@@ -1,0 +1,14 @@
+.idea
+.DS_STORE
+
+build
+generated
+node_modules
+contracts
+/.postgres/
+
+subgraph.mainnet.yaml
+subgraph.rinkeby.yaml
+
+yarn-error.log
+logfile

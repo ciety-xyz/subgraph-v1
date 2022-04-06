@@ -1,0 +1,191 @@
+specVersion: 0.0.2
+description: A protocol for NFT minting
+repository: https://github.com/ddevkim/omnuum_subgraph_rinkeby
+schema:
+  file: ./schema.graphql
+dataSources:
+
+  # CA Manager
+  {{#caManager}}
+  - kind: ethereum/contract
+    name: OmnuumCAManager
+    network: {{network}}
+    source:
+      startBlock: {{startBlock}}
+      address: "{{address}}"
+      abi: OmnuumCAManager
+    mapping:
+      file: ./src/mappings/caManager.ts
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - Transaction
+        - Contract
+        - ContractRole
+      abis:
+        - name: OmnuumCAManager
+          file: ./abis/OmnuumCAManager.json
+        - name: OmnuumNFT1155
+          file: ./abis/OmnuumNFT1155.json
+      eventHandlers:
+        - event: ManagerContractRegistered(indexed address,string)
+          handler: handleManagerContractRegistered
+        - event: ManagerContractRemoved(indexed address,string)
+          handler: handleManagerContractRemoved
+        - event: NftContractRegistered(indexed address,indexed address)
+          handler: handleNftContractRegistered
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+        - event: RoleAdded(indexed address,string)
+          handler: handleRoleAdded
+        - event: RoleRemoved(indexed address,string)
+          handler: handleRoleRemoved
+  {{/caManager}}
+
+#  # Mint Manager
+#  {{#mintManager}}
+#  - kind: ethereum/contract
+#    name: OmnuumMintManager
+#    network: {{network}}
+#    source:
+#      startBlock: {{startBlock}}
+#      address: "{{address}}"
+#      abi: OmnuumMintManager
+#    mapping:
+#      file: ./src/mappings/mintManager.ts
+#      kind: ethereum/events
+#      apiVersion: 0.0.5
+#      language: wasm/assemblyscript
+#      entities:
+#        - Transaction
+#        - MintSchedule
+#        - Mint
+#        - Minter
+#        - Contract
+#      abis:
+#        - name: OmnuumMintManager
+#          file: ./abis/OmnuumMintManager.json
+#      eventHandlers:
+#        - event: SetPublicSchedule(indexed address,indexed uint256,uint256,uint256,uint32,uint32)
+#          handler: handleSetPublicSchedule
+#        - event: PublicMint(indexed address,indexed address,indexed uint256,uint32,uint32,uint256)
+#          handler: handlePublicMint
+#        - event: Airdrop(indexed address,indexed address,uint256)
+#          handler: handleAirdrop
+#  {{/mintManager}}
+#
+#  # Ticket Manager
+#  {{#ticketManager}}
+#  - kind: ethereum/contract
+#    name: TicketManager
+#    network: {{network}}
+#    source:
+#      startBlock: {{startBlock}}
+#      address: "{{address}}"
+#      abi: TicketManager
+#    mapping:
+#      file: ./src/mappings/ticketManager.ts
+#      kind: ethereum/events
+#      apiVersion: 0.0.5
+#      language: wasm/assemblyscript
+#      entities:
+#        - Transaction
+#        - MintSchedule
+#      abis:
+#        - name: TicketManager
+#          file: ./abis/TicketManager.json
+#      eventHandlers:
+#        - event: SetTicketSchedule(indexed address,indexed uint256,uint256)
+#          handler: handleSetTicketSchedule
+#        - event: TicketMint(indexed address,indexed address,indexed uint256,uint32,uint32,uint256)
+#          handler: handleTicketMint
+#  {{/ticketManager}}
+#
+#  # VRF Manager
+#  {{#vrfManager}}
+#  - kind: ethereum/contract
+#    name: OmnuumVRFManager
+#    network: {{network}}
+#    source:
+#      startBlock: {{startBlock}}
+#      address: "{{address}}"
+#      abi: OmnuumVRFManager
+#    mapping:
+#      file: ./src/mappings/vrfManager.ts
+#      kind: ethereum/events
+#      apiVersion: 0.0.5
+#      language: wasm/assemblyscript
+#      entities:
+#        - Transaction
+#        - Reveal
+#      abis:
+#        - name: OmnuumVRFManager
+#          file: ./abis/OmnuumVRFManager.json
+#      eventHandlers:
+#        - event: RequestVRF(indexed address,indexed bytes32,indexed bytes32)
+#          handler: handleRequestVRF
+#        - event: ResponseVRF(indexed bytes32,uint256,indexed bytes32,bool,string)
+#          handler: handleResponseVRF
+# {{/vrfManager}}
+#
+  # Wallet
+  {{#wallet}}
+  - kind: ethereum/contract
+    name: OmnuumWallet
+    network: {{network}}
+    source:
+      startBlock: {{startBlock}}
+      address: "{{address}}"
+      abi: OmnuumWallet
+    mapping:
+      file: ./src/mappings/wallet.ts
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - Transaction
+      abis:
+        - name: OmnuumWallet
+          file: ./abis/OmnuumWallet.json
+      eventHandlers:
+        - event: EtherReceived(indexed address)
+          handler: handleEtherReceived
+        - event: PaymentReceived(indexed address,string,string)
+          handler: handlePaymentReceived
+        - event: Requested(indexed address,indexed uint256,indexed uint8)
+          handler: handleRequested
+        - event: Approved(indexed address,indexed uint256,uint8)
+          handler: handleApproved
+        - event: Canceled(indexed address,indexed uint256)
+          handler: handleCanceled
+        - event: Revoked(indexed address,indexed uint256,uint8)
+          handler: handleRevoked
+        - event: Executed(indexed address,indexed uint256,indexed uint8)
+          handler: handleExecuted
+  {{/wallet}}
+
+templates:
+  - kind: ethereum/contract
+    name: OmnuumNFT1155
+    network: {{network}}
+    source:
+      abi: OmnuumNFT1155
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      file: ./src/mappings/nft.ts
+      entities:
+        - Transaction
+        - Contract
+      abis:
+        - name: OmnuumNFT1155
+          file: ./abis/OmnuumNFT1155.json
+      eventHandlers:
+        - event: TransferSingle(indexed address,indexed address,indexed address,uint256,uint256)
+          handler: handleTransferSingle
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+        - event: Uri(indexed address,string)
+          handler: handleUri

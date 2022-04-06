@@ -9,10 +9,10 @@
         "type": "address"
       },
       {
-        "indexed": true,
-        "internalType": "bytes32",
+        "indexed": false,
+        "internalType": "string",
         "name": "topic",
-        "type": "bytes32"
+        "type": "string"
       }
     ],
     "name": "ManagerContractRegistered",
@@ -28,10 +28,10 @@
         "type": "address"
       },
       {
-        "indexed": true,
-        "internalType": "bytes32",
+        "indexed": false,
+        "internalType": "string",
         "name": "topic",
-        "type": "bytes32"
+        "type": "string"
       }
     ],
     "name": "ManagerContractRemoved",
@@ -79,7 +79,7 @@
     "anonymous": false,
     "inputs": [
       {
-        "indexed": false,
+        "indexed": true,
         "internalType": "address",
         "name": "ca",
         "type": "address"
@@ -98,7 +98,7 @@
     "anonymous": false,
     "inputs": [
       {
-        "indexed": false,
+        "indexed": true,
         "internalType": "address",
         "name": "ca",
         "type": "address"
@@ -115,8 +115,16 @@
   },
   {
     "inputs": [
-      { "internalType": "address[]", "name": "_CAs", "type": "address[]" },
-      { "internalType": "string", "name": "_role", "type": "string" }
+      {
+        "internalType": "address[]",
+        "name": "_CAs",
+        "type": "address[]"
+      },
+      {
+        "internalType": "string",
+        "name": "_role",
+        "type": "string"
+      }
     ],
     "name": "addRole",
     "outputs": [],
@@ -124,37 +132,83 @@
     "type": "function"
   },
   {
-    "inputs": [{ "internalType": "address", "name": "_CA", "type": "address" }],
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_CA",
+        "type": "address"
+      }
+    ],
     "name": "checkRegistration",
     "outputs": [
-      { "internalType": "bool", "name": "isRegistered", "type": "bool" }
+      {
+        "internalType": "bool",
+        "name": "isRegistered",
+        "type": "bool"
+      }
     ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      { "internalType": "string", "name": "_topic", "type": "string" }
+      {
+        "internalType": "string",
+        "name": "_topic",
+        "type": "string"
+      }
     ],
     "name": "getContract",
-    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "_target", "type": "address" },
-      { "internalType": "string", "name": "_role", "type": "string" }
+      {
+        "internalType": "address",
+        "name": "_target",
+        "type": "address"
+      },
+      {
+        "internalType": "string",
+        "name": "_role",
+        "type": "string"
+      }
     ],
     "name": "hasRole",
-    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
-    "inputs": [{ "internalType": "string", "name": "", "type": "string" }],
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "",
+        "type": "string"
+      }
+    ],
     "name": "indexedContracts",
-    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
@@ -166,33 +220,73 @@
     "type": "function"
   },
   {
-    "inputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
     "name": "managerContracts",
     "outputs": [
-      { "internalType": "string", "name": "topic", "type": "string" },
-      { "internalType": "bool", "name": "active", "type": "bool" }
+      {
+        "internalType": "string",
+        "name": "topic",
+        "type": "string"
+      },
+      {
+        "internalType": "bool",
+        "name": "active",
+        "type": "bool"
+      }
     ],
     "stateMutability": "view",
     "type": "function"
   },
   {
-    "inputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
     "name": "nftContracts",
-    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [],
     "name": "owner",
-    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "_CA", "type": "address" },
-      { "internalType": "string", "name": "_topic", "type": "string" }
+      {
+        "internalType": "address",
+        "name": "_CA",
+        "type": "address"
+      },
+      {
+        "internalType": "string",
+        "name": "_topic",
+        "type": "string"
+      }
     ],
     "name": "registerContract",
     "outputs": [],
@@ -201,8 +295,16 @@
   },
   {
     "inputs": [
-      { "internalType": "address[]", "name": "_CAs", "type": "address[]" },
-      { "internalType": "string[]", "name": "_topics", "type": "string[]" }
+      {
+        "internalType": "address[]",
+        "name": "_CAs",
+        "type": "address[]"
+      },
+      {
+        "internalType": "string[]",
+        "name": "_topics",
+        "type": "string[]"
+      }
     ],
     "name": "registerContractMultiple",
     "outputs": [],
@@ -211,7 +313,11 @@
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "_nftContract", "type": "address" }
+      {
+        "internalType": "address",
+        "name": "_nftContract",
+        "type": "address"
+      }
     ],
     "name": "registerNftContract",
     "outputs": [],
@@ -219,7 +325,13 @@
     "type": "function"
   },
   {
-    "inputs": [{ "internalType": "address", "name": "_CA", "type": "address" }],
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_CA",
+        "type": "address"
+      }
+    ],
     "name": "removeContract",
     "outputs": [],
     "stateMutability": "nonpayable",
@@ -227,8 +339,16 @@
   },
   {
     "inputs": [
-      { "internalType": "address[]", "name": "_CAs", "type": "address[]" },
-      { "internalType": "string", "name": "_role", "type": "string" }
+      {
+        "internalType": "address[]",
+        "name": "_CAs",
+        "type": "address[]"
+      },
+      {
+        "internalType": "string",
+        "name": "_role",
+        "type": "string"
+      }
     ],
     "name": "removeRole",
     "outputs": [],
@@ -237,17 +357,35 @@
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "", "type": "address" },
-      { "internalType": "bytes32", "name": "", "type": "bytes32" }
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      },
+      {
+        "internalType": "string",
+        "name": "",
+        "type": "string"
+      }
     ],
     "name": "roles",
-    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "newOwner", "type": "address" }
+      {
+        "internalType": "address",
+        "name": "newOwner",
+        "type": "address"
+      }
     ],
     "name": "transferOwnership",
     "outputs": [],

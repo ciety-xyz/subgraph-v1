@@ -1,0 +1,8 @@
+{
+  "network": "rinkeby",
+  "caManager": { "address": "0xBbD6B1A152023FD2400a82C662BEad55eD827Be7", "startBlock": "10451336" },
+  "mintManager": { "address": "0xAfDCf148a5Ac7Ce4C8c36E93Edb77a34c43F271C", "startBlock": "10451340" },
+  "ticketManager": { "address": "0x2030464478D6F522922459DFd095bF473e899199", "startBlock": "10451344" },
+  "vrfManager": { "address": "0xdF7b8cc616943088A9b3048C27c48C3c8B075D5A", "startBlock": "10451347" },
+  "wallet": { "address": "0x2F97bcb5F996C16B6b048B2D3bef841557037f2E", "startBlock": "10451348" }
+}

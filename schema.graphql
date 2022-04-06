@@ -1,6 +1,68 @@
-type ExampleEntity @entity {
+type Transaction @entity {
+  "id: transactionHash(hex)"
   id: ID!
-  count: BigInt!
-  managerContract: Bytes! # address
-  topic: Bytes! # bytes32
+  event_selectors: [String!]!
+  block_number: Int!
+  timestamp: Int!
+  from: String!
+  to: String
+  value: BigInt!
+  gas_price: BigInt!
+}
+
+type Contract @entity {
+  "id: contractAddress(hex)"
+  id: ID!
+  block_number: Int!
+  transaction: Transaction!
+  owner: String!
+  topic: String!
+  is_removed: Boolean!
+  is_revealed: Boolean
+  is_owner_changed: Boolean!
+  max_supply: Int
+  total_minted_amount: Int
+  cover_uri: String
+  reveal_url: String
+  collection_id: String
+}
+
+type ContractRole @entity {
+  "id: contractAddress(hex)"
+  id: ID!
+  block_number: Int!
+  transaction: Transaction!
+  contract: Contract
+  role: [String!]!
+}
+
+type Payment @entity {
+  "id: transactionHash(hex)_logIndex(dec) or EOA(hex)"
+  id: ID!
+  block_number: Int!
+  transaction: Transaction
+  sender: String! #msg.sender
+  value: BigInt! #msg.value
+  topic: String
+  description: String
+}
+
+type Nft @entity {
+  "id: nftContractAddress(hex)_tokenId(dec)"
+  id: ID!
+  block_number: Int!
+  transaction: Transaction!
+  nft_contract: Contract!
+  token_id: ID!
+  minter: String
+  owners: [String!]!
+}
+
+type Minter @entity {
+  "id: minterAddress(hex)[_nftAddress(hex)[_groupId(dec)]]"
+  id: ID!
+  block_number: Int!
+  minter_address: String!
+  nfts: [Nft!] # way to reference NFTs for mintSchedule?
+  mintAmount: Int!
 }
