@@ -88,7 +88,7 @@ export function handleNftContractRegistered(event: NftContractRegistered): void 
   contractEntity.is_removed = false;
   contractEntity.is_revealed = false;
   contractEntity.is_owner_changed = false;
-  contractEntity.total_minted_amount = BigInt.zero().toU32();
+  contractEntity.total_minted_amount = BigInt.zero().toI32();
 
   // Interaction max supply, cover uri
   const nftContract = NftContract.bind(event.params.nftContract);
@@ -96,7 +96,7 @@ export function handleNftContractRegistered(event: NftContractRegistered): void 
   if (maxSupply.reverted) {
     logging(getLogMsg(LogMsg.___CALL_REVERTED), eventName, nftAddress, '@query maxSupply');
   } else {
-    contractEntity.max_supply = maxSupply.value.toU32();
+    contractEntity.max_supply = maxSupply.value.toI32();
   }
 
   contractEntity.total_minted_amount = 0;

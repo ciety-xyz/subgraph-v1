@@ -1,4 +1,4 @@
-import { ethereum, log } from '@graphprotocol/graph-ts';
+import { ethereum } from '@graphprotocol/graph-ts';
 import { Transaction } from '../types/schema';
 import { getLogMsg, logging, LogMsg } from '../utils/logger';
 
@@ -31,8 +31,8 @@ export function saveTransaction(event: ethereum.Event, contractTopic: string, ev
 }
 
 function evolveBaseTransactionInfo(event: ethereum.Event, transactionEntity: Transaction): Transaction {
-  const blockNumber = event.block.number.toU32();
-  const timeStamp = event.block.timestamp.toU32();
+  const blockNumber = event.block.number.toI32();
+  const timeStamp = event.block.timestamp.toI32();
 
   transactionEntity.block_number = blockNumber;
   transactionEntity.timestamp = timeStamp;
@@ -48,5 +48,5 @@ function evolveBaseTransactionInfo(event: ethereum.Event, transactionEntity: Tra
 }
 
 export function getUniqueId(event: ethereum.Event): string {
-  return `${event.transaction.hash.toHexString()}_${event.logIndex.toU32()}`;
+  return `${event.transaction.hash.toHexString()}_${event.logIndex.toI32()}`;
 }

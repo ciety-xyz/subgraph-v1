@@ -586,6 +586,144 @@ export class Nft extends Entity {
   }
 }
 
+export class MintSchedule extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+
+    this.set("block_number", Value.fromI32(0));
+    this.set("transaction", Value.fromString(""));
+    this.set("nft_contract", Value.fromString(""));
+    this.set("topic", Value.fromString(""));
+    this.set("group_id", Value.fromString(""));
+    this.set("end_date", Value.fromI32(0));
+    this.set("minted_amount", Value.fromI32(0));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save MintSchedule entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        `Entities of type MintSchedule must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+      );
+      store.set("MintSchedule", id.toString(), this);
+    }
+  }
+
+  static load(id: string): MintSchedule | null {
+    return changetype<MintSchedule | null>(store.get("MintSchedule", id));
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get block_number(): i32 {
+    let value = this.get("block_number");
+    return value!.toI32();
+  }
+
+  set block_number(value: i32) {
+    this.set("block_number", Value.fromI32(value));
+  }
+
+  get transaction(): string {
+    let value = this.get("transaction");
+    return value!.toString();
+  }
+
+  set transaction(value: string) {
+    this.set("transaction", Value.fromString(value));
+  }
+
+  get nft_contract(): string {
+    let value = this.get("nft_contract");
+    return value!.toString();
+  }
+
+  set nft_contract(value: string) {
+    this.set("nft_contract", Value.fromString(value));
+  }
+
+  get topic(): string {
+    let value = this.get("topic");
+    return value!.toString();
+  }
+
+  set topic(value: string) {
+    this.set("topic", Value.fromString(value));
+  }
+
+  get group_id(): string {
+    let value = this.get("group_id");
+    return value!.toString();
+  }
+
+  set group_id(value: string) {
+    this.set("group_id", Value.fromString(value));
+  }
+
+  get end_date(): i32 {
+    let value = this.get("end_date");
+    return value!.toI32();
+  }
+
+  set end_date(value: i32) {
+    this.set("end_date", Value.fromI32(value));
+  }
+
+  get base_price(): BigInt | null {
+    let value = this.get("base_price");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set base_price(value: BigInt | null) {
+    if (!value) {
+      this.unset("base_price");
+    } else {
+      this.set("base_price", Value.fromBigInt(<BigInt>value));
+    }
+  }
+
+  get mint_supply(): i32 {
+    let value = this.get("mint_supply");
+    return value!.toI32();
+  }
+
+  set mint_supply(value: i32) {
+    this.set("mint_supply", Value.fromI32(value));
+  }
+
+  get mint_limit_per_address(): i32 {
+    let value = this.get("mint_limit_per_address");
+    return value!.toI32();
+  }
+
+  set mint_limit_per_address(value: i32) {
+    this.set("mint_limit_per_address", Value.fromI32(value));
+  }
+
+  get minted_amount(): i32 {
+    let value = this.get("minted_amount");
+    return value!.toI32();
+  }
+
+  set minted_amount(value: i32) {
+    this.set("minted_amount", Value.fromI32(value));
+  }
+}
+
 export class Minter extends Entity {
   constructor(id: string) {
     super();
@@ -663,5 +801,141 @@ export class Minter extends Entity {
 
   set mintAmount(value: i32) {
     this.set("mintAmount", Value.fromI32(value));
+  }
+}
+
+export class Mint extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+
+    this.set("block_number", Value.fromI32(0));
+    this.set("transaction", Value.fromString(""));
+    this.set("nft_contract", Value.fromString(""));
+    this.set("topic", Value.fromString(""));
+    this.set("minter", Value.fromString(""));
+    this.set("mint_quantity", Value.fromI32(0));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save Mint entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        `Entities of type Mint must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+      );
+      store.set("Mint", id.toString(), this);
+    }
+  }
+
+  static load(id: string): Mint | null {
+    return changetype<Mint | null>(store.get("Mint", id));
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get block_number(): i32 {
+    let value = this.get("block_number");
+    return value!.toI32();
+  }
+
+  set block_number(value: i32) {
+    this.set("block_number", Value.fromI32(value));
+  }
+
+  get transaction(): string {
+    let value = this.get("transaction");
+    return value!.toString();
+  }
+
+  set transaction(value: string) {
+    this.set("transaction", Value.fromString(value));
+  }
+
+  get nft_contract(): string {
+    let value = this.get("nft_contract");
+    return value!.toString();
+  }
+
+  set nft_contract(value: string) {
+    this.set("nft_contract", Value.fromString(value));
+  }
+
+  get mint_schedule(): string | null {
+    let value = this.get("mint_schedule");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set mint_schedule(value: string | null) {
+    if (!value) {
+      this.unset("mint_schedule");
+    } else {
+      this.set("mint_schedule", Value.fromString(<string>value));
+    }
+  }
+
+  get topic(): string {
+    let value = this.get("topic");
+    return value!.toString();
+  }
+
+  set topic(value: string) {
+    this.set("topic", Value.fromString(value));
+  }
+
+  get minter(): string {
+    let value = this.get("minter");
+    return value!.toString();
+  }
+
+  set minter(value: string) {
+    this.set("minter", Value.fromString(value));
+  }
+
+  get mint_quantity(): i32 {
+    let value = this.get("mint_quantity");
+    return value!.toI32();
+  }
+
+  set mint_quantity(value: i32) {
+    this.set("mint_quantity", Value.fromI32(value));
+  }
+
+  get max_quantity(): i32 {
+    let value = this.get("max_quantity");
+    return value!.toI32();
+  }
+
+  set max_quantity(value: i32) {
+    this.set("max_quantity", Value.fromI32(value));
+  }
+
+  get mint_price(): BigInt | null {
+    let value = this.get("mint_price");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set mint_price(value: BigInt | null) {
+    if (!value) {
+      this.unset("mint_price");
+    } else {
+      this.set("mint_price", Value.fromBigInt(<BigInt>value));
+    }
   }
 }

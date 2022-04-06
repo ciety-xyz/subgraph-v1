@@ -17,7 +17,7 @@ dataSources:
     mapping:
       file: ./src/mappings/caManager.ts
       kind: ethereum/events
-      apiVersion: 0.0.5
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       entities:
         - Transaction
@@ -43,65 +43,70 @@ dataSources:
           handler: handleRoleRemoved
   {{/caManager}}
 
-#  # Mint Manager
-#  {{#mintManager}}
-#  - kind: ethereum/contract
-#    name: OmnuumMintManager
-#    network: {{network}}
-#    source:
-#      startBlock: {{startBlock}}
-#      address: "{{address}}"
-#      abi: OmnuumMintManager
-#    mapping:
-#      file: ./src/mappings/mintManager.ts
-#      kind: ethereum/events
-#      apiVersion: 0.0.5
-#      language: wasm/assemblyscript
-#      entities:
-#        - Transaction
-#        - MintSchedule
-#        - Mint
-#        - Minter
-#        - Contract
-#      abis:
-#        - name: OmnuumMintManager
-#          file: ./abis/OmnuumMintManager.json
-#      eventHandlers:
-#        - event: SetPublicSchedule(indexed address,indexed uint256,uint256,uint256,uint32,uint32)
-#          handler: handleSetPublicSchedule
-#        - event: PublicMint(indexed address,indexed address,indexed uint256,uint32,uint32,uint256)
-#          handler: handlePublicMint
-#        - event: Airdrop(indexed address,indexed address,uint256)
-#          handler: handleAirdrop
-#  {{/mintManager}}
-#
-#  # Ticket Manager
-#  {{#ticketManager}}
-#  - kind: ethereum/contract
-#    name: TicketManager
-#    network: {{network}}
-#    source:
-#      startBlock: {{startBlock}}
-#      address: "{{address}}"
-#      abi: TicketManager
-#    mapping:
-#      file: ./src/mappings/ticketManager.ts
-#      kind: ethereum/events
-#      apiVersion: 0.0.5
-#      language: wasm/assemblyscript
-#      entities:
-#        - Transaction
-#        - MintSchedule
-#      abis:
-#        - name: TicketManager
-#          file: ./abis/TicketManager.json
-#      eventHandlers:
-#        - event: SetTicketSchedule(indexed address,indexed uint256,uint256)
-#          handler: handleSetTicketSchedule
-#        - event: TicketMint(indexed address,indexed address,indexed uint256,uint32,uint32,uint256)
-#          handler: handleTicketMint
-#  {{/ticketManager}}
-#
+  # Mint Manager
+  {{#mintManager}}
+  - kind: ethereum/contract
+    name: OmnuumMintManager
+    network: {{network}}
+    source:
+      startBlock: {{startBlock}}
+      address: "{{address}}"
+      abi: OmnuumMintManager
+    mapping:
+      file: ./src/mappings/mintManager.ts
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - Transaction
+        - MintSchedule
+      abis:
+        - name: OmnuumMintManager
+          file: ./abis/OmnuumMintManager.json
+      eventHandlers:
+        - event: SetPublicSchedule(indexed address,indexed uint256,uint256,uint256,uint32,uint32)
+          handler: handleSetPublicSchedule
+        - event: PublicMint(indexed address,indexed address,indexed uint256,uint32,uint32,uint256)
+          handler: handlePublicMint
+        - event: Airdrop(indexed address,indexed address,uint256)
+          handler: handleAirdrop
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+        - event: ChangeFeeRate(uint256)
+          handler: handleChangeFeeRate
+        - event: SetMinFee(uint256)
+          handler: handleSetMinFee
+        - event: SetSpecialFeeRate(indexed address,uint256)
+          handler: handleSetSpecialFeeRate
+  {{/mintManager}}
+
+  # Ticket Manager
+  {{#ticketManager}}
+  - kind: ethereum/contract
+    name: TicketManager
+    network: {{network}}
+    source:
+      startBlock: {{startBlock}}
+      address: "{{address}}"
+      abi: TicketManager
+    mapping:
+      file: ./src/mappings/ticketManager.ts
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - Transaction
+        - MintSchedule
+      abis:
+        - name: TicketManager
+          file: ./abis/TicketManager.json
+      eventHandlers:
+        - event: SetTicketSchedule(indexed address,indexed uint256,uint256)
+          handler: handleSetTicketSchedule
+        - event: TicketMint(indexed address,indexed address,indexed uint256,uint32,uint32,uint256)
+          handler: handleTicketMint
+  {{/ticketManager}}
+
 #  # VRF Manager
 #  {{#vrfManager}}
 #  - kind: ethereum/contract
@@ -114,7 +119,7 @@ dataSources:
 #    mapping:
 #      file: ./src/mappings/vrfManager.ts
 #      kind: ethereum/events
-#      apiVersion: 0.0.5
+#      apiVersion: 0.0.6
 #      language: wasm/assemblyscript
 #      entities:
 #        - Transaction
@@ -141,7 +146,7 @@ dataSources:
     mapping:
       file: ./src/mappings/wallet.ts
       kind: ethereum/events
-      apiVersion: 0.0.5
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       entities:
         - Transaction
@@ -173,7 +178,7 @@ templates:
       abi: OmnuumNFT1155
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.5
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       file: ./src/mappings/nft.ts
       entities:

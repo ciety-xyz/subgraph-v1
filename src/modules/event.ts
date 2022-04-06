@@ -10,6 +10,11 @@ export enum EventName {
   TransferSingle,
   ownershipTransferred,
   Uri,
+  SetTicketSchedule,
+  SetPublicSchedule,
+  PublicMint,
+  TicketMint,
+  Airdrop,
 }
 
 export function getEventName(eventName: EventName): string {
@@ -32,10 +37,18 @@ export function getEventName(eventName: EventName): string {
       return 'EtherReceived';
     case EventName.TransferSingle:
       return 'TransferSingle';
-    case EventName.ownershipTransferred:
-      return 'ownershipTransferred';
     case EventName.Uri:
       return 'Uri';
+    case EventName.SetTicketSchedule:
+      return 'SetTicketSchedule';
+    case EventName.SetPublicSchedule:
+      return 'SetPublicSchedule';
+    case EventName.PublicMint:
+      return 'PublicMint';
+    case EventName.TicketMint:
+      return 'TicketMint';
+    case EventName.Airdrop:
+      return 'Airdrop';
     default:
       return '';
   }
