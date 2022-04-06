@@ -119,6 +119,125 @@ export class Transaction extends Entity {
   set gas_price(value: BigInt) {
     this.set("gas_price", Value.fromBigInt(value));
   }
+
+  get contracts(): Array<string> | null {
+    let value = this.get("contracts");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toStringArray();
+    }
+  }
+
+  set contracts(value: Array<string> | null) {
+    if (!value) {
+      this.unset("contracts");
+    } else {
+      this.set("contracts", Value.fromStringArray(<Array<string>>value));
+    }
+  }
+
+  get contract_roles(): Array<string> | null {
+    let value = this.get("contract_roles");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toStringArray();
+    }
+  }
+
+  set contract_roles(value: Array<string> | null) {
+    if (!value) {
+      this.unset("contract_roles");
+    } else {
+      this.set("contract_roles", Value.fromStringArray(<Array<string>>value));
+    }
+  }
+
+  get payments(): Array<string> | null {
+    let value = this.get("payments");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toStringArray();
+    }
+  }
+
+  set payments(value: Array<string> | null) {
+    if (!value) {
+      this.unset("payments");
+    } else {
+      this.set("payments", Value.fromStringArray(<Array<string>>value));
+    }
+  }
+
+  get nfts(): Array<string> | null {
+    let value = this.get("nfts");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toStringArray();
+    }
+  }
+
+  set nfts(value: Array<string> | null) {
+    if (!value) {
+      this.unset("nfts");
+    } else {
+      this.set("nfts", Value.fromStringArray(<Array<string>>value));
+    }
+  }
+
+  get mint_schedule(): Array<string> | null {
+    let value = this.get("mint_schedule");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toStringArray();
+    }
+  }
+
+  set mint_schedule(value: Array<string> | null) {
+    if (!value) {
+      this.unset("mint_schedule");
+    } else {
+      this.set("mint_schedule", Value.fromStringArray(<Array<string>>value));
+    }
+  }
+
+  get mints(): Array<string> | null {
+    let value = this.get("mints");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toStringArray();
+    }
+  }
+
+  set mints(value: Array<string> | null) {
+    if (!value) {
+      this.unset("mints");
+    } else {
+      this.set("mints", Value.fromStringArray(<Array<string>>value));
+    }
+  }
+
+  get reveals(): Array<string> | null {
+    let value = this.get("reveals");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toStringArray();
+    }
+  }
+
+  set reveals(value: Array<string> | null) {
+    if (!value) {
+      this.unset("reveals");
+    } else {
+      this.set("reveals", Value.fromStringArray(<Array<string>>value));
+    }
+  }
 }
 
 export class Contract extends Entity {

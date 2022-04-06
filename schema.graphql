@@ -8,6 +8,15 @@ type Transaction @entity {
   to: String
   value: BigInt!
   gas_price: BigInt!
+
+  "Derived"
+  contracts: [Contract!] @derivedFrom(field: "transaction")
+  contract_roles: [ContractRole!] @derivedFrom(field: "transaction")
+  payments: [Payment!] @derivedFrom(field: "transaction")
+  nfts: [Nft!] @derivedFrom(field: "transaction")
+  mint_schedule: [MintSchedule!] @derivedFrom(field: "transaction")
+  mints: [Mint!] @derivedFrom(field: "transaction")
+  reveals: [Reveal!] @derivedFrom(field: "transaction")
 }
 
 type Contract @entity {
