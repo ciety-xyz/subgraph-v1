@@ -28,6 +28,8 @@ dataSources:
           file: ./abis/OmnuumCAManager.json
         - name: OmnuumNFT1155
           file: ./abis/OmnuumNFT1155.json
+        - name: Ownable
+          file: ./abis/Ownable.json
       eventHandlers:
         - event: ManagerContractRegistered(indexed address,string)
           handler: handleManagerContractRegistered
@@ -63,6 +65,8 @@ dataSources:
       abis:
         - name: OmnuumMintManager
           file: ./abis/OmnuumMintManager.json
+        - name: Ownable
+          file: ./abis/Ownable.json
       eventHandlers:
         - event: SetPublicSchedule(indexed address,indexed uint256,uint256,uint256,uint32,uint32)
           handler: handleSetPublicSchedule
@@ -129,6 +133,8 @@ dataSources:
           file: ./abis/OmnuumVRFManager.json
         - name: OmnuumNFT1155
           file: ./abis/OmnuumNFT1155.json
+        - name: Ownable
+          file: ./abis/Ownable.json
       eventHandlers:
         - event: RequestVRF(indexed address,indexed bytes32,string)
           handler: handleRequestVRF

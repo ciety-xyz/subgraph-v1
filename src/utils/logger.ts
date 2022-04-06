@@ -2,6 +2,7 @@ import { log } from '@graphprotocol/graph-ts';
 
 export enum LogMsg {
   ___NO_ENTITY,
+  ___ZERO_ADDRESS,
   ___NO_ROLE,
   ___CALL_REVERTED,
   ___DUPLICATED,
@@ -13,6 +14,8 @@ export function getLogMsg(key: LogMsg): string {
   switch (key) {
     case LogMsg.___NO_ENTITY:
       return '___NO_ENTITY';
+    case LogMsg.___ZERO_ADDRESS:
+      return '___ZERO_ADDRESS';
     case LogMsg.___NO_ROLE:
       return '___NO_ROLE';
     case LogMsg.___CALL_REVERTED:
@@ -29,5 +32,5 @@ export function getLogMsg(key: LogMsg): string {
 }
 
 export function logging(msg: string, eventName: string, id: string, addMsg: string): void {
-  log.debug(`ERROR_CODE: ${msg}, EVENT: ${eventName}, ID: {} ${addMsg}`, [id]);
+  log.debug(`TAG: ${msg}, EVENT: ${eventName}, ID: {} ${addMsg}`, [id]);
 }

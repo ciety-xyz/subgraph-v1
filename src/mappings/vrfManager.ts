@@ -5,7 +5,8 @@ import { getContractTopic, getVrfTopic, VrfTopic } from '../modules/topic';
 import { Reveal } from '../types/schema';
 import { getLogMsg, logging, LogMsg } from '../utils/logger';
 import { OmnuumNFT1155 as NftContract } from '../types/templates/OmnuumNFT1155/OmnuumNFT1155';
-import { Address, log } from '@graphprotocol/graph-ts';
+import { Address } from '@graphprotocol/graph-ts';
+import { ownershipTransfer } from '../modules/ownership';
 
 export function handleRequestVRF(event: RequestVRF): void {
   // revealEntityId: "requestId(hex)"
@@ -63,6 +64,8 @@ export function handleResponseVRF(event: ResponseVRF): void {
   }
 }
 
-export function handleOwnershipTransferred(event: OwnershipTransferred): void {}
+export function handleOwnershipTransferred(event: OwnershipTransferred): void {
+  ownershipTransfer(event);
+}
 
 export function handleUpdated(event: Updated): void {}

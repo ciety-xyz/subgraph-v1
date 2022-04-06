@@ -6,6 +6,7 @@ import { EventName, getEventName } from '../modules/event';
 import { updateMinterEntities } from '../modules/minter';
 import { getLogMsg, logging, LogMsg } from '../utils/logger';
 import { updateTotalMintedAmountForNftContract } from '../modules/nftContract';
+import { ownershipTransfer } from '../modules/ownership';
 
 export function handleTransferSingle(event: TransferSingle): void {
   const nftContractAddress = event.address.toHexString();
@@ -56,25 +57,7 @@ export function handleTransferSingle(event: TransferSingle): void {
 }
 
 export function handleOwnershipTransferred(event: OwnershipTransferred): void {
-  const contractEntityId = event.address.toHexString();
-
-  const contractEntity = Contract.load(contractEntityId);
-  const eventName = getEventName(EventName.OwnershipTransferred);
-  if (contractEntity) {
-    if (contractEntity.owner == event.params.previousOwner.toHexString()) {
-      const transactionEntity = saveTransaction(event, getContractTopic(event.address), eventName);
-      contractEntity.block_number = transactionEntity.block_number;
-      contractEntity.transaction = transactionEntity.id;
-      contractEntity.owner = event.params.newOwner.toHexString();
-      contractEntity.is_owner_changed = true;
-
-      contractEntity.save();
-    } else {
-      logging(getLogMsg(LogMsg.___DIFF_OWNER), eventName, contractEntityId, '');
-    }
-  } else {
-    logging(getLogMsg(LogMsg.___NO_ENTITY), eventName, contractEntityId, '');
-  }
+  ownershipTransfer(event);
 }
 
 export function handleUri(event: Uri): void {
