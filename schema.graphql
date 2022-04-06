@@ -54,7 +54,7 @@ type Nft @entity {
   transaction: Transaction!
   nft_contract: Contract!
   token_id: ID!
-  minter: String
+  minter: Minter
   owners: [String!]!
 }
 
@@ -90,8 +90,20 @@ type Mint @entity {
   nft_contract: Contract!
   mint_schedule: MintSchedule
   topic: String!
-  minter: String!
+  minter: Minter!
   mint_quantity: Int!
   max_quantity: Int
   mint_price: BigInt
+}
+
+type Reveal @entity {
+  "id: requestId(hex)"
+  id: ID!
+  block_number: Int!
+  transaction: Transaction!
+  nft_contract: Contract!
+  topic: String!
+  vrf_fare: BigInt!
+  random_number: BigInt
+  starting_index: Int!
 }

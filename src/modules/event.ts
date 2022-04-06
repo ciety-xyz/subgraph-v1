@@ -1,3 +1,5 @@
+import { handleRequestVRF } from '../mappings/vrfManager';
+
 export enum EventName {
   ManagerContractRegistered,
   ManagerContractRemoved,
@@ -15,6 +17,8 @@ export enum EventName {
   PublicMint,
   TicketMint,
   Airdrop,
+  RequestVRF,
+  ResponseVRF,
 }
 
 export function getEventName(eventName: EventName): string {
@@ -49,6 +53,10 @@ export function getEventName(eventName: EventName): string {
       return 'TicketMint';
     case EventName.Airdrop:
       return 'Airdrop';
+    case EventName.RequestVRF:
+      return 'RequestVRF';
+    case EventName.ResponseVRF:
+      return 'ResponseVRF';
     default:
       return '';
   }

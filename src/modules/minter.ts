@@ -44,6 +44,7 @@ function updateMinterEntityById(
   nftId: string,
   blockNumber: i32
 ): void {
+  // Minter entity does not have transaction, so that no need to update transaction id.
   let minterEntity = Minter.load(id);
   if (!minterEntity) {
     minterEntity = new Minter(id);

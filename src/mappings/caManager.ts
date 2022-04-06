@@ -90,7 +90,7 @@ export function handleNftContractRegistered(event: NftContractRegistered): void 
   contractEntity.is_owner_changed = false;
   contractEntity.total_minted_amount = BigInt.zero().toI32();
 
-  // Interaction max supply, cover uri
+  // Interaction with the NFT contract for max supply, cover uri.
   const nftContract = NftContract.bind(event.params.nftContract);
   const maxSupply = nftContract.try_maxSupply();
   if (maxSupply.reverted) {
@@ -117,7 +117,7 @@ export function handleOwnershipTransferred(event: OwnershipTransferred): void {
   const contractEntity = Contract.load(contractEntityId);
   const eventName = getEventName(EventName.OwnershipTransferred);
   if (contractEntity) {
-    if (contractEntity.owner === event.params.previousOwner.toHexString()) {
+    if (contractEntity.owner == event.params.previousOwner.toHexString()) {
       const transactionEntity = saveTransaction(event, getContractTopic(event.address), eventName);
       contractEntity.block_number = transactionEntity.block_number;
       contractEntity.transaction = transactionEntity.id;

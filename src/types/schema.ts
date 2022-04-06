@@ -939,3 +939,113 @@ export class Mint extends Entity {
     }
   }
 }
+
+export class Reveal extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+
+    this.set("block_number", Value.fromI32(0));
+    this.set("transaction", Value.fromString(""));
+    this.set("nft_contract", Value.fromString(""));
+    this.set("topic", Value.fromString(""));
+    this.set("vrf_fare", Value.fromBigInt(BigInt.zero()));
+    this.set("starting_index", Value.fromI32(0));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save Reveal entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        `Entities of type Reveal must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+      );
+      store.set("Reveal", id.toString(), this);
+    }
+  }
+
+  static load(id: string): Reveal | null {
+    return changetype<Reveal | null>(store.get("Reveal", id));
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get block_number(): i32 {
+    let value = this.get("block_number");
+    return value!.toI32();
+  }
+
+  set block_number(value: i32) {
+    this.set("block_number", Value.fromI32(value));
+  }
+
+  get transaction(): string {
+    let value = this.get("transaction");
+    return value!.toString();
+  }
+
+  set transaction(value: string) {
+    this.set("transaction", Value.fromString(value));
+  }
+
+  get nft_contract(): string {
+    let value = this.get("nft_contract");
+    return value!.toString();
+  }
+
+  set nft_contract(value: string) {
+    this.set("nft_contract", Value.fromString(value));
+  }
+
+  get topic(): string {
+    let value = this.get("topic");
+    return value!.toString();
+  }
+
+  set topic(value: string) {
+    this.set("topic", Value.fromString(value));
+  }
+
+  get vrf_fare(): BigInt {
+    let value = this.get("vrf_fare");
+    return value!.toBigInt();
+  }
+
+  set vrf_fare(value: BigInt) {
+    this.set("vrf_fare", Value.fromBigInt(value));
+  }
+
+  get random_number(): BigInt | null {
+    let value = this.get("random_number");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set random_number(value: BigInt | null) {
+    if (!value) {
+      this.unset("random_number");
+    } else {
+      this.set("random_number", Value.fromBigInt(<BigInt>value));
+    }
+  }
+
+  get starting_index(): i32 {
+    let value = this.get("starting_index");
+    return value!.toI32();
+  }
+
+  set starting_index(value: i32) {
+    this.set("starting_index", Value.fromI32(value));
+  }
+}

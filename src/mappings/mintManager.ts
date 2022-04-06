@@ -13,7 +13,6 @@ import { getContractTopic, getMintTopic, MintTopic } from '../modules/topic';
 import { Contract, Mint, MintSchedule } from '../types/schema';
 import { BigInt } from '@graphprotocol/graph-ts';
 import { getLogMsg, logging, LogMsg } from '../utils/logger';
-import { updateMinterEntityWithMintSchedule } from '../modules/minter';
 import { handleMint } from '../modules/handleMint';
 
 export function handleSetPublicSchedule(event: SetPublicSchedule): void {
@@ -46,47 +45,6 @@ export function handleSetPublicSchedule(event: SetPublicSchedule): void {
 
 export function handlePublicMint(event: PublicMint): void {
   handleMint(event, getEventName(EventName.PublicMint), getMintTopic(MintTopic.PUBLIC));
-
-  // const mintEntityId = getUniqueId(event);
-  // const eventName = getEventName(EventName.PublicMint);
-  // const transactionEntity = saveTransaction(event, getContractTopic(event.address), eventName);
-  // const nftContractAddress = event.params.nftContract.toHexString();
-  // const mintScheduleGroupId = event.params.groupId.toString();
-  // const mintScheduleId = `${nftContractAddress}_${mintScheduleGroupId}`;
-  // const mintQuantity = event.params.quantity.toI32();
-  // const minterAddress = event.params.minter.toHexString();
-  //
-  // let mintEntity = Mint.load(mintEntityId);
-  // if (!mintEntity) {
-  //   mintEntity = new Mint(mintEntityId);
-  // }
-  //
-  // mintEntity.block_number = transactionEntity.block_number;
-  // mintEntity.transaction = transactionEntity.id;
-  // mintEntity.nft_contract = nftContractAddress;
-  // mintEntity.mint_schedule = mintScheduleId;
-  // mintEntity.topic = getMintTopic(MintTopic.PUBLIC);
-  // mintEntity.minter = minterAddress;
-  // mintEntity.mint_quantity = mintQuantity;
-  // mintEntity.max_quantity = event.params.maxQuantity.toI32();
-  // mintEntity.mint_price = event.params.price;
-  //
-  // mintEntity.save();
-  //
-  // // update minted_amount at MintSchedule Entity
-  // const mintScheduleEntity = MintSchedule.load(mintScheduleId);
-  // if (mintScheduleEntity) {
-  //   mintScheduleEntity.minted_amount = mintScheduleEntity.minted_amount + mintQuantity;
-  //   mintScheduleEntity.block_number = transactionEntity.block_number;
-  //   mintScheduleEntity.transaction = transactionEntity.id;
-  //
-  //   mintScheduleEntity.save();
-  // } else {
-  //   logging(getLogMsg(LogMsg.___NO_ENTITY), eventName, mintScheduleId, '');
-  // }
-  //
-  // // update minter Entity with minter_nftContract_mintScheduleGroupId
-  // updateMinterEntityWithMintSchedule(minterAddress, mintScheduleId, mintQuantity, transactionEntity.block_number);
 }
 
 export function handleAirdrop(event: Airdrop): void {
@@ -117,7 +75,7 @@ export function handleOwnershipTransferred(event: OwnershipTransferred): void {
   const contractEntity = Contract.load(contractEntityId);
   const eventName = getEventName(EventName.OwnershipTransferred);
   if (contractEntity) {
-    if (contractEntity.owner === event.params.previousOwner.toHexString()) {
+    if (contractEntity.owner == event.params.previousOwner.toHexString()) {
       const transactionEntity = saveTransaction(event, getContractTopic(event.address), eventName);
       contractEntity.block_number = transactionEntity.block_number;
       contractEntity.transaction = transactionEntity.id;

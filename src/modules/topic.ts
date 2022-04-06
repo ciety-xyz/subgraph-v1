@@ -6,12 +6,26 @@ export function getContractTopic(contractAddress: Bytes): string {
   return contractEntity ? contractEntity.topic : '';
 }
 
+export enum VrfTopic {
+  REVEAL_PFP,
+}
+
 export enum MintTopic {
   TICKET,
   PUBLIC,
   AIRDROP,
   UNRECOGNIZED,
 }
+
+export function getVrfTopic(vrfTopic: VrfTopic): string {
+  switch (vrfTopic) {
+    case VrfTopic.REVEAL_PFP:
+      return 'REVEAL_PFP';
+    default:
+      return 'UNRECOGNIZED';
+  }
+}
+
 export function getMintTopic(mintTopic: MintTopic): string {
   switch (mintTopic) {
     case MintTopic.TICKET:

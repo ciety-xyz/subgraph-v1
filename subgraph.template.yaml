@@ -107,33 +107,39 @@ dataSources:
           handler: handleTicketMint
   {{/ticketManager}}
 
-#  # VRF Manager
-#  {{#vrfManager}}
-#  - kind: ethereum/contract
-#    name: OmnuumVRFManager
-#    network: {{network}}
-#    source:
-#      startBlock: {{startBlock}}
-#      address: "{{address}}"
-#      abi: OmnuumVRFManager
-#    mapping:
-#      file: ./src/mappings/vrfManager.ts
-#      kind: ethereum/events
-#      apiVersion: 0.0.6
-#      language: wasm/assemblyscript
-#      entities:
-#        - Transaction
-#        - Reveal
-#      abis:
-#        - name: OmnuumVRFManager
-#          file: ./abis/OmnuumVRFManager.json
-#      eventHandlers:
-#        - event: RequestVRF(indexed address,indexed bytes32,indexed bytes32)
-#          handler: handleRequestVRF
-#        - event: ResponseVRF(indexed bytes32,uint256,indexed bytes32,bool,string)
-#          handler: handleResponseVRF
-# {{/vrfManager}}
-#
+  # VRF Manager
+  {{#vrfManager}}
+  - kind: ethereum/contract
+    name: OmnuumVRFManager
+    network: {{network}}
+    source:
+      startBlock: {{startBlock}}
+      address: "{{address}}"
+      abi: OmnuumVRFManager
+    mapping:
+      file: ./src/mappings/vrfManager.ts
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - Transaction
+        - Reveal
+      abis:
+        - name: OmnuumVRFManager
+          file: ./abis/OmnuumVRFManager.json
+        - name: OmnuumNFT1155
+          file: ./abis/OmnuumNFT1155.json
+      eventHandlers:
+        - event: RequestVRF(indexed address,indexed bytes32,string)
+          handler: handleRequestVRF
+        - event: ResponseVRF(indexed bytes32,uint256,string,bool,string)
+          handler: handleResponseVRF
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+        - event: Updated(uint256,string)
+          handler: handleUpdated
+ {{/vrfManager}}
+
   # Wallet
   {{#wallet}}
   - kind: ethereum/contract
