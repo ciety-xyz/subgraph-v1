@@ -188,8 +188,8 @@ export class Transaction extends Entity {
     }
   }
 
-  get mint_schedule(): Array<string> | null {
-    let value = this.get("mint_schedule");
+  get mint_schedules(): Array<string> | null {
+    let value = this.get("mint_schedules");
     if (!value || value.kind == ValueKind.NULL) {
       return null;
     } else {
@@ -197,11 +197,11 @@ export class Transaction extends Entity {
     }
   }
 
-  set mint_schedule(value: Array<string> | null) {
+  set mint_schedules(value: Array<string> | null) {
     if (!value) {
-      this.unset("mint_schedule");
+      this.unset("mint_schedules");
     } else {
-      this.set("mint_schedule", Value.fromStringArray(<Array<string>>value));
+      this.set("mint_schedules", Value.fromStringArray(<Array<string>>value));
     }
   }
 
@@ -850,7 +850,7 @@ export class Minter extends Entity {
 
     this.set("block_number", Value.fromI32(0));
     this.set("minter_address", Value.fromString(""));
-    this.set("mintAmount", Value.fromI32(0));
+    this.set("minted_amount", Value.fromI32(0));
   }
 
   save(): void {
@@ -913,13 +913,13 @@ export class Minter extends Entity {
     }
   }
 
-  get mintAmount(): i32 {
-    let value = this.get("mintAmount");
+  get minted_amount(): i32 {
+    let value = this.get("minted_amount");
     return value!.toI32();
   }
 
-  set mintAmount(value: i32) {
-    this.set("mintAmount", Value.fromI32(value));
+  set minted_amount(value: i32) {
+    this.set("minted_amount", Value.fromI32(value));
   }
 }
 

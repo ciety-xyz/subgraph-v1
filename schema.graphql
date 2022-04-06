@@ -14,7 +14,7 @@ type Transaction @entity {
   contract_roles: [ContractRole!] @derivedFrom(field: "transaction")
   payments: [Payment!] @derivedFrom(field: "transaction")
   nfts: [Nft!] @derivedFrom(field: "transaction")
-  mint_schedule: [MintSchedule!] @derivedFrom(field: "transaction")
+  mint_schedules: [MintSchedule!] @derivedFrom(field: "transaction")
   mints: [Mint!] @derivedFrom(field: "transaction")
   reveals: [Reveal!] @derivedFrom(field: "transaction")
 }
@@ -88,7 +88,7 @@ type Minter @entity {
   block_number: Int!
   minter_address: String!
   nfts: [Nft!] # way to reference NFTs for mintSchedule?
-  mintAmount: Int!
+  minted_amount: Int!
 }
 
 type Mint @entity {

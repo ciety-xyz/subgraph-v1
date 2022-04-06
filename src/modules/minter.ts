@@ -29,9 +29,9 @@ export function updateMinterEntityWithMintSchedule(
   if (!minterEntity) {
     minterEntity = new Minter(id);
     minterEntity.minter_address = minterAddress;
-    minterEntity.mintAmount = mintQuantity;
+    minterEntity.minted_amount = mintQuantity;
   } else {
-    minterEntity.mintAmount = minterEntity.mintAmount + mintQuantity;
+    minterEntity.minted_amount = minterEntity.minted_amount + mintQuantity;
   }
   minterEntity.block_number = blockNumber;
   minterEntity.save();
@@ -49,10 +49,10 @@ function updateMinterEntityById(
   if (!minterEntity) {
     minterEntity = new Minter(id);
     minterEntity.minter_address = minterAddress;
-    minterEntity.mintAmount = mintQty;
+    minterEntity.minted_amount = mintQty;
     minterEntity.nfts = [nftId];
   } else {
-    minterEntity.mintAmount = minterEntity.mintAmount + mintQty;
+    minterEntity.minted_amount = minterEntity.minted_amount + mintQty;
     const nfts = minterEntity.nfts;
     if (nfts) {
       nfts.push(nftId);
