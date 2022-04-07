@@ -34,6 +34,13 @@ type Contract @entity {
   cover_uri: String
   reveal_url: String
   collection_id: String
+
+  "Derived"
+  contract_roles: ContractRole @derivedFrom(field: "contract")
+  mint_schedules: [MintSchedule!] @derivedFrom(field: "nft_contract")
+  nfts: [Nft!] @derivedFrom(field: "nft_contract")
+  mints: [Mint!] @derivedFrom(field: "nft_contract")
+  reveals: Reveal @derivedFrom(field: "nft_contract")
 }
 
 type ContractRole @entity {

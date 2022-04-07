@@ -409,6 +409,91 @@ export class Contract extends Entity {
       this.set("collection_id", Value.fromString(<string>value));
     }
   }
+
+  get contract_roles(): string | null {
+    let value = this.get("contract_roles");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set contract_roles(value: string | null) {
+    if (!value) {
+      this.unset("contract_roles");
+    } else {
+      this.set("contract_roles", Value.fromString(<string>value));
+    }
+  }
+
+  get mint_schedules(): Array<string> | null {
+    let value = this.get("mint_schedules");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toStringArray();
+    }
+  }
+
+  set mint_schedules(value: Array<string> | null) {
+    if (!value) {
+      this.unset("mint_schedules");
+    } else {
+      this.set("mint_schedules", Value.fromStringArray(<Array<string>>value));
+    }
+  }
+
+  get nfts(): Array<string> | null {
+    let value = this.get("nfts");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toStringArray();
+    }
+  }
+
+  set nfts(value: Array<string> | null) {
+    if (!value) {
+      this.unset("nfts");
+    } else {
+      this.set("nfts", Value.fromStringArray(<Array<string>>value));
+    }
+  }
+
+  get mints(): Array<string> | null {
+    let value = this.get("mints");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toStringArray();
+    }
+  }
+
+  set mints(value: Array<string> | null) {
+    if (!value) {
+      this.unset("mints");
+    } else {
+      this.set("mints", Value.fromStringArray(<Array<string>>value));
+    }
+  }
+
+  get reveals(): string | null {
+    let value = this.get("reveals");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set reveals(value: string | null) {
+    if (!value) {
+      this.unset("reveals");
+    } else {
+      this.set("reveals", Value.fromString(<string>value));
+    }
+  }
 }
 
 export class ContractRole extends Entity {

@@ -3,8 +3,9 @@ import { Mint, MintSchedule } from '../types/schema';
 import { getLogMsg, logging, LogMsg } from '../utils/logger';
 import { updateMinterEntityWithMintSchedule } from './minter';
 import { getContractTopic } from './topic';
+import { PublicMint } from '../types/OmnuumMintManager/OmnuumMintManager';
 
-export function handleMint<T>(event: T, eventName: string, mintTopic: string): void {
+export function handleMint<T extends PublicMint>(event: T, eventName: string, mintTopic: string): void {
   const mintEntityId = getUniqueId(event);
   const transactionEntity = saveTransaction(event, getContractTopic(event.address), eventName);
   const nftContractAddress = event.params.nftContract.toHexString();

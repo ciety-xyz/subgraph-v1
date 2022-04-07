@@ -10,36 +10,20 @@ import {
 import { EventName, getEventName } from '../modules/event';
 import { getUniqueId, saveTransaction } from '../modules/transaction';
 import { getContractTopic, getMintTopic, MintTopic } from '../modules/topic';
-import { Mint, MintSchedule } from '../types/schema';
-import { BigInt } from '@graphprotocol/graph-ts';
+import { Mint } from '../types/schema';
 import { handleMint } from '../modules/handleMint';
 import { ownershipTransfer } from '../modules/ownership';
+import { getMintScheduleEntity } from '../modules/mintSchedule';
 
 export function handleSetPublicSchedule(event: SetPublicSchedule): void {
-  // mintScheduleEntityid: nftContractAddress(hex)_scheduleGroupId(dec)"
-  const nftContractAddress = event.params.nftContract.toHexString();
-  const mintScheduleGroupId = event.params.groupId;
-  const eventName = getEventName(EventName.SetPublicSchedule);
-  const transactionEntity = saveTransaction(event, getContractTopic(event.address), eventName);
-
-  const mintScheduleEntityId = `${nftContractAddress}_${mintScheduleGroupId}`;
-
-  let mintScheduleEntity = MintSchedule.load(mintScheduleEntityId);
-  if (!mintScheduleEntity) {
-    mintScheduleEntity = new MintSchedule(mintScheduleEntityId);
-  }
-
-  mintScheduleEntity.block_number = transactionEntity.block_number;
-  mintScheduleEntity.transaction = transactionEntity.id;
-  mintScheduleEntity.nft_contract = nftContractAddress;
-  mintScheduleEntity.topic = getMintTopic(MintTopic.PUBLIC);
-  mintScheduleEntity.group_id = mintScheduleGroupId.toString();
-  mintScheduleEntity.end_date = event.params.endDate.toI32();
+  const mintScheduleEntity = getMintScheduleEntity(
+    event,
+    getMintTopic(MintTopic.PUBLIC),
+    getEventName(EventName.SetPublicSchedule)
+  );
   mintScheduleEntity.base_price = event.params.basePrice;
   mintScheduleEntity.mint_supply = event.params.supply.toI32();
   mintScheduleEntity.mint_limit_per_address = event.params.maxMintAtAddress.toI32();
-  mintScheduleEntity.minted_amount = BigInt.zero().toI32();
-
   mintScheduleEntity.save();
 }
 
