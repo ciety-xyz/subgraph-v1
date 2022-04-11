@@ -12,3 +12,5 @@ subgraph.rinkeby.yaml
 
 yarn-error.log
 logfile
+
+eventSelectors.json

@@ -3,9 +3,14 @@
   "version": "1.0.0",
   "license": "GPL-3.0-or-later",
   "repository": "https://github.com/omnuum/subgraph-v1",
+  "type": "module",
   "scripts": {
+    "createEventSelector": "node scripts/createEventSelectors.js",
+    "prepare:mainnet": "mustache config/mainnet.json subgraph.template.yaml > subgraph.mainnet.yaml",
     "prepare:rinkeby": "mustache config/rinkeby.json subgraph.template.yaml > subgraph.rinkeby.yaml",
+    "codegen:mainnet": "npm run prepare:mainnet && graph codegen --output-dir src/types/ subgraph.mainnet.yaml",
     "codegen:rinkeby": "npm run prepare:rinkeby && graph codegen --output-dir src/types/ subgraph.rinkeby.yaml",
+    "build:mainnet": "npm run codegen:mainnet && graph build subgraph.mainnet.yaml",
     "build:rinkeby": "npm run codegen:rinkeby && graph build subgraph.rinkeby.yaml",
     "deploy:hosting:rinkeby": "npm run build:rinkeby && graph deploy --product hosted-service ddevkim/omnuum subgraph.rinkeby.yaml",
     "deploy:hosting:staging:rinkeby": "npm run build:rinkeby && graph deploy --product hosted-service ddevkim/omnuum-staging subgraph.rinkeby.yaml"
@@ -20,6 +25,7 @@
   },
   "devDependencies": {
     "eslint-config-prettier": "^8.5.0",
+    "fxjs": "^0.21.3",
     "mustache": "^4.2.0",
     "prettier": "^2.6.2"
   }
