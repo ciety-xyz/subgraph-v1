@@ -1,8 +1,9 @@
 {
   "network": "rinkeby",
-  "caManager": { "address": "0xBbD6B1A152023FD2400a82C662BEad55eD827Be7", "startBlock": "10451336" },
-  "mintManager": { "address": "0xAfDCf148a5Ac7Ce4C8c36E93Edb77a34c43F271C", "startBlock": "10451340" },
-  "ticketManager": { "address": "0x2030464478D6F522922459DFd095bF473e899199", "startBlock": "10451344" },
-  "vrfManager": { "address": "0xdF7b8cc616943088A9b3048C27c48C3c8B075D5A", "startBlock": "10451347" },
-  "wallet": { "address": "0x2F97bcb5F996C16B6b048B2D3bef841557037f2E", "startBlock": "10451348" }
+  "caManager": { "address": "0xEab9BDFf22CB76ebf434E429f29869CeBC7c21a1", "startBlock": "10484993" },
+  "mintManager": { "address": "0x1a212E7Dbb805D3029E6d1D59aDFA1Cac6ad2d5C", "startBlock": "10484996" },
+  "ticketManager": { "address": "0x9176744399c9E2B94DAe79697a151c69A5B14B5C", "startBlock": "10485002" },
+  "vrfManager": { "address": "0xA16dE26Dc59EA3919C301EC4F6b7DAeC6A5ce566", "startBlock": "10485007" },
+  "wallet": { "address": "0x5dccf2b54c5791f00FD3099aAbc93c681d14D694", "startBlock": "10485008" },
+  "nftFactory": { "address": "0x2bb7BF6C44cA15073c7B5566DEE936b941e1d5Ed", "startBlock": "10485066" }
 }

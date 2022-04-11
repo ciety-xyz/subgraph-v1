@@ -282,7 +282,7 @@
       },
       {
         "internalType": "bool",
-        "name": "_onlyNotExecuted",
+        "name": "_isExecuted",
         "type": "bool"
       }
     ],
@@ -303,6 +303,11 @@
         "internalType": "enum OmnuumWallet.RequestTypes",
         "name": "_requestType",
         "type": "uint8"
+      },
+      {
+        "internalType": "bool",
+        "name": "_isExecuted",
+        "type": "bool"
       }
     ],
     "name": "getRequestIdsByType",

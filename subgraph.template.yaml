@@ -26,15 +26,11 @@ dataSources:
       abis:
         - name: OmnuumCAManager
           file: ./abis/OmnuumCAManager.json
-        - name: OmnuumNFT1155
-          file: ./abis/OmnuumNFT1155.json
       eventHandlers:
-        - event: ManagerContractRegistered(indexed address,string)
-          handler: handleManagerContractRegistered
-        - event: ManagerContractRemoved(indexed address,string)
-          handler: handleManagerContractRemoved
-        - event: NftContractRegistered(indexed address,indexed address)
-          handler: handleNftContractRegistered
+        - event: ContractRegistered(indexed address,string)
+          handler: handleContractRegistered
+        - event: ContractRemoved(indexed address,string)
+          handler: handleContractRemoved
         - event: OwnershipTransferred(indexed address,indexed address)
           handler: handleOwnershipTransferred
         - event: RoleAdded(indexed address,string)
@@ -175,6 +171,35 @@ dataSources:
         - event: Executed(indexed address,indexed uint256,indexed uint8)
           handler: handleExecuted
   {{/wallet}}
+
+  # nftFactory
+  {{#nftFactory}}
+  - kind: ethereum/contract
+    name: NftFactory
+    network: {{network}}
+    source:
+      startBlock: {{startBlock}}
+      address: "{{address}}"
+      abi: NftFactory
+    mapping:
+      file: ./src/mappings/nftFactory.ts
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - Transaction
+      abis:
+        - name: NftFactory
+          file: ./abis/NftFactory.json
+        - name: OmnuumNFT1155
+          file: ./abis/OmnuumNFT1155.json
+      eventHandlers:
+        - event: NftContractDeployed(indexed address,indexed address,indexed uint256)
+          handler: handleNftContractDeployed
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+  {{/nftFactory}}
+
 
 templates:
   - kind: ethereum/contract

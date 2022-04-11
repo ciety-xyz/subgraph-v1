@@ -9,7 +9,7 @@
   "function idToTopic(bytes32) view returns (string)",
   "function owner() view returns (address)",
   "function rawFulfillRandomness(bytes32,uint256)",
-  "function requestVRF(string)",
+  "function requestVRF(string) payable",
   "function requestVRFOnce(address,string) payable",
   "function safetyRatio() view returns (uint16)",
   "function transferOwnership(address)",

@@ -36,6 +36,24 @@ export class ApprovalForAll__Params {
   }
 }
 
+export class EtherReceived extends ethereum.Event {
+  get params(): EtherReceived__Params {
+    return new EtherReceived__Params(this);
+  }
+}
+
+export class EtherReceived__Params {
+  _event: EtherReceived;
+
+  constructor(event: EtherReceived) {
+    this._event = event;
+  }
+
+  get sender(): Address {
+    return this._event.parameters[0].value.toAddress();
+  }
+}
+
 export class FeePaid extends ethereum.Event {
   get params(): FeePaid__Params {
     return new FeePaid__Params(this);
@@ -76,6 +94,28 @@ export class OwnershipTransferred__Params {
   }
 
   get newOwner(): Address {
+    return this._event.parameters[1].value.toAddress();
+  }
+}
+
+export class TransferBalance extends ethereum.Event {
+  get params(): TransferBalance__Params {
+    return new TransferBalance__Params(this);
+  }
+}
+
+export class TransferBalance__Params {
+  _event: TransferBalance;
+
+  constructor(event: TransferBalance) {
+    this._event = event;
+  }
+
+  get value(): BigInt {
+    return this._event.parameters[0].value.toBigInt();
+  }
+
+  get receiver(): Address {
     return this._event.parameters[1].value.toAddress();
   }
 }
@@ -758,6 +798,40 @@ export class TicketMintCall_payloadStruct extends ethereum.Tuple {
   }
 }
 
+export class TransferBalanceCall extends ethereum.Call {
+  get inputs(): TransferBalanceCall__Inputs {
+    return new TransferBalanceCall__Inputs(this);
+  }
+
+  get outputs(): TransferBalanceCall__Outputs {
+    return new TransferBalanceCall__Outputs(this);
+  }
+}
+
+export class TransferBalanceCall__Inputs {
+  _call: TransferBalanceCall;
+
+  constructor(call: TransferBalanceCall) {
+    this._call = call;
+  }
+
+  get _value(): BigInt {
+    return this._call.inputValues[0].value.toBigInt();
+  }
+
+  get _to(): Address {
+    return this._call.inputValues[1].value.toAddress();
+  }
+}
+
+export class TransferBalanceCall__Outputs {
+  _call: TransferBalanceCall;
+
+  constructor(call: TransferBalanceCall) {
+    this._call = call;
+  }
+}
+
 export class TransferOwnershipCall extends ethereum.Call {
   get inputs(): TransferOwnershipCall__Inputs {
     return new TransferOwnershipCall__Inputs(this);
@@ -784,32 +858,6 @@ export class TransferOwnershipCall__Outputs {
   _call: TransferOwnershipCall;
 
   constructor(call: TransferOwnershipCall) {
-    this._call = call;
-  }
-}
-
-export class WithdrawCall extends ethereum.Call {
-  get inputs(): WithdrawCall__Inputs {
-    return new WithdrawCall__Inputs(this);
-  }
-
-  get outputs(): WithdrawCall__Outputs {
-    return new WithdrawCall__Outputs(this);
-  }
-}
-
-export class WithdrawCall__Inputs {
-  _call: WithdrawCall;
-
-  constructor(call: WithdrawCall) {
-    this._call = call;
-  }
-}
-
-export class WithdrawCall__Outputs {
-  _call: WithdrawCall;
-
-  constructor(call: WithdrawCall) {
     this._call = call;
   }
 }

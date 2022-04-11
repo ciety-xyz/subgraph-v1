@@ -315,16 +315,13 @@ export class OmnuumWallet extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBigIntArray());
   }
 
-  getRequestIdsByOwner(
-    _owner: Address,
-    _onlyNotExecuted: boolean
-  ): Array<BigInt> {
+  getRequestIdsByOwner(_owner: Address, _isExecuted: boolean): Array<BigInt> {
     let result = super.call(
       "getRequestIdsByOwner",
       "getRequestIdsByOwner(address,bool):(uint256[])",
       [
         ethereum.Value.fromAddress(_owner),
-        ethereum.Value.fromBoolean(_onlyNotExecuted)
+        ethereum.Value.fromBoolean(_isExecuted)
       ]
     );
 
@@ -333,14 +330,14 @@ export class OmnuumWallet extends ethereum.SmartContract {
 
   try_getRequestIdsByOwner(
     _owner: Address,
-    _onlyNotExecuted: boolean
+    _isExecuted: boolean
   ): ethereum.CallResult<Array<BigInt>> {
     let result = super.tryCall(
       "getRequestIdsByOwner",
       "getRequestIdsByOwner(address,bool):(uint256[])",
       [
         ethereum.Value.fromAddress(_owner),
-        ethereum.Value.fromBoolean(_onlyNotExecuted)
+        ethereum.Value.fromBoolean(_isExecuted)
       ]
     );
     if (result.reverted) {
@@ -350,23 +347,30 @@ export class OmnuumWallet extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBigIntArray());
   }
 
-  getRequestIdsByType(_requestType: i32): Array<BigInt> {
+  getRequestIdsByType(_requestType: i32, _isExecuted: boolean): Array<BigInt> {
     let result = super.call(
       "getRequestIdsByType",
-      "getRequestIdsByType(uint8):(uint256[])",
-      [ethereum.Value.fromUnsignedBigInt(BigInt.fromI32(_requestType))]
+      "getRequestIdsByType(uint8,bool):(uint256[])",
+      [
+        ethereum.Value.fromUnsignedBigInt(BigInt.fromI32(_requestType)),
+        ethereum.Value.fromBoolean(_isExecuted)
+      ]
     );
 
     return result[0].toBigIntArray();
   }
 
   try_getRequestIdsByType(
-    _requestType: i32
+    _requestType: i32,
+    _isExecuted: boolean
   ): ethereum.CallResult<Array<BigInt>> {
     let result = super.tryCall(
       "getRequestIdsByType",
-      "getRequestIdsByType(uint8):(uint256[])",
-      [ethereum.Value.fromUnsignedBigInt(BigInt.fromI32(_requestType))]
+      "getRequestIdsByType(uint8,bool):(uint256[])",
+      [
+        ethereum.Value.fromUnsignedBigInt(BigInt.fromI32(_requestType)),
+        ethereum.Value.fromBoolean(_isExecuted)
+      ]
     );
     if (result.reverted) {
       return new ethereum.CallResult();

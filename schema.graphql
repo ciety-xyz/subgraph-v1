@@ -53,7 +53,7 @@ type ContractRole @entity {
 }
 
 type Payment @entity {
-  "id: transactionHash(hex)_logIndex(dec) or EOA(hex)"
+  "id: transactionHash(hex)_logIndex(dec)"
   id: ID!
   block_number: Int!
   transaction: Transaction

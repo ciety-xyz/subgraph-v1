@@ -7,7 +7,8 @@
     "prepare:rinkeby": "mustache config/rinkeby.json subgraph.template.yaml > subgraph.rinkeby.yaml",
     "codegen:rinkeby": "npm run prepare:rinkeby && graph codegen --output-dir src/types/ subgraph.rinkeby.yaml",
     "build:rinkeby": "npm run codegen:rinkeby && graph build subgraph.rinkeby.yaml",
-    "deploy:hosting:rinkeby": "npm run build:rinkeby && graph deploy --product hosted-service ddevkim/omnuum subgraph.rinkeby.yaml"
+    "deploy:hosting:rinkeby": "npm run build:rinkeby && graph deploy --product hosted-service ddevkim/omnuum subgraph.rinkeby.yaml",
+    "deploy:hosting:staging:rinkeby": "npm run build:rinkeby && graph deploy --product hosted-service ddevkim/omnuum-staging subgraph.rinkeby.yaml"
   },
   "dependencies": {
     "@graphprotocol/graph-cli": "0.28.1",

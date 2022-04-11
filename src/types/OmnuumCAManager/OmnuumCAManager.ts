@@ -10,16 +10,16 @@ import {
   BigInt
 } from "@graphprotocol/graph-ts";
 
-export class ManagerContractRegistered extends ethereum.Event {
-  get params(): ManagerContractRegistered__Params {
-    return new ManagerContractRegistered__Params(this);
+export class ContractRegistered extends ethereum.Event {
+  get params(): ContractRegistered__Params {
+    return new ContractRegistered__Params(this);
   }
 }
 
-export class ManagerContractRegistered__Params {
-  _event: ManagerContractRegistered;
+export class ContractRegistered__Params {
+  _event: ContractRegistered;
 
-  constructor(event: ManagerContractRegistered) {
+  constructor(event: ContractRegistered) {
     this._event = event;
   }
 
@@ -32,16 +32,16 @@ export class ManagerContractRegistered__Params {
   }
 }
 
-export class ManagerContractRemoved extends ethereum.Event {
-  get params(): ManagerContractRemoved__Params {
-    return new ManagerContractRemoved__Params(this);
+export class ContractRemoved extends ethereum.Event {
+  get params(): ContractRemoved__Params {
+    return new ContractRemoved__Params(this);
   }
 }
 
-export class ManagerContractRemoved__Params {
-  _event: ManagerContractRemoved;
+export class ContractRemoved__Params {
+  _event: ContractRemoved;
 
-  constructor(event: ManagerContractRemoved) {
+  constructor(event: ContractRemoved) {
     this._event = event;
   }
 
@@ -51,28 +51,6 @@ export class ManagerContractRemoved__Params {
 
   get topic(): string {
     return this._event.parameters[1].value.toString();
-  }
-}
-
-export class NftContractRegistered extends ethereum.Event {
-  get params(): NftContractRegistered__Params {
-    return new NftContractRegistered__Params(this);
-  }
-}
-
-export class NftContractRegistered__Params {
-  _event: NftContractRegistered;
-
-  constructor(event: NftContractRegistered) {
-    this._event = event;
-  }
-
-  get nftContract(): Address {
-    return this._event.parameters[0].value.toAddress();
-  }
-
-  get nftOwner(): Address {
-    return this._event.parameters[1].value.toAddress();
   }
 }
 
@@ -283,25 +261,6 @@ export class OmnuumCAManager extends ethereum.SmartContract {
     );
   }
 
-  nftContracts(param0: Address): boolean {
-    let result = super.call("nftContracts", "nftContracts(address):(bool)", [
-      ethereum.Value.fromAddress(param0)
-    ]);
-
-    return result[0].toBoolean();
-  }
-
-  try_nftContracts(param0: Address): ethereum.CallResult<boolean> {
-    let result = super.tryCall("nftContracts", "nftContracts(address):(bool)", [
-      ethereum.Value.fromAddress(param0)
-    ]);
-    if (result.reverted) {
-      return new ethereum.CallResult();
-    }
-    let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toBoolean());
-  }
-
   owner(): Address {
     let result = super.call("owner", "owner():(address)", []);
 
@@ -463,36 +422,6 @@ export class RegisterContractMultipleCall__Outputs {
   _call: RegisterContractMultipleCall;
 
   constructor(call: RegisterContractMultipleCall) {
-    this._call = call;
-  }
-}
-
-export class RegisterNftContractCall extends ethereum.Call {
-  get inputs(): RegisterNftContractCall__Inputs {
-    return new RegisterNftContractCall__Inputs(this);
-  }
-
-  get outputs(): RegisterNftContractCall__Outputs {
-    return new RegisterNftContractCall__Outputs(this);
-  }
-}
-
-export class RegisterNftContractCall__Inputs {
-  _call: RegisterNftContractCall;
-
-  constructor(call: RegisterNftContractCall) {
-    this._call = call;
-  }
-
-  get _nftContract(): Address {
-    return this._call.inputValues[0].value.toAddress();
-  }
-}
-
-export class RegisterNftContractCall__Outputs {
-  _call: RegisterNftContractCall;
-
-  constructor(call: RegisterNftContractCall) {
     this._call = call;
   }
 }

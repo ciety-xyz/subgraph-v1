@@ -1,9 +1,7 @@
-import { handleRequestVRF } from '../mappings/vrfManager';
-
 export enum EventName {
-  ManagerContractRegistered,
-  ManagerContractRemoved,
-  NftContractRegistered,
+  ContractRegistered,
+  ContractRemoved,
+  NftContractDeployed,
   OwnershipTransferred,
   RoleAdded,
   RoleRemoved,
@@ -23,12 +21,12 @@ export enum EventName {
 
 export function getEventName(eventName: EventName): string {
   switch (eventName) {
-    case EventName.ManagerContractRegistered:
+    case EventName.ContractRegistered:
       return 'ManagerContractRegistered';
-    case EventName.ManagerContractRemoved:
+    case EventName.ContractRemoved:
       return 'ManagerContractRemoved';
-    case EventName.NftContractRegistered:
-      return 'NftContractRegistered';
+    case EventName.NftContractDeployed:
+      return 'NftContractDeployed';
     case EventName.OwnershipTransferred:
       return 'OwnershipTransferred';
     case EventName.RoleAdded:

@@ -248,7 +248,7 @@
   {
     "inputs": [
       {
-        "internalType": "address",
+        "internalType": "address payable",
         "name": "_nftContract",
         "type": "address"
       },

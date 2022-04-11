@@ -15,7 +15,7 @@
         "type": "string"
       }
     ],
-    "name": "ManagerContractRegistered",
+    "name": "ContractRegistered",
     "type": "event"
   },
   {
@@ -34,26 +34,7 @@
         "type": "string"
       }
     ],
-    "name": "ManagerContractRemoved",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "nftContract",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "nftOwner",
-        "type": "address"
-      }
-    ],
-    "name": "NftContractRegistered",
+    "name": "ContractRemoved",
     "type": "event"
   },
   {
@@ -244,25 +225,6 @@
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "name": "nftContracts",
-    "outputs": [
-      {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
     "inputs": [],
     "name": "owner",
     "outputs": [
@@ -307,19 +269,6 @@
       }
     ],
     "name": "registerContractMultiple",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_nftContract",
-        "type": "address"
-      }
-    ],
-    "name": "registerNftContract",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
