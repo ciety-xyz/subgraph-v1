@@ -1,4 +1,4 @@
-import { BigInt, log } from '@graphprotocol/graph-ts';
+import { log } from '@graphprotocol/graph-ts';
 import {
   ContractRegistered,
   ContractRemoved,
@@ -6,9 +6,7 @@ import {
   RoleAdded,
   RoleRemoved,
 } from '../types/OmnuumCAManager/OmnuumCAManager';
-import { Contract, ContractRole, Payment } from '../types/schema';
-import { OmnuumNFT1155 as NftTemplate } from '../types/templates';
-import { OmnuumNFT1155 as NftContract } from '../types/templates/OmnuumNFT1155/OmnuumNFT1155';
+import { Contract, ContractRole } from '../types/schema';
 
 import { saveTransaction } from '../modules/transaction';
 import { getContractTopic } from '../modules/topic';

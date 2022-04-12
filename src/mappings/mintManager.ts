@@ -21,6 +21,10 @@ export function handleSetPublicSchedule(event: SetPublicSchedule): void {
     getMintTopic(MintTopic.PUBLIC),
     getEventName(EventName.SetPublicSchedule)
   );
+
+  // For public schedule,
+  // base price, mint_supply and mint_limit_per_address parameters exist.
+  // Different from the ticket schedule which has parameters inside ticket payload.
   mintScheduleEntity.base_price = event.params.basePrice;
   mintScheduleEntity.mint_supply = event.params.supply.toI32();
   mintScheduleEntity.mint_limit_per_address = event.params.maxMintAtAddress.toI32();
@@ -45,7 +49,6 @@ export function handleAirdrop(event: Airdrop): void {
   mintEntity.block_number = transactionEntity.block_number;
   mintEntity.transaction = transactionEntity.id;
   mintEntity.nft_contract = nftContractAddress;
-  // no mint Schedule, max quantity, price for Airdrop
   mintEntity.topic = getMintTopic(MintTopic.AIRDROP);
   mintEntity.minter = event.params.receiver.toHexString();
   mintEntity.mint_quantity = event.params.quantity.toI32();

@@ -11,8 +11,6 @@ export function handleSetTicketSchedule(event: SetTicketSchedule): void {
     getMintTopic(MintTopic.TICKET),
     getEventName(EventName.SetTicketSchedule)
   );
-  // // no base price, mint_supply and mint_limit_per_address for ticket.
-  // // Because it's inside ticket payload, so they can be different for each ticket.
   mintScheduleEntity.save();
 }
 

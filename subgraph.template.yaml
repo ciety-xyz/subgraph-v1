@@ -56,6 +56,8 @@ dataSources:
       entities:
         - Transaction
         - MintSchedule
+        - Mint
+        - Contract
       abis:
         - name: OmnuumMintManager
           file: ./abis/OmnuumMintManager.json
@@ -93,6 +95,7 @@ dataSources:
       entities:
         - Transaction
         - MintSchedule
+        - Mint
       abis:
         - name: TicketManager
           file: ./abis/TicketManager.json
@@ -120,6 +123,7 @@ dataSources:
       entities:
         - Transaction
         - Reveal
+        - Contract
       abis:
         - name: OmnuumVRFManager
           file: ./abis/OmnuumVRFManager.json
@@ -152,6 +156,7 @@ dataSources:
       language: wasm/assemblyscript
       entities:
         - Transaction
+        - Payment
       abis:
         - name: OmnuumWallet
           file: ./abis/OmnuumWallet.json
@@ -188,6 +193,7 @@ dataSources:
       language: wasm/assemblyscript
       entities:
         - Transaction
+        - Contract
       abis:
         - name: NftFactory
           file: ./abis/NftFactory.json
@@ -215,6 +221,8 @@ templates:
       entities:
         - Transaction
         - Contract
+        - Nft
+        - Minter
       abis:
         - name: OmnuumNFT1155
           file: ./abis/OmnuumNFT1155.json
