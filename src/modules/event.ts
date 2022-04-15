@@ -17,6 +17,7 @@ export enum EventName {
   Airdrop,
   RequestVRF,
   ResponseVRF,
+  Requested,
 }
 
 export function getEventName(eventName: EventName): string {
@@ -55,6 +56,8 @@ export function getEventName(eventName: EventName): string {
       return 'RequestVRF';
     case EventName.ResponseVRF:
       return 'ResponseVRF';
+    case EventName.Requested:
+      return 'Requested';
     default:
       return '';
   }

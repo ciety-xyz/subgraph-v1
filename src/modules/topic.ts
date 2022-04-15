@@ -17,6 +17,14 @@ export enum MintTopic {
   UNRECOGNIZED,
 }
 
+export enum RequestType {
+  Withdraw,
+  Add,
+  Remove,
+  Change,
+  Cancel,
+}
+
 export function getVrfTopic(vrfTopic: VrfTopic): string {
   switch (vrfTopic) {
     case VrfTopic.REVEAL_PFP:
@@ -34,6 +42,23 @@ export function getMintTopic(mintTopic: MintTopic): string {
       return 'PUBLIC';
     case MintTopic.AIRDROP:
       return 'AIRDROP';
+    default:
+      return 'UNRECOGNIZED';
+  }
+}
+
+export function getRequestType(requestType: RequestType): string {
+  switch (requestType) {
+    case RequestType.Withdraw:
+      return 'Withdraw';
+    case RequestType.Add:
+      return 'Add';
+    case RequestType.Remove:
+      return 'Remove';
+    case RequestType.Change:
+      return 'Change';
+    case RequestType.Cancel:
+      return 'Cancel';
     default:
       return 'UNRECOGNIZED';
   }

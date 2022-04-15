@@ -1,8 +1,19 @@
 {
-  "network": "rinkeby",
-  "caManager": { "address": "0xec41fA2a15A1d0e3743EF009C295602C15cd472b", "startBlock": "10439681" },
-  "mintManager": { "address": "0xbB589d8169d7c462f3A03715B657bDEd6A4b89F0", "startBlock": "10439684" },
-  "ticketManager": { "address": "0xAAfb764203387D58b0bd1FCC0FAFAE665b3541b5", "startBlock": "10439687" },
-  "vrfManager": { "address": "0x89Bd9799Fd1baC330beb4836e566c993811076C5", "startBlock": "10439690" },
-  "wallet": { "address": "0x53543b9f6ceFb480782B894E2480B492580a07B8", "startBlock": "10439691" }
+  "network": "mainnet",
+  "deployStartAt": "2:46:59 PM",
+  "deployer": "0x84803BBd4269f596D94e88fA4E697b21C39370d2",
+  "caManager": { "address": "0xD52F874978c3B86Ef4A8DC5e03AdaA4F3C81B8Ab", "startBlock": "14588099" },
+  "mintManager": { "address": "0x2D24c1C8677870d320C10aE7b840A279A0CAF492", "startBlock": "14588127" },
+  "exchange": { "address": "0x680756B2794B4d4Ad265040B18539f19f90F13CC", "startBlock": "14588133" },
+  "wallet": { "address": "0x85ed922D503Eb40D962A6c82CE7480e9bf0a87c8", "startBlock": "14588144" },
+  "ticketManager": { "address": "0x80ba159a1D187A4C4F8722F1262316Aa3976eec0", "startBlock": "14588135" },
+  "vrfManager": { "address": "0x1795c86d5e52EeF689981f89D3276C70a3e61149", "startBlock": "14588139" },
+  "revealManager": { "address": "0x618be88829Be3e29ebEF719dAFfb3037C20A8f64", "startBlock": "14588136" },
+  "senderVerifier": { "address": "0x4b0997358df0F6428ACD252FeEBC3469790f1774", "startBlock": "14588137" },
+  "nft1155": {
+    "impl": "0x853A06b944aBEF31984c08beAB9ad2Bf43F00c4F",
+    "beacon": "0x25a374f03B20ba168F723630cc1850A8D1A9767a",
+    "startBlock": "14588168"
+  },
+  "nftFactory": { "address": "0x21AF6949Ec33cd7CEd838Db2CF5875905CE82CEf", "startBlock": "14588171" }
 }

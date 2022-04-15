@@ -123,3 +123,28 @@ type Reveal @entity {
   random_number: BigInt
   starting_index: Int!
 }
+
+enum RequestType {
+  Withdraw,
+  Add
+  Remove
+  Change
+  Cancel
+}
+
+type WalletRequest @entity {
+  "id: requestId(dec)"
+  id: ID!
+  block_number: Int!
+  transaction: Transaction!
+  requester: String!
+  request_type: RequestType!
+  current_owner_address: String
+  current_owner_vote: Int
+  new_owner_address: String
+  new_owner_vote: Int
+  withdrawal_amount: BigInt
+  voters: [String!]!
+  votes: Int!
+  isExecute: Boolean!
+}

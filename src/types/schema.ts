@@ -1253,3 +1253,175 @@ export class Reveal extends Entity {
     this.set("starting_index", Value.fromI32(value));
   }
 }
+
+export class WalletRequest extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+
+    this.set("block_number", Value.fromI32(0));
+    this.set("transaction", Value.fromString(""));
+    this.set("requester", Value.fromString(""));
+    this.set("request_type", Value.fromString(""));
+    this.set("voters", Value.fromStringArray(new Array(0)));
+    this.set("votes", Value.fromI32(0));
+    this.set("isExecute", Value.fromBoolean(false));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save WalletRequest entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        `Entities of type WalletRequest must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+      );
+      store.set("WalletRequest", id.toString(), this);
+    }
+  }
+
+  static load(id: string): WalletRequest | null {
+    return changetype<WalletRequest | null>(store.get("WalletRequest", id));
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get block_number(): i32 {
+    let value = this.get("block_number");
+    return value!.toI32();
+  }
+
+  set block_number(value: i32) {
+    this.set("block_number", Value.fromI32(value));
+  }
+
+  get transaction(): string {
+    let value = this.get("transaction");
+    return value!.toString();
+  }
+
+  set transaction(value: string) {
+    this.set("transaction", Value.fromString(value));
+  }
+
+  get requester(): string {
+    let value = this.get("requester");
+    return value!.toString();
+  }
+
+  set requester(value: string) {
+    this.set("requester", Value.fromString(value));
+  }
+
+  get request_type(): string {
+    let value = this.get("request_type");
+    return value!.toString();
+  }
+
+  set request_type(value: string) {
+    this.set("request_type", Value.fromString(value));
+  }
+
+  get current_owner_address(): string | null {
+    let value = this.get("current_owner_address");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set current_owner_address(value: string | null) {
+    if (!value) {
+      this.unset("current_owner_address");
+    } else {
+      this.set("current_owner_address", Value.fromString(<string>value));
+    }
+  }
+
+  get current_owner_vote(): i32 {
+    let value = this.get("current_owner_vote");
+    return value!.toI32();
+  }
+
+  set current_owner_vote(value: i32) {
+    this.set("current_owner_vote", Value.fromI32(value));
+  }
+
+  get new_owner_address(): string | null {
+    let value = this.get("new_owner_address");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set new_owner_address(value: string | null) {
+    if (!value) {
+      this.unset("new_owner_address");
+    } else {
+      this.set("new_owner_address", Value.fromString(<string>value));
+    }
+  }
+
+  get new_owner_vote(): i32 {
+    let value = this.get("new_owner_vote");
+    return value!.toI32();
+  }
+
+  set new_owner_vote(value: i32) {
+    this.set("new_owner_vote", Value.fromI32(value));
+  }
+
+  get withdrawal_amount(): BigInt | null {
+    let value = this.get("withdrawal_amount");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set withdrawal_amount(value: BigInt | null) {
+    if (!value) {
+      this.unset("withdrawal_amount");
+    } else {
+      this.set("withdrawal_amount", Value.fromBigInt(<BigInt>value));
+    }
+  }
+
+  get voters(): Array<string> {
+    let value = this.get("voters");
+    return value!.toStringArray();
+  }
+
+  set voters(value: Array<string>) {
+    this.set("voters", Value.fromStringArray(value));
+  }
+
+  get votes(): i32 {
+    let value = this.get("votes");
+    return value!.toI32();
+  }
+
+  set votes(value: i32) {
+    this.set("votes", Value.fromI32(value));
+  }
+
+  get isExecute(): boolean {
+    let value = this.get("isExecute");
+    return value!.toBoolean();
+  }
+
+  set isExecute(value: boolean) {
+    this.set("isExecute", Value.fromBoolean(value));
+  }
+}
