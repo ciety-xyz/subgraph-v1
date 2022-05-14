@@ -221,7 +221,7 @@ export class DeployCall__Inputs {
     return this._call.inputValues[0].value.toBigInt();
   }
 
-  get _coverUri(): string {
+  get _coverBaseURI(): string {
     return this._call.inputValues[1].value.toString();
   }
 
@@ -229,9 +229,17 @@ export class DeployCall__Inputs {
     return this._call.inputValues[2].value.toBigInt();
   }
 
+  get _name(): string {
+    return this._call.inputValues[3].value.toString();
+  }
+
+  get _symbol(): string {
+    return this._call.inputValues[4].value.toString();
+  }
+
   get _payload(): DeployCall_payloadStruct {
     return changetype<DeployCall_payloadStruct>(
-      this._call.inputValues[3].value.toTuple()
+      this._call.inputValues[5].value.toTuple()
     );
   }
 }

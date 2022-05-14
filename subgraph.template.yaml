@@ -127,8 +127,8 @@ dataSources:
       abis:
         - name: OmnuumVRFManager
           file: ./abis/OmnuumVRFManager.json
-        - name: OmnuumNFT1155
-          file: ./abis/OmnuumNFT1155.json
+        - name: OmnuumNFT721
+          file: ./abis/OmnuumNFT721.json
       eventHandlers:
         - event: RequestVRF(indexed address,indexed bytes32,string)
           handler: handleRequestVRF
@@ -161,9 +161,9 @@ dataSources:
         - name: OmnuumWallet
           file: ./abis/OmnuumWallet.json
       eventHandlers:
-        - event: EtherReceived(indexed address)
+        - event: EtherReceived(indexed address,uint256)
           handler: handleEtherReceived
-        - event: PaymentReceived(indexed address,string,string)
+        - event: PaymentReceived(indexed address,string,string,uint256)
           handler: handlePaymentReceived
         - event: Requested(indexed address,indexed uint256,indexed uint8)
           handler: handleRequested
@@ -197,8 +197,8 @@ dataSources:
       abis:
         - name: NftFactory
           file: ./abis/NftFactory.json
-        - name: OmnuumNFT1155
-          file: ./abis/OmnuumNFT1155.json
+        - name: OmnuumNFT721
+          file: ./abis/OmnuumNFT721.json
       eventHandlers:
         - event: NftContractDeployed(indexed address,indexed address,indexed uint256)
           handler: handleNftContractDeployed
@@ -209,10 +209,10 @@ dataSources:
 
 templates:
   - kind: ethereum/contract
-    name: OmnuumNFT1155
+    name: OmnuumNFT721
     network: {{network}}
     source:
-      abi: OmnuumNFT1155
+      abi: OmnuumNFT721
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
@@ -224,12 +224,14 @@ templates:
         - Nft
         - Minter
       abis:
-        - name: OmnuumNFT1155
-          file: ./abis/OmnuumNFT1155.json
+        - name: OmnuumNFT721
+          file: ./abis/OmnuumNFT721.json
       eventHandlers:
-        - event: TransferSingle(indexed address,indexed address,indexed address,uint256,uint256)
-          handler: handleTransferSingle
+        - event: Transfer(indexed address,indexed address,indexed uint256)
+          handler: handleTransfer
         - event: OwnershipTransferred(indexed address,indexed address)
           handler: handleOwnershipTransferred
-        - event: Uri(indexed address,string)
-          handler: handleUri
+        - event: BaseURIChanged(indexed address,string)
+          handler: handleBaseURIChanged
+        - event: Revealed(indexed address)
+          handler: handleRevealed

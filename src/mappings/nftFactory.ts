@@ -1,12 +1,11 @@
 import { EventName, getEventName } from '../modules/event';
 import { Contract } from '../types/schema';
-import { OmnuumNFT1155 as NftTemplate } from '../types/templates';
+import { OmnuumNFT721 as NftTemplate } from '../types/templates';
+import { OmnuumNFT721 as NftContract } from '../types/templates/OmnuumNFT721/OmnuumNFT721';
 import { getLogMsg, logging, LogMsg } from '../utils/logger';
 import { saveTransaction } from '../modules/transaction';
 import { getContractTopic } from '../modules/topic';
 import { BigInt } from '@graphprotocol/graph-ts';
-import { OmnuumNFT1155 as NftContract } from '../types/templates/OmnuumNFT1155/OmnuumNFT1155';
-
 import { NftContractDeployed } from '../types/NftFactory/NftFactory';
 import { OwnershipTransferred } from '../types/OmnuumCAManager/OmnuumCAManager';
 import { ownershipTransfer } from '../modules/ownership';
@@ -40,6 +39,7 @@ export function handleNftContractDeployed(event: NftContractDeployed): void {
 
   // Interaction with the NFT contract for max supply, cover uri.
   const nftContract = NftContract.bind(event.params.nftContract);
+
   const maxSupply = nftContract.try_maxSupply();
   if (maxSupply.reverted) {
     logging(getLogMsg(LogMsg.___CALL_REVERTED), eventName, nftAddress, '@query maxSupply');
@@ -49,11 +49,25 @@ export function handleNftContractDeployed(event: NftContractDeployed): void {
 
   contractEntity.total_minted_amount = 0;
 
-  const coverUri = nftContract.try_uri(BigInt.zero());
+  const coverUri = nftContract.try_baseURI();
   if (coverUri.reverted) {
     logging(getLogMsg(LogMsg.___CALL_REVERTED), eventName, nftAddress, '@query coverUri');
   } else {
-    contractEntity.cover_uri = coverUri.value;
+    contractEntity.base_uri = contractEntity.cover_uri = coverUri.value;
+  }
+
+  const name = nftContract.try_name();
+  if (name.reverted) {
+    logging(getLogMsg(LogMsg.___CALL_REVERTED), eventName, nftAddress, '@query name');
+  } else {
+    contractEntity.name = name.value;
+  }
+
+  const symbol = nftContract.try_symbol();
+  if (name.reverted) {
+    logging(getLogMsg(LogMsg.___CALL_REVERTED), eventName, nftAddress, '@query symbol');
+  } else {
+    contractEntity.symbol = symbol.value;
   }
 
   contractEntity.save();

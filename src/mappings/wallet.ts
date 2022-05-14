@@ -13,44 +13,51 @@ import { Payment, WalletRequest } from '../types/schema';
 import { EventName, getEventName } from '../modules/event';
 import { getContractTopic, getRequestType, RequestType } from '../modules/topic';
 import { getLogMsg, logging, LogMsg } from '../utils/logger';
+import { handleRevenue } from '../modules/revenue';
 
 export function handleEtherReceived(event: EtherReceived): void {
   // Payment entity cannot overlap, because ID is unique for every single event when it emitted
   const paymentId = getUniqueId(event);
+  const sender = event.params.sender.toHexString();
   const paymentEntity = new Payment(paymentId);
 
   const eventName = getEventName(EventName.EtherReceived);
   const transactionEntity = saveTransaction(event, getContractTopic(event.address), eventName);
-  const paymentValue = event.transaction.value;
+  const paymentValue = event.params.value;
 
   paymentEntity.block_number = transactionEntity.block_number;
   paymentEntity.transaction = transactionEntity.id;
-  paymentEntity.sender = event.params.sender.toHexString();
+  paymentEntity.sender = sender;
   paymentEntity.value = paymentValue;
 
   paymentEntity.save();
+
+  handleRevenue(sender, paymentValue, transactionEntity, event.address.toHexString());
 }
 
 export function handlePaymentReceived(event: PaymentReceived): void {
   // Payment entity cannot overlap, because ID is unique for every single event when it emitted
   const paymentId = getUniqueId(event);
+  const sender = event.params.sender.toHexString();
   const paymentEntity = new Payment(paymentId);
 
   const eventName = getEventName(EventName.PaymentReceived);
   const transactionEntity = saveTransaction(event, getContractTopic(event.address), eventName);
 
   const topicString = event.params.topic;
-  const paymentValue = event.transaction.value;
+  const paymentValue = event.params.value;
 
   paymentEntity.block_number = transactionEntity.block_number;
   paymentEntity.transaction = transactionEntity.id;
-  paymentEntity.sender = event.params.sender.toHexString();
+  paymentEntity.sender = sender;
   paymentEntity.value = paymentValue;
 
   paymentEntity.topic = topicString;
   paymentEntity.description = event.params.description;
 
   paymentEntity.save();
+
+  handleRevenue(sender, paymentValue, transactionEntity, event.address.toHexString());
 }
 
 export function handleRequested(event: Requested): void {
@@ -88,7 +95,7 @@ export function handleRequested(event: Requested): void {
 
   walletRequestEntity.voters = [requester];
   walletRequestEntity.votes = request.value.value5.toI32();
-  walletRequestEntity.isExecute = request.value.value6;
+  walletRequestEntity.is_execute = request.value.value6;
 
   walletRequestEntity.save();
 }
@@ -165,7 +172,7 @@ export function handleExecuted(event: Executed): void {
   const eventAddress = event.address.toHexString();
   const walletRequestEntity = WalletRequest.load(requestId.toString());
   if (walletRequestEntity) {
-    walletRequestEntity.isExecute = true;
+    walletRequestEntity.is_execute = true;
     walletRequestEntity.save();
   } else {
     logging(getLogMsg(LogMsg.___NO_ENTITY), eventName, eventAddress, 'no wallet request entity');

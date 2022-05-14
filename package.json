@@ -14,7 +14,7 @@
     "build:rinkeby": "npm run codegen:rinkeby && graph build subgraph.rinkeby.yaml",
     "deploy:hosting:mainnet": "npm run build:mainnet && graph deploy --product hosted-service omnuum/omnuum-mainnet subgraph.mainnet.yaml",
     "deploy:hosting:rinkeby": "npm run build:rinkeby && graph deploy --product hosted-service omnuum/omnuum-rinkeby subgraph.rinkeby.yaml",
-    "deploy:hosting:private:rinkeby": "npm run build:rinkeby && graph deploy --product hosted-service ddevkim/omnuum-rinkeby subgraph.rinkeby.yaml"
+    "deploy:hosting:ddevkim:rinkeby": "npm run build:rinkeby && graph deploy --product hosted-service ddevkim/omnuum-rinkeby subgraph.rinkeby.yaml"
   },
   "dependencies": {
     "@graphprotocol/graph-cli": "0.28.1",

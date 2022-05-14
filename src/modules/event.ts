@@ -1,3 +1,5 @@
+import { Revealed } from '../types/templates/OmnuumNFT721/OmnuumNFT721';
+
 export enum EventName {
   ContractRegistered,
   ContractRemoved,
@@ -9,7 +11,8 @@ export enum EventName {
   EtherReceived,
   TransferSingle,
   ownershipTransferred,
-  Uri,
+  BaseURIChanged,
+  Revealed,
   SetTicketSchedule,
   SetPublicSchedule,
   PublicMint,
@@ -40,8 +43,10 @@ export function getEventName(eventName: EventName): string {
       return 'EtherReceived';
     case EventName.TransferSingle:
       return 'TransferSingle';
-    case EventName.Uri:
-      return 'Uri';
+    case EventName.BaseURIChanged:
+      return 'BaseURIChanged';
+    case EventName.Revealed:
+      return 'Revealed';
     case EventName.SetTicketSchedule:
       return 'SetTicketSchedule';
     case EventName.SetPublicSchedule:

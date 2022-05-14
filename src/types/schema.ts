@@ -341,22 +341,55 @@ export class Contract extends Entity {
     this.set("is_owner_changed", Value.fromBoolean(value));
   }
 
-  get max_supply(): i32 {
-    let value = this.get("max_supply");
-    return value!.toI32();
+  get name(): string | null {
+    let value = this.get("name");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
   }
 
-  set max_supply(value: i32) {
-    this.set("max_supply", Value.fromI32(value));
+  set name(value: string | null) {
+    if (!value) {
+      this.unset("name");
+    } else {
+      this.set("name", Value.fromString(<string>value));
+    }
   }
 
-  get total_minted_amount(): i32 {
-    let value = this.get("total_minted_amount");
-    return value!.toI32();
+  get symbol(): string | null {
+    let value = this.get("symbol");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
   }
 
-  set total_minted_amount(value: i32) {
-    this.set("total_minted_amount", Value.fromI32(value));
+  set symbol(value: string | null) {
+    if (!value) {
+      this.unset("symbol");
+    } else {
+      this.set("symbol", Value.fromString(<string>value));
+    }
+  }
+
+  get collection_id(): string | null {
+    let value = this.get("collection_id");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set collection_id(value: string | null) {
+    if (!value) {
+      this.unset("collection_id");
+    } else {
+      this.set("collection_id", Value.fromString(<string>value));
+    }
   }
 
   get cover_uri(): string | null {
@@ -376,8 +409,8 @@ export class Contract extends Entity {
     }
   }
 
-  get reveal_url(): string | null {
-    let value = this.get("reveal_url");
+  get base_uri(): string | null {
+    let value = this.get("base_uri");
     if (!value || value.kind == ValueKind.NULL) {
       return null;
     } else {
@@ -385,29 +418,30 @@ export class Contract extends Entity {
     }
   }
 
-  set reveal_url(value: string | null) {
+  set base_uri(value: string | null) {
     if (!value) {
-      this.unset("reveal_url");
+      this.unset("base_uri");
     } else {
-      this.set("reveal_url", Value.fromString(<string>value));
+      this.set("base_uri", Value.fromString(<string>value));
     }
   }
 
-  get collection_id(): string | null {
-    let value = this.get("collection_id");
-    if (!value || value.kind == ValueKind.NULL) {
-      return null;
-    } else {
-      return value.toString();
-    }
+  get max_supply(): i32 {
+    let value = this.get("max_supply");
+    return value!.toI32();
   }
 
-  set collection_id(value: string | null) {
-    if (!value) {
-      this.unset("collection_id");
-    } else {
-      this.set("collection_id", Value.fromString(<string>value));
-    }
+  set max_supply(value: i32) {
+    this.set("max_supply", Value.fromI32(value));
+  }
+
+  get total_minted_amount(): i32 {
+    let value = this.get("total_minted_amount");
+    return value!.toI32();
+  }
+
+  set total_minted_amount(value: i32) {
+    this.set("total_minted_amount", Value.fromI32(value));
   }
 
   get contract_roles(): string | null {
@@ -1265,7 +1299,7 @@ export class WalletRequest extends Entity {
     this.set("request_type", Value.fromString(""));
     this.set("voters", Value.fromStringArray(new Array(0)));
     this.set("votes", Value.fromI32(0));
-    this.set("isExecute", Value.fromBoolean(false));
+    this.set("is_execute", Value.fromBoolean(false));
   }
 
   save(): void {
@@ -1416,12 +1450,82 @@ export class WalletRequest extends Entity {
     this.set("votes", Value.fromI32(value));
   }
 
-  get isExecute(): boolean {
-    let value = this.get("isExecute");
+  get is_execute(): boolean {
+    let value = this.get("is_execute");
     return value!.toBoolean();
   }
 
-  set isExecute(value: boolean) {
-    this.set("isExecute", Value.fromBoolean(value));
+  set is_execute(value: boolean) {
+    this.set("is_execute", Value.fromBoolean(value));
+  }
+}
+
+export class Revenue extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+
+    this.set("block_number", Value.fromI32(0));
+    this.set("value", Value.fromBigInt(BigInt.zero()));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save Revenue entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        `Entities of type Revenue must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+      );
+      store.set("Revenue", id.toString(), this);
+    }
+  }
+
+  static load(id: string): Revenue | null {
+    return changetype<Revenue | null>(store.get("Revenue", id));
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get block_number(): i32 {
+    let value = this.get("block_number");
+    return value!.toI32();
+  }
+
+  set block_number(value: i32) {
+    this.set("block_number", Value.fromI32(value));
+  }
+
+  get value(): BigInt {
+    let value = this.get("value");
+    return value!.toBigInt();
+  }
+
+  set value(value: BigInt) {
+    this.set("value", Value.fromBigInt(value));
+  }
+
+  get contract(): string | null {
+    let value = this.get("contract");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set contract(value: string | null) {
+    if (!value) {
+      this.unset("contract");
+    } else {
+      this.set("contract", Value.fromString(<string>value));
+    }
   }
 }

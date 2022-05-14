@@ -29,11 +29,13 @@ type Contract @entity {
   is_removed: Boolean!
   is_revealed: Boolean
   is_owner_changed: Boolean!
+  name: String
+  symbol: String
+  collection_id: String
+  cover_uri: String
+  base_uri: String
   max_supply: Int
   total_minted_amount: Int
-  cover_uri: String
-  reveal_url: String
-  collection_id: String
 
   "Derived"
   contract_roles: ContractRole @derivedFrom(field: "contract")
@@ -146,5 +148,13 @@ type WalletRequest @entity {
   withdrawal_amount: BigInt
   voters: [String!]!
   votes: Int!
-  isExecute: Boolean!
+  is_execute: Boolean!
+}
+
+type Revenue @entity {
+  "id: address(hex)"
+  id: ID!
+  block_number: Int!
+  value: BigInt!
+  contract: Contract
 }

@@ -74,6 +74,10 @@ export class EtherReceived__Params {
   get sender(): Address {
     return this._event.parameters[0].value.toAddress();
   }
+
+  get value(): BigInt {
+    return this._event.parameters[1].value.toBigInt();
+  }
 }
 
 export class Executed extends ethereum.Event {
@@ -125,6 +129,10 @@ export class PaymentReceived__Params {
 
   get description(): string {
     return this._event.parameters[2].value.toString();
+  }
+
+  get value(): BigInt {
+    return this._event.parameters[3].value.toBigInt();
   }
 }
 
@@ -290,23 +298,37 @@ export class OmnuumWallet extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
-  getRequestIdsByExecution(_isExecuted: boolean): Array<BigInt> {
+  getRequestIdsByExecution(
+    _isExecuted: boolean,
+    _cursorIndex: BigInt,
+    _length: BigInt
+  ): Array<BigInt> {
     let result = super.call(
       "getRequestIdsByExecution",
-      "getRequestIdsByExecution(bool):(uint256[])",
-      [ethereum.Value.fromBoolean(_isExecuted)]
+      "getRequestIdsByExecution(bool,uint256,uint256):(uint256[])",
+      [
+        ethereum.Value.fromBoolean(_isExecuted),
+        ethereum.Value.fromUnsignedBigInt(_cursorIndex),
+        ethereum.Value.fromUnsignedBigInt(_length)
+      ]
     );
 
     return result[0].toBigIntArray();
   }
 
   try_getRequestIdsByExecution(
-    _isExecuted: boolean
+    _isExecuted: boolean,
+    _cursorIndex: BigInt,
+    _length: BigInt
   ): ethereum.CallResult<Array<BigInt>> {
     let result = super.tryCall(
       "getRequestIdsByExecution",
-      "getRequestIdsByExecution(bool):(uint256[])",
-      [ethereum.Value.fromBoolean(_isExecuted)]
+      "getRequestIdsByExecution(bool,uint256,uint256):(uint256[])",
+      [
+        ethereum.Value.fromBoolean(_isExecuted),
+        ethereum.Value.fromUnsignedBigInt(_cursorIndex),
+        ethereum.Value.fromUnsignedBigInt(_length)
+      ]
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -315,13 +337,20 @@ export class OmnuumWallet extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBigIntArray());
   }
 
-  getRequestIdsByOwner(_owner: Address, _isExecuted: boolean): Array<BigInt> {
+  getRequestIdsByOwner(
+    _owner: Address,
+    _isExecuted: boolean,
+    _cursorIndex: BigInt,
+    _length: BigInt
+  ): Array<BigInt> {
     let result = super.call(
       "getRequestIdsByOwner",
-      "getRequestIdsByOwner(address,bool):(uint256[])",
+      "getRequestIdsByOwner(address,bool,uint256,uint256):(uint256[])",
       [
         ethereum.Value.fromAddress(_owner),
-        ethereum.Value.fromBoolean(_isExecuted)
+        ethereum.Value.fromBoolean(_isExecuted),
+        ethereum.Value.fromUnsignedBigInt(_cursorIndex),
+        ethereum.Value.fromUnsignedBigInt(_length)
       ]
     );
 
@@ -330,14 +359,18 @@ export class OmnuumWallet extends ethereum.SmartContract {
 
   try_getRequestIdsByOwner(
     _owner: Address,
-    _isExecuted: boolean
+    _isExecuted: boolean,
+    _cursorIndex: BigInt,
+    _length: BigInt
   ): ethereum.CallResult<Array<BigInt>> {
     let result = super.tryCall(
       "getRequestIdsByOwner",
-      "getRequestIdsByOwner(address,bool):(uint256[])",
+      "getRequestIdsByOwner(address,bool,uint256,uint256):(uint256[])",
       [
         ethereum.Value.fromAddress(_owner),
-        ethereum.Value.fromBoolean(_isExecuted)
+        ethereum.Value.fromBoolean(_isExecuted),
+        ethereum.Value.fromUnsignedBigInt(_cursorIndex),
+        ethereum.Value.fromUnsignedBigInt(_length)
       ]
     );
     if (result.reverted) {
@@ -347,13 +380,20 @@ export class OmnuumWallet extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBigIntArray());
   }
 
-  getRequestIdsByType(_requestType: i32, _isExecuted: boolean): Array<BigInt> {
+  getRequestIdsByType(
+    _requestType: i32,
+    _isExecuted: boolean,
+    _cursorIndex: BigInt,
+    _length: BigInt
+  ): Array<BigInt> {
     let result = super.call(
       "getRequestIdsByType",
-      "getRequestIdsByType(uint8,bool):(uint256[])",
+      "getRequestIdsByType(uint8,bool,uint256,uint256):(uint256[])",
       [
         ethereum.Value.fromUnsignedBigInt(BigInt.fromI32(_requestType)),
-        ethereum.Value.fromBoolean(_isExecuted)
+        ethereum.Value.fromBoolean(_isExecuted),
+        ethereum.Value.fromUnsignedBigInt(_cursorIndex),
+        ethereum.Value.fromUnsignedBigInt(_length)
       ]
     );
 
@@ -362,14 +402,18 @@ export class OmnuumWallet extends ethereum.SmartContract {
 
   try_getRequestIdsByType(
     _requestType: i32,
-    _isExecuted: boolean
+    _isExecuted: boolean,
+    _cursorIndex: BigInt,
+    _length: BigInt
   ): ethereum.CallResult<Array<BigInt>> {
     let result = super.tryCall(
       "getRequestIdsByType",
-      "getRequestIdsByType(uint8,bool):(uint256[])",
+      "getRequestIdsByType(uint8,bool,uint256,uint256):(uint256[])",
       [
         ethereum.Value.fromUnsignedBigInt(BigInt.fromI32(_requestType)),
-        ethereum.Value.fromBoolean(_isExecuted)
+        ethereum.Value.fromBoolean(_isExecuted),
+        ethereum.Value.fromUnsignedBigInt(_cursorIndex),
+        ethereum.Value.fromUnsignedBigInt(_length)
       ]
     );
     if (result.reverted) {
@@ -757,20 +801,20 @@ export class MakePaymentCall__Outputs {
   }
 }
 
-export class RequestCall extends ethereum.Call {
-  get inputs(): RequestCall__Inputs {
-    return new RequestCall__Inputs(this);
+export class RequestOwnerManagementCall extends ethereum.Call {
+  get inputs(): RequestOwnerManagementCall__Inputs {
+    return new RequestOwnerManagementCall__Inputs(this);
   }
 
-  get outputs(): RequestCall__Outputs {
-    return new RequestCall__Outputs(this);
+  get outputs(): RequestOwnerManagementCall__Outputs {
+    return new RequestOwnerManagementCall__Outputs(this);
   }
 }
 
-export class RequestCall__Inputs {
-  _call: RequestCall;
+export class RequestOwnerManagementCall__Inputs {
+  _call: RequestOwnerManagementCall;
 
-  constructor(call: RequestCall) {
+  constructor(call: RequestOwnerManagementCall) {
     this._call = call;
   }
 
@@ -778,32 +822,28 @@ export class RequestCall__Inputs {
     return this._call.inputValues[0].value.toI32();
   }
 
-  get _currentAccount(): RequestCall_currentAccountStruct {
-    return changetype<RequestCall_currentAccountStruct>(
+  get _currentAccount(): RequestOwnerManagementCall_currentAccountStruct {
+    return changetype<RequestOwnerManagementCall_currentAccountStruct>(
       this._call.inputValues[1].value.toTuple()
     );
   }
 
-  get _newAccount(): RequestCall_newAccountStruct {
-    return changetype<RequestCall_newAccountStruct>(
+  get _newAccount(): RequestOwnerManagementCall_newAccountStruct {
+    return changetype<RequestOwnerManagementCall_newAccountStruct>(
       this._call.inputValues[2].value.toTuple()
     );
   }
-
-  get _withdrawalAmount(): BigInt {
-    return this._call.inputValues[3].value.toBigInt();
-  }
 }
 
-export class RequestCall__Outputs {
-  _call: RequestCall;
+export class RequestOwnerManagementCall__Outputs {
+  _call: RequestOwnerManagementCall;
 
-  constructor(call: RequestCall) {
+  constructor(call: RequestOwnerManagementCall) {
     this._call = call;
   }
 }
 
-export class RequestCall_currentAccountStruct extends ethereum.Tuple {
+export class RequestOwnerManagementCall_currentAccountStruct extends ethereum.Tuple {
   get addr(): Address {
     return this[0].toAddress();
   }
@@ -813,13 +853,43 @@ export class RequestCall_currentAccountStruct extends ethereum.Tuple {
   }
 }
 
-export class RequestCall_newAccountStruct extends ethereum.Tuple {
+export class RequestOwnerManagementCall_newAccountStruct extends ethereum.Tuple {
   get addr(): Address {
     return this[0].toAddress();
   }
 
   get vote(): i32 {
     return this[1].toI32();
+  }
+}
+
+export class RequestWithdrawalCall extends ethereum.Call {
+  get inputs(): RequestWithdrawalCall__Inputs {
+    return new RequestWithdrawalCall__Inputs(this);
+  }
+
+  get outputs(): RequestWithdrawalCall__Outputs {
+    return new RequestWithdrawalCall__Outputs(this);
+  }
+}
+
+export class RequestWithdrawalCall__Inputs {
+  _call: RequestWithdrawalCall;
+
+  constructor(call: RequestWithdrawalCall) {
+    this._call = call;
+  }
+
+  get _withdrawalAmount(): BigInt {
+    return this._call.inputValues[0].value.toBigInt();
+  }
+}
+
+export class RequestWithdrawalCall__Outputs {
+  _call: RequestWithdrawalCall;
+
+  constructor(call: RequestWithdrawalCall) {
+    this._call = call;
   }
 }
 

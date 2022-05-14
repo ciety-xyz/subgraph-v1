@@ -225,6 +225,11 @@
         "internalType": "uint256",
         "name": "_feeRate",
         "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "_caManager",
+        "type": "address"
       }
     ],
     "name": "initialize",
@@ -258,9 +263,9 @@
         "type": "address[]"
       },
       {
-        "internalType": "uint16[]",
+        "internalType": "uint256[]",
         "name": "_quantitys",
-        "type": "uint16[]"
+        "type": "uint256[]"
       }
     ],
     "name": "mintMultiple",
@@ -284,9 +289,9 @@
   {
     "inputs": [
       {
-        "internalType": "uint16",
+        "internalType": "uint256",
         "name": "_groupId",
-        "type": "uint16"
+        "type": "uint256"
       },
       {
         "internalType": "uint32",

@@ -6,14 +6,14 @@ import {
   DataSourceContext
 } from "@graphprotocol/graph-ts";
 
-export class OmnuumNFT1155 extends DataSourceTemplate {
+export class OmnuumNFT721 extends DataSourceTemplate {
   static create(address: Address): void {
-    DataSourceTemplate.create("OmnuumNFT1155", [address.toHex()]);
+    DataSourceTemplate.create("OmnuumNFT721", [address.toHex()]);
   }
 
   static createWithContext(address: Address, context: DataSourceContext): void {
     DataSourceTemplate.createWithContext(
-      "OmnuumNFT1155",
+      "OmnuumNFT721",
       [address.toHex()],
       context
     );

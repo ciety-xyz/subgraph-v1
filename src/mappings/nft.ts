@@ -1,5 +1,5 @@
-import { Nft, Contract } from '../types/schema';
-import { OwnershipTransferred, TransferSingle, Uri } from '../types/templates/OmnuumNFT1155/OmnuumNFT1155';
+import { Contract, Nft } from '../types/schema';
+import { BaseURIChanged, OwnershipTransferred, Revealed, Transfer } from '../types/templates/OmnuumNFT721/OmnuumNFT721';
 import { saveTransaction } from '../modules/transaction';
 import { getContractTopic } from '../modules/topic';
 import { EventName, getEventName } from '../modules/event';
@@ -8,9 +8,9 @@ import { getLogMsg, logging, LogMsg } from '../utils/logger';
 import { updateTotalMintedAmountForNftContract } from '../modules/nftContract';
 import { ownershipTransfer } from '../modules/ownership';
 
-export function handleTransferSingle(event: TransferSingle): void {
+export function handleTransfer(event: Transfer): void {
   const nftContractAddress = event.address.toHexString();
-  const tokenId = event.params.id.toString();
+  const tokenId = event.params.tokenId.toString();
   const eventName = getEventName(EventName.TransferSingle);
   const transactionEntity = saveTransaction(event, getContractTopic(event.address), eventName);
   const mintQuantity = 1;
@@ -60,17 +60,34 @@ export function handleOwnershipTransferred(event: OwnershipTransferred): void {
   ownershipTransfer(event);
 }
 
-export function handleUri(event: Uri): void {
+export function handleBaseURIChanged(event: BaseURIChanged): void {
   const nftContractAddress = event.address.toHexString();
   const contractEntity = Contract.load(nftContractAddress);
-  const eventName = getEventName(EventName.Uri);
+  const eventName = getEventName(EventName.BaseURIChanged);
+
+  if (contractEntity) {
+    const transactionEntity = saveTransaction(event, getContractTopic(event.address), eventName);
+    contractEntity.block_number = transactionEntity.block_number;
+    contractEntity.transaction = transactionEntity.id;
+
+    contractEntity.base_uri = event.params.baseURI;
+
+    contractEntity.save();
+  } else {
+    logging(getLogMsg(LogMsg.___NO_ENTITY), eventName, nftContractAddress, '');
+  }
+}
+
+export function handleRevealed(event: Revealed): void {
+  const nftContractAddress = event.address.toHexString();
+  const contractEntity = Contract.load(nftContractAddress);
+  const eventName = getEventName(EventName.Revealed);
 
   if (contractEntity) {
     const transactionEntity = saveTransaction(event, getContractTopic(event.address), eventName);
     contractEntity.block_number = transactionEntity.block_number;
     contractEntity.transaction = transactionEntity.id;
     contractEntity.is_revealed = true;
-    contractEntity.reveal_url = event.params.uri;
 
     contractEntity.save();
   } else {

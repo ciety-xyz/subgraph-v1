@@ -13,7 +13,7 @@
   {
     "inputs": [
       {
-        "internalType": "contract OmnuumNFT1155",
+        "internalType": "contract Ownable",
         "name": "_nftContract",
         "type": "address"
       }

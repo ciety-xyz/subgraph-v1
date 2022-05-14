@@ -99,13 +99,23 @@
       },
       {
         "internalType": "string",
-        "name": "_coverUri",
+        "name": "_coverBaseURI",
         "type": "string"
       },
       {
         "internalType": "uint256",
         "name": "_collectionId",
         "type": "uint256"
+      },
+      {
+        "internalType": "string",
+        "name": "_name",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "_symbol",
+        "type": "string"
       },
       {
         "components": [

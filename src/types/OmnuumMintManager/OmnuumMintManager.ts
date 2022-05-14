@@ -431,6 +431,10 @@ export class InitializeCall__Inputs {
   get _feeRate(): BigInt {
     return this._call.inputValues[0].value.toBigInt();
   }
+
+  get _caManager(): Address {
+    return this._call.inputValues[1].value.toAddress();
+  }
 }
 
 export class InitializeCall__Outputs {
@@ -466,8 +470,8 @@ export class MintMultipleCall__Inputs {
     return this._call.inputValues[1].value.toAddressArray();
   }
 
-  get _quantitys(): Array<i32> {
-    return this._call.inputValues[2].value.toI32Array();
+  get _quantitys(): Array<BigInt> {
+    return this._call.inputValues[2].value.toBigIntArray();
   }
 }
 
@@ -496,8 +500,8 @@ export class PreparePublicMintCall__Inputs {
     this._call = call;
   }
 
-  get _groupId(): i32 {
-    return this._call.inputValues[0].value.toI32();
+  get _groupId(): BigInt {
+    return this._call.inputValues[0].value.toBigInt();
   }
 
   get _quantity(): BigInt {
