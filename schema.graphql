@@ -39,7 +39,7 @@ type Contract @entity {
   total_transferred_amount: Int
   total_burned_amount: Int
   profit: BigInt!
-  feePaid: BigInt!
+  fee_paid: BigInt!
 
   "Derived"
   contract_roles: ContractRole @derivedFrom(field: "contract")

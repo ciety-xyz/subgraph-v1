@@ -252,7 +252,7 @@ export class Contract extends Entity {
     this.set("is_removed", Value.fromBoolean(false));
     this.set("is_owner_changed", Value.fromBoolean(false));
     this.set("profit", Value.fromBigInt(BigInt.zero()));
-    this.set("feePaid", Value.fromBigInt(BigInt.zero()));
+    this.set("fee_paid", Value.fromBigInt(BigInt.zero()));
   }
 
   save(): void {
@@ -473,13 +473,13 @@ export class Contract extends Entity {
     this.set("profit", Value.fromBigInt(value));
   }
 
-  get feePaid(): BigInt {
-    let value = this.get("feePaid");
+  get fee_paid(): BigInt {
+    let value = this.get("fee_paid");
     return value!.toBigInt();
   }
 
-  set feePaid(value: BigInt) {
-    this.set("feePaid", Value.fromBigInt(value));
+  set fee_paid(value: BigInt) {
+    this.set("fee_paid", Value.fromBigInt(value));
   }
 
   get contract_roles(): string | null {

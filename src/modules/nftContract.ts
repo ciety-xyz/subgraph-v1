@@ -35,7 +35,7 @@ export function handleNFTContractBalance(event: ethereum.Event, nftAddress: Byte
     contractEntity.block_number = transactionEntity.block_number;
     contractEntity.transaction = transactionEntity.id;
     contractEntity.profit = contractEntity.profit.plus(profit);
-    contractEntity.feePaid = contractEntity.feePaid.plus(fee);
+    contractEntity.fee_paid = contractEntity.fee_paid.plus(fee);
 
     contractEntity.save();
   } else {

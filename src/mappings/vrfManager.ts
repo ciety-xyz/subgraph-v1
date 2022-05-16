@@ -1,4 +1,4 @@
-import { OwnershipTransferred, RequestVRF, ResponseVRF, Updated } from '../types/OmnuumVRFManager/OmnuumVRFManager';
+import { OwnershipTransferred, RequestVRF, ResponseVRF } from '../types/OmnuumVRFManager/OmnuumVRFManager';
 import { EventName, getEventName } from '../modules/event';
 import { saveTransaction } from '../modules/transaction';
 import { getContractTopic, getVrfTopic, VrfTopic } from '../modules/topic';
