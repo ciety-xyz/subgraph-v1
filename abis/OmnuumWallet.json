@@ -126,7 +126,32 @@
       {
         "indexed": true,
         "internalType": "address",
+        "name": "nftContract",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "value",
+        "type": "uint256"
+      }
+    ],
+    "name": "MintFeeReceived",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
         "name": "sender",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "target",
         "type": "address"
       },
       {
@@ -409,6 +434,11 @@
   {
     "inputs": [
       {
+        "internalType": "address",
+        "name": "_target",
+        "type": "address"
+      },
+      {
         "internalType": "string",
         "name": "_topic",
         "type": "string"
@@ -435,6 +465,19 @@
       }
     ],
     "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_nftContract",
+        "type": "address"
+      }
+    ],
+    "name": "mintFeePayment",
+    "outputs": [],
+    "stateMutability": "payable",
     "type": "function"
   },
   {

@@ -6,6 +6,7 @@ import {
   Executed,
   Requested,
   OmnuumWallet,
+  MintFeeReceived,
 } from '../types/OmnuumWallet/OmnuumWallet';
 import { EtherReceived } from '../types/OmnuumWallet/OmnuumWallet';
 import { getUniqueId, saveTransaction } from '../modules/transaction';
@@ -13,7 +14,7 @@ import { Payment, WalletRequest } from '../types/schema';
 import { EventName, getEventName } from '../modules/event';
 import { getContractTopic, getRequestType, RequestType } from '../modules/topic';
 import { getLogMsg, logging, LogMsg } from '../utils/logger';
-import { handleRevenue } from '../modules/revenue';
+import { handleWalletProfit } from '../modules/walletProfit';
 
 export function handleEtherReceived(event: EtherReceived): void {
   // Payment entity cannot overlap, because ID is unique for every single event when it emitted
@@ -27,12 +28,14 @@ export function handleEtherReceived(event: EtherReceived): void {
 
   paymentEntity.block_number = transactionEntity.block_number;
   paymentEntity.transaction = transactionEntity.id;
+  paymentEntity.origin = event.transaction.from.toHexString();
   paymentEntity.sender = sender;
   paymentEntity.value = paymentValue;
+  paymentEntity.topic = 'INVESTMENT';
 
   paymentEntity.save();
 
-  handleRevenue(sender, paymentValue, transactionEntity, event.address.toHexString());
+  handleWalletProfit(sender, paymentValue, transactionEntity, event.address.toHexString());
 }
 
 export function handlePaymentReceived(event: PaymentReceived): void {
@@ -46,9 +49,12 @@ export function handlePaymentReceived(event: PaymentReceived): void {
 
   const topicString = event.params.topic;
   const paymentValue = event.params.value;
+  const targetAddress = event.params.target.toHexString();
 
   paymentEntity.block_number = transactionEntity.block_number;
   paymentEntity.transaction = transactionEntity.id;
+  paymentEntity.target = targetAddress;
+  paymentEntity.origin = event.transaction.from.toHexString();
   paymentEntity.sender = sender;
   paymentEntity.value = paymentValue;
 
@@ -57,7 +63,30 @@ export function handlePaymentReceived(event: PaymentReceived): void {
 
   paymentEntity.save();
 
-  handleRevenue(sender, paymentValue, transactionEntity, event.address.toHexString());
+  handleWalletProfit(targetAddress, paymentValue, transactionEntity, event.address.toHexString());
+}
+
+export function handleMintFeeReceived(event: MintFeeReceived): void {
+  // Payment entity cannot overlap, because ID is unique for every single event when it emitted
+  const paymentId = getUniqueId(event);
+  const paymentEntity = new Payment(paymentId);
+
+  const eventName = getEventName(EventName.MintFeeReceived);
+  const transactionEntity = saveTransaction(event, getContractTopic(event.address), eventName);
+  const nftContractAddress = event.params.nftContract.toHexString();
+
+  const paymentValue = event.params.value;
+
+  paymentEntity.block_number = transactionEntity.block_number;
+  paymentEntity.transaction = transactionEntity.id;
+  paymentEntity.target = nftContractAddress;
+  paymentEntity.origin = event.transaction.from.toHexString();
+  paymentEntity.value = paymentValue;
+  paymentEntity.topic = 'MINT_FEE';
+
+  paymentEntity.save();
+
+  handleWalletProfit(nftContractAddress, paymentValue, transactionEntity, event.address.toHexString());
 }
 
 export function handleRequested(event: Requested): void {

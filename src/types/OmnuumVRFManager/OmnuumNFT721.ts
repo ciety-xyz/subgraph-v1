@@ -119,12 +119,20 @@ export class MintFeePaid__Params {
     this._event = event;
   }
 
-  get payer(): Address {
+  get nftContract(): Address {
     return this._event.parameters[0].value.toAddress();
   }
 
-  get amount(): BigInt {
-    return this._event.parameters[1].value.toBigInt();
+  get payer(): Address {
+    return this._event.parameters[1].value.toAddress();
+  }
+
+  get profit(): BigInt {
+    return this._event.parameters[2].value.toBigInt();
+  }
+
+  get mintFee(): BigInt {
+    return this._event.parameters[3].value.toBigInt();
   }
 }
 

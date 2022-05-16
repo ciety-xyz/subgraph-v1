@@ -6,6 +6,7 @@ import {
   OwnershipTransferred,
   ChangeFeeRate,
   SetMinFee,
+  MintFeePaid,
 } from '../types/OmnuumMintManager/OmnuumMintManager';
 import { EventName, getEventName } from '../modules/event';
 import { getUniqueId, saveTransaction } from '../modules/transaction';
@@ -14,6 +15,7 @@ import { Mint } from '../types/schema';
 import { handleMint } from '../modules/handleMint';
 import { ownershipTransfer } from '../modules/ownership';
 import { getMintScheduleEntity } from '../modules/mintSchedule';
+import { handleNFTContractBalance } from '../modules/nftContract';
 
 export function handleSetPublicSchedule(event: SetPublicSchedule): void {
   const mintScheduleEntity = getMintScheduleEntity(
@@ -54,6 +56,10 @@ export function handleAirdrop(event: Airdrop): void {
   mintEntity.mint_quantity = event.params.quantity.toI32();
 
   mintEntity.save();
+}
+
+export function handleMintFeePaid(event: MintFeePaid): void {
+  handleNFTContractBalance(event, event.params.nftContract, event.params.profit, event.params.mintFee);
 }
 
 export function handleOwnershipTransferred(event: OwnershipTransferred): void {

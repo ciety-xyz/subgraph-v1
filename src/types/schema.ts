@@ -251,6 +251,8 @@ export class Contract extends Entity {
     this.set("topic", Value.fromString(""));
     this.set("is_removed", Value.fromBoolean(false));
     this.set("is_owner_changed", Value.fromBoolean(false));
+    this.set("profit", Value.fromBigInt(BigInt.zero()));
+    this.set("feePaid", Value.fromBigInt(BigInt.zero()));
   }
 
   save(): void {
@@ -444,6 +446,42 @@ export class Contract extends Entity {
     this.set("total_minted_amount", Value.fromI32(value));
   }
 
+  get total_transferred_amount(): i32 {
+    let value = this.get("total_transferred_amount");
+    return value!.toI32();
+  }
+
+  set total_transferred_amount(value: i32) {
+    this.set("total_transferred_amount", Value.fromI32(value));
+  }
+
+  get total_burned_amount(): i32 {
+    let value = this.get("total_burned_amount");
+    return value!.toI32();
+  }
+
+  set total_burned_amount(value: i32) {
+    this.set("total_burned_amount", Value.fromI32(value));
+  }
+
+  get profit(): BigInt {
+    let value = this.get("profit");
+    return value!.toBigInt();
+  }
+
+  set profit(value: BigInt) {
+    this.set("profit", Value.fromBigInt(value));
+  }
+
+  get feePaid(): BigInt {
+    let value = this.get("feePaid");
+    return value!.toBigInt();
+  }
+
+  set feePaid(value: BigInt) {
+    this.set("feePaid", Value.fromBigInt(value));
+  }
+
   get contract_roles(): string | null {
     let value = this.get("contract_roles");
     if (!value || value.kind == ValueKind.NULL) {
@@ -616,7 +654,8 @@ export class Payment extends Entity {
     this.set("id", Value.fromString(id));
 
     this.set("block_number", Value.fromI32(0));
-    this.set("sender", Value.fromString(""));
+    this.set("target", Value.fromString(""));
+    this.set("origin", Value.fromString(""));
     this.set("value", Value.fromBigInt(BigInt.zero()));
   }
 
@@ -671,13 +710,39 @@ export class Payment extends Entity {
     }
   }
 
-  get sender(): string {
-    let value = this.get("sender");
+  get target(): string {
+    let value = this.get("target");
     return value!.toString();
   }
 
-  set sender(value: string) {
-    this.set("sender", Value.fromString(value));
+  set target(value: string) {
+    this.set("target", Value.fromString(value));
+  }
+
+  get sender(): string | null {
+    let value = this.get("sender");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set sender(value: string | null) {
+    if (!value) {
+      this.unset("sender");
+    } else {
+      this.set("sender", Value.fromString(<string>value));
+    }
+  }
+
+  get origin(): string {
+    let value = this.get("origin");
+    return value!.toString();
+  }
+
+  set origin(value: string) {
+    this.set("origin", Value.fromString(value));
   }
 
   get value(): BigInt {
@@ -969,6 +1034,7 @@ export class Minter extends Entity {
 
     this.set("block_number", Value.fromI32(0));
     this.set("minter_address", Value.fromString(""));
+    this.set("nfts", Value.fromStringArray(new Array(0)));
     this.set("minted_amount", Value.fromI32(0));
   }
 
@@ -1015,21 +1081,13 @@ export class Minter extends Entity {
     this.set("minter_address", Value.fromString(value));
   }
 
-  get nfts(): Array<string> | null {
+  get nfts(): Array<string> {
     let value = this.get("nfts");
-    if (!value || value.kind == ValueKind.NULL) {
-      return null;
-    } else {
-      return value.toStringArray();
-    }
+    return value!.toStringArray();
   }
 
-  set nfts(value: Array<string> | null) {
-    if (!value) {
-      this.unset("nfts");
-    } else {
-      this.set("nfts", Value.fromStringArray(<Array<string>>value));
-    }
+  set nfts(value: Array<string>) {
+    this.set("nfts", Value.fromStringArray(value));
   }
 
   get minted_amount(): i32 {
@@ -1460,7 +1518,7 @@ export class WalletRequest extends Entity {
   }
 }
 
-export class Revenue extends Entity {
+export class WalletProfit extends Entity {
   constructor(id: string) {
     super();
     this.set("id", Value.fromString(id));
@@ -1471,18 +1529,18 @@ export class Revenue extends Entity {
 
   save(): void {
     let id = this.get("id");
-    assert(id != null, "Cannot save Revenue entity without an ID");
+    assert(id != null, "Cannot save WalletProfit entity without an ID");
     if (id) {
       assert(
         id.kind == ValueKind.STRING,
-        `Entities of type Revenue must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+        `Entities of type WalletProfit must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
       );
-      store.set("Revenue", id.toString(), this);
+      store.set("WalletProfit", id.toString(), this);
     }
   }
 
-  static load(id: string): Revenue | null {
-    return changetype<Revenue | null>(store.get("Revenue", id));
+  static load(id: string): WalletProfit | null {
+    return changetype<WalletProfit | null>(store.get("WalletProfit", id));
   }
 
   get id(): string {
@@ -1503,15 +1561,6 @@ export class Revenue extends Entity {
     this.set("block_number", Value.fromI32(value));
   }
 
-  get value(): BigInt {
-    let value = this.get("value");
-    return value!.toBigInt();
-  }
-
-  set value(value: BigInt) {
-    this.set("value", Value.fromBigInt(value));
-  }
-
   get contract(): string | null {
     let value = this.get("contract");
     if (!value || value.kind == ValueKind.NULL) {
@@ -1527,5 +1576,14 @@ export class Revenue extends Entity {
     } else {
       this.set("contract", Value.fromString(<string>value));
     }
+  }
+
+  get value(): BigInt {
+    let value = this.get("value");
+    return value!.toBigInt();
+  }
+
+  set value(value: BigInt) {
+    this.set("value", Value.fromBigInt(value));
   }
 }

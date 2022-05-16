@@ -1,4 +1,6 @@
 import { Minter } from '../types/schema';
+import { OmnuumNFT721 as NftContract } from '../types/templates/OmnuumNFT721/OmnuumNFT721';
+import { Address } from '@graphprotocol/graph-ts';
 
 // Listening from singleTransfer (ticket, public, airdrop)
 export function updateMinterEntities(
@@ -18,6 +20,7 @@ export function updateMinterEntities(
 
 // Listening from mint events (ticket, public)
 export function updateMinterEntityWithMintSchedule(
+  nftAddress: Address,
   minterAddress: string,
   mintScheduleId: string,
   mintQuantity: i32,
@@ -33,6 +36,20 @@ export function updateMinterEntityWithMintSchedule(
   } else {
     minterEntity.minted_amount = minterEntity.minted_amount + mintQuantity;
   }
+
+  const nftContract = NftContract.bind(nftAddress);
+  const totalSupply = nftContract.try_totalSupply();
+  if (!totalSupply.reverted) {
+    const lastTokenId = totalSupply.value.toI32();
+    const initialTokenId = lastTokenId - mintQuantity + 1;
+    const nftContractAddress = nftAddress.toHexString();
+    const nfts = minterEntity.nfts;
+    for (let i = initialTokenId; i <= lastTokenId; i++) {
+      nfts.push(`${nftContractAddress}_${i}`);
+    }
+    minterEntity.nfts = nfts;
+  }
+
   minterEntity.block_number = blockNumber;
   minterEntity.save();
 }

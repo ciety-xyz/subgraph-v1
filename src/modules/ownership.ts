@@ -4,7 +4,7 @@ import { saveTransaction } from './transaction';
 import { getContractTopic } from './topic';
 import { getLogMsg, logging, LogMsg } from '../utils/logger';
 import { Address } from '@graphprotocol/graph-ts';
-import { OwnershipTransferred } from '../types/templates/OmnuumNFT1155/OmnuumNFT1155';
+import { OwnershipTransferred } from '../types/templates/OmnuumNFT721/OmnuumNFT721';
 
 export function ownershipTransfer<T extends OwnershipTransferred>(event: T): void {
   const contractEntityId = event.address.toHexString();

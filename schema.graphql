@@ -36,6 +36,10 @@ type Contract @entity {
   base_uri: String
   max_supply: Int
   total_minted_amount: Int
+  total_transferred_amount: Int
+  total_burned_amount: Int
+  profit: BigInt!
+  feePaid: BigInt!
 
   "Derived"
   contract_roles: ContractRole @derivedFrom(field: "contract")
@@ -59,7 +63,9 @@ type Payment @entity {
   id: ID!
   block_number: Int!
   transaction: Transaction
-  sender: String! #msg.sender
+  target: String!
+  sender: String #msg.sender
+  origin: String! #tx.origin
   value: BigInt! #msg.value
   topic: String
   description: String
@@ -96,7 +102,7 @@ type Minter @entity {
   id: ID!
   block_number: Int!
   minter_address: String!
-  nfts: [Nft!] # way to reference NFTs for mintSchedule?
+  nfts: [Nft!]!
   minted_amount: Int!
 }
 
@@ -151,10 +157,10 @@ type WalletRequest @entity {
   is_execute: Boolean!
 }
 
-type Revenue @entity {
+type WalletProfit @entity {
   "id: address(hex)"
   id: ID!
   block_number: Int!
-  value: BigInt!
   contract: Contract
+  value: BigInt!
 }

@@ -106,6 +106,28 @@ export class Executed__Params {
   }
 }
 
+export class MintFeeReceived extends ethereum.Event {
+  get params(): MintFeeReceived__Params {
+    return new MintFeeReceived__Params(this);
+  }
+}
+
+export class MintFeeReceived__Params {
+  _event: MintFeeReceived;
+
+  constructor(event: MintFeeReceived) {
+    this._event = event;
+  }
+
+  get nftContract(): Address {
+    return this._event.parameters[0].value.toAddress();
+  }
+
+  get value(): BigInt {
+    return this._event.parameters[1].value.toBigInt();
+  }
+}
+
 export class PaymentReceived extends ethereum.Event {
   get params(): PaymentReceived__Params {
     return new PaymentReceived__Params(this);
@@ -123,16 +145,20 @@ export class PaymentReceived__Params {
     return this._event.parameters[0].value.toAddress();
   }
 
-  get topic(): string {
-    return this._event.parameters[1].value.toString();
+  get target(): Address {
+    return this._event.parameters[1].value.toAddress();
   }
 
-  get description(): string {
+  get topic(): string {
     return this._event.parameters[2].value.toString();
   }
 
+  get description(): string {
+    return this._event.parameters[3].value.toString();
+  }
+
   get value(): BigInt {
-    return this._event.parameters[3].value.toBigInt();
+    return this._event.parameters[4].value.toBigInt();
   }
 }
 
@@ -784,12 +810,16 @@ export class MakePaymentCall__Inputs {
     this._call = call;
   }
 
+  get _target(): Address {
+    return this._call.inputValues[0].value.toAddress();
+  }
+
   get _topic(): string {
-    return this._call.inputValues[0].value.toString();
+    return this._call.inputValues[1].value.toString();
   }
 
   get _description(): string {
-    return this._call.inputValues[1].value.toString();
+    return this._call.inputValues[2].value.toString();
   }
 }
 
@@ -797,6 +827,36 @@ export class MakePaymentCall__Outputs {
   _call: MakePaymentCall;
 
   constructor(call: MakePaymentCall) {
+    this._call = call;
+  }
+}
+
+export class MintFeePaymentCall extends ethereum.Call {
+  get inputs(): MintFeePaymentCall__Inputs {
+    return new MintFeePaymentCall__Inputs(this);
+  }
+
+  get outputs(): MintFeePaymentCall__Outputs {
+    return new MintFeePaymentCall__Outputs(this);
+  }
+}
+
+export class MintFeePaymentCall__Inputs {
+  _call: MintFeePaymentCall;
+
+  constructor(call: MintFeePaymentCall) {
+    this._call = call;
+  }
+
+  get _nftContract(): Address {
+    return this._call.inputValues[0].value.toAddress();
+  }
+}
+
+export class MintFeePaymentCall__Outputs {
+  _call: MintFeePaymentCall;
+
+  constructor(call: MintFeePaymentCall) {
     this._call = call;
   }
 }

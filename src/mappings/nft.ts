@@ -1,12 +1,15 @@
 import { Contract, Nft } from '../types/schema';
+import { BigInt } from '@graphprotocol/graph-ts';
+import { getLogMsg, logging, LogMsg } from '../utils/logger';
 import { BaseURIChanged, OwnershipTransferred, Revealed, Transfer } from '../types/templates/OmnuumNFT721/OmnuumNFT721';
 import { saveTransaction } from '../modules/transaction';
 import { getContractTopic } from '../modules/topic';
 import { EventName, getEventName } from '../modules/event';
 import { updateMinterEntities } from '../modules/minter';
-import { getLogMsg, logging, LogMsg } from '../utils/logger';
-import { updateTotalMintedAmountForNftContract } from '../modules/nftContract';
+import { handleNFTContractBalance, updateTotalMintedAmountForNftContract } from '../modules/nftContract';
 import { ownershipTransfer } from '../modules/ownership';
+import { EtherReceived, MintFeePaid } from '../types/NftFactory/OmnuumNFT721';
+import { ADDRESS_DEAD, ADDRESS_ZERO } from '../utils/constants';
 
 export function handleTransfer(event: Transfer): void {
   const nftContractAddress = event.address.toHexString();
@@ -48,6 +51,19 @@ export function handleTransfer(event: Transfer): void {
     const owners = nftEntity.owners;
     owners.push(nftNewOwner);
     nftEntity.owners = owners;
+
+    const contractEntity = Contract.load(nftContractAddress);
+
+    if (contractEntity) {
+      if (event.params.to.toHexString() == ADDRESS_ZERO || event.params.to.toHexString() == ADDRESS_DEAD) {
+        contractEntity.total_burned_amount = contractEntity.total_burned_amount + 1;
+      } else {
+        contractEntity.total_transferred_amount = contractEntity.total_transferred_amount + 1;
+      }
+      contractEntity.save();
+    } else {
+      logging(getLogMsg(LogMsg.___NO_ENTITY), eventName, nftContractAddress, '');
+    }
   }
 
   nftEntity.block_number = transactionEntity.block_number;
@@ -93,4 +109,12 @@ export function handleRevealed(event: Revealed): void {
   } else {
     logging(getLogMsg(LogMsg.___NO_ENTITY), eventName, nftContractAddress, '');
   }
+}
+
+export function handleEtherReceived(event: EtherReceived): void {
+  handleNFTContractBalance(event, event.address, event.params.value, BigInt.zero());
+}
+
+export function handleMintFeePaid(event: MintFeePaid): void {
+  handleNFTContractBalance(event, event.params.nftContract, event.params.profit, event.params.mintFee);
 }

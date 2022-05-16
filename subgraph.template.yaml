@@ -61,6 +61,8 @@ dataSources:
       abis:
         - name: OmnuumMintManager
           file: ./abis/OmnuumMintManager.json
+        - name: OmnuumNFT721
+          file: ./abis/OmnuumNFT721.json
       eventHandlers:
         - event: SetPublicSchedule(indexed address,indexed uint256,uint256,uint256,uint32,uint32)
           handler: handleSetPublicSchedule
@@ -76,6 +78,8 @@ dataSources:
           handler: handleSetMinFee
         - event: SetSpecialFeeRate(indexed address,uint256)
           handler: handleSetSpecialFeeRate
+        - event: MintFeePaid(indexed address,indexed address,uint256,uint256)
+          handler: handleMintFeePaid
   {{/mintManager}}
 
   # Ticket Manager
@@ -99,6 +103,8 @@ dataSources:
       abis:
         - name: TicketManager
           file: ./abis/TicketManager.json
+        - name: OmnuumNFT721
+          file: ./abis/OmnuumNFT721.json
       eventHandlers:
         - event: SetTicketSchedule(indexed address,indexed uint256,uint256)
           handler: handleSetTicketSchedule
@@ -163,8 +169,10 @@ dataSources:
       eventHandlers:
         - event: EtherReceived(indexed address,uint256)
           handler: handleEtherReceived
-        - event: PaymentReceived(indexed address,string,string,uint256)
+        - event: PaymentReceived(indexed address,indexed address,string,string,uint256)
           handler: handlePaymentReceived
+        - event: MintFeeReceived(indexed address,uint256)
+          handler: handleMintFeeReceived
         - event: Requested(indexed address,indexed uint256,indexed uint8)
           handler: handleRequested
         - event: Approved(indexed address,indexed uint256,uint8)
@@ -235,3 +243,7 @@ templates:
           handler: handleBaseURIChanged
         - event: Revealed(indexed address)
           handler: handleRevealed
+        - event: EtherReceived(indexed address,uint256)
+          handler: handleEtherReceived
+        - event: MintFeePaid(indexed address,indexed address,uint256,uint256)
+          handler: handleMintFeePaid

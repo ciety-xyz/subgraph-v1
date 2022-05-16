@@ -44,5 +44,11 @@ export function handleMint<T extends PublicMint>(event: T, eventName: string, mi
   }
 
   // update minter Entity with minter_nftContract_mintScheduleGroupId
-  updateMinterEntityWithMintSchedule(minterAddress, mintScheduleId, mintQuantity, transactionEntity.block_number);
+  updateMinterEntityWithMintSchedule(
+    event.params.nftContract,
+    minterAddress,
+    mintScheduleId,
+    mintQuantity,
+    transactionEntity.block_number
+  );
 }

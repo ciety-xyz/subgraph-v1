@@ -1,9 +1,9 @@
-import { filter, flatMap, object, go, join, map } from 'fxjs';
+import { filter, object, go, map } from 'fxjs';
 import { readFileSync, writeFileSync } from 'fs';
 
 const CONTRACT_TOPICS = {
   OmnuumVRFManager: 'VRF',
-  OmnuumNFT1155: 'NFT',
+  OmnuumNFT721: 'NFT',
   SenderVerifier: 'VERIFIER',
   TicketManager: 'TICKET',
   OmnuumMintManager: 'MINTMANAGER',

@@ -1,4 +1,4 @@
-import { log } from '@graphprotocol/graph-ts';
+import { log, BigInt } from '@graphprotocol/graph-ts';
 import {
   ContractRegistered,
   ContractRemoved,
@@ -35,6 +35,8 @@ export function handleContractRegistered(event: ContractRegistered): void {
   contractEntity.topic = event.params.topic;
   contractEntity.is_removed = false;
   contractEntity.is_owner_changed = false;
+  contractEntity.profit = BigInt.zero();
+  contractEntity.feePaid = BigInt.zero();
 
   contractEntity.save();
 }

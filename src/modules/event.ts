@@ -1,4 +1,5 @@
 import { Revealed } from '../types/templates/OmnuumNFT721/OmnuumNFT721';
+import { MintFeeReceived } from '../types/OmnuumWallet/OmnuumWallet';
 
 export enum EventName {
   ContractRegistered,
@@ -8,7 +9,9 @@ export enum EventName {
   RoleAdded,
   RoleRemoved,
   PaymentReceived,
+  MintFeeReceived,
   EtherReceived,
+  MintFeePaid,
   TransferSingle,
   ownershipTransferred,
   BaseURIChanged,
@@ -39,8 +42,12 @@ export function getEventName(eventName: EventName): string {
       return 'RoleRemoved';
     case EventName.PaymentReceived:
       return 'PaymentReceived';
+    case EventName.MintFeeReceived:
+      return 'MintFeeReceived';
     case EventName.EtherReceived:
       return 'EtherReceived';
+    case EventName.MintFeePaid:
+      return 'MintFeePaid';
     case EventName.TransferSingle:
       return 'TransferSingle';
     case EventName.BaseURIChanged:

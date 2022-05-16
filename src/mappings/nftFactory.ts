@@ -36,6 +36,10 @@ export function handleNftContractDeployed(event: NftContractDeployed): void {
   contractEntity.is_revealed = false;
   contractEntity.is_owner_changed = false;
   contractEntity.total_minted_amount = BigInt.zero().toI32();
+  contractEntity.total_transferred_amount = BigInt.zero().toI32();
+  contractEntity.total_burned_amount = BigInt.zero().toI32();
+  contractEntity.profit = BigInt.zero();
+  contractEntity.feePaid = BigInt.zero();
 
   // Interaction with the NFT contract for max supply, cover uri.
   const nftContract = NftContract.bind(event.params.nftContract);
@@ -46,8 +50,6 @@ export function handleNftContractDeployed(event: NftContractDeployed): void {
   } else {
     contractEntity.max_supply = maxSupply.value.toI32();
   }
-
-  contractEntity.total_minted_amount = 0;
 
   const coverUri = nftContract.try_baseURI();
   if (coverUri.reverted) {
