@@ -10,6 +10,7 @@ import { handleNFTContractBalance, updateTotalMintedAmountForNftContract } from 
 import { ownershipTransfer } from '../modules/ownership';
 import { EtherReceived, MintFeePaid } from '../types/NftFactory/OmnuumNFT721';
 import { ADDRESS_DEAD, ADDRESS_ZERO } from '../utils/constants';
+import { manageOwner } from '../modules/manageOwners';
 
 export function handleTransfer(event: Transfer): void {
   const nftContractAddress = event.address.toHexString();
@@ -55,7 +56,7 @@ export function handleTransfer(event: Transfer): void {
     const contractEntity = Contract.load(nftContractAddress);
 
     if (contractEntity) {
-      if (event.params.to.toHexString() == ADDRESS_ZERO || event.params.to.toHexString() == ADDRESS_DEAD) {
+      if (nftNewOwner == ADDRESS_ZERO || nftNewOwner == ADDRESS_DEAD) {
         contractEntity.total_burned_amount = contractEntity.total_burned_amount + 1;
       } else {
         contractEntity.total_transferred_amount = contractEntity.total_transferred_amount + 1;
@@ -70,6 +71,15 @@ export function handleTransfer(event: Transfer): void {
   nftEntity.transaction = transactionEntity.id;
 
   nftEntity.save();
+
+  manageOwner(
+    event.params.from.toHexString(),
+    nftNewOwner,
+    nftContractAddress,
+    tokenId,
+    transactionEntity.id,
+    transactionEntity.block_number
+  );
 }
 
 export function handleOwnershipTransferred(event: OwnershipTransferred): void {

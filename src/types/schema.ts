@@ -648,147 +648,6 @@ export class ContractRole extends Entity {
   }
 }
 
-export class Payment extends Entity {
-  constructor(id: string) {
-    super();
-    this.set("id", Value.fromString(id));
-
-    this.set("block_number", Value.fromI32(0));
-    this.set("target", Value.fromString(""));
-    this.set("origin", Value.fromString(""));
-    this.set("value", Value.fromBigInt(BigInt.zero()));
-  }
-
-  save(): void {
-    let id = this.get("id");
-    assert(id != null, "Cannot save Payment entity without an ID");
-    if (id) {
-      assert(
-        id.kind == ValueKind.STRING,
-        `Entities of type Payment must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
-      );
-      store.set("Payment", id.toString(), this);
-    }
-  }
-
-  static load(id: string): Payment | null {
-    return changetype<Payment | null>(store.get("Payment", id));
-  }
-
-  get id(): string {
-    let value = this.get("id");
-    return value!.toString();
-  }
-
-  set id(value: string) {
-    this.set("id", Value.fromString(value));
-  }
-
-  get block_number(): i32 {
-    let value = this.get("block_number");
-    return value!.toI32();
-  }
-
-  set block_number(value: i32) {
-    this.set("block_number", Value.fromI32(value));
-  }
-
-  get transaction(): string | null {
-    let value = this.get("transaction");
-    if (!value || value.kind == ValueKind.NULL) {
-      return null;
-    } else {
-      return value.toString();
-    }
-  }
-
-  set transaction(value: string | null) {
-    if (!value) {
-      this.unset("transaction");
-    } else {
-      this.set("transaction", Value.fromString(<string>value));
-    }
-  }
-
-  get target(): string {
-    let value = this.get("target");
-    return value!.toString();
-  }
-
-  set target(value: string) {
-    this.set("target", Value.fromString(value));
-  }
-
-  get sender(): string | null {
-    let value = this.get("sender");
-    if (!value || value.kind == ValueKind.NULL) {
-      return null;
-    } else {
-      return value.toString();
-    }
-  }
-
-  set sender(value: string | null) {
-    if (!value) {
-      this.unset("sender");
-    } else {
-      this.set("sender", Value.fromString(<string>value));
-    }
-  }
-
-  get origin(): string {
-    let value = this.get("origin");
-    return value!.toString();
-  }
-
-  set origin(value: string) {
-    this.set("origin", Value.fromString(value));
-  }
-
-  get value(): BigInt {
-    let value = this.get("value");
-    return value!.toBigInt();
-  }
-
-  set value(value: BigInt) {
-    this.set("value", Value.fromBigInt(value));
-  }
-
-  get topic(): string | null {
-    let value = this.get("topic");
-    if (!value || value.kind == ValueKind.NULL) {
-      return null;
-    } else {
-      return value.toString();
-    }
-  }
-
-  set topic(value: string | null) {
-    if (!value) {
-      this.unset("topic");
-    } else {
-      this.set("topic", Value.fromString(<string>value));
-    }
-  }
-
-  get description(): string | null {
-    let value = this.get("description");
-    if (!value || value.kind == ValueKind.NULL) {
-      return null;
-    } else {
-      return value.toString();
-    }
-  }
-
-  set description(value: string | null) {
-    if (!value) {
-      this.unset("description");
-    } else {
-      this.set("description", Value.fromString(<string>value));
-    }
-  }
-}
-
 export class Nft extends Entity {
   constructor(id: string) {
     super();
@@ -1100,6 +959,119 @@ export class Minter extends Entity {
   }
 }
 
+export class Owner extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+
+    this.set("block_number", Value.fromI32(0));
+    this.set("mintTransactions", Value.fromStringArray(new Array(0)));
+    this.set("sendTransactions", Value.fromStringArray(new Array(0)));
+    this.set("receiveTransactions", Value.fromStringArray(new Array(0)));
+    this.set("mintCount", Value.fromI32(0));
+    this.set("sendCount", Value.fromI32(0));
+    this.set("receiveCount", Value.fromI32(0));
+    this.set("nfts", Value.fromStringArray(new Array(0)));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save Owner entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        `Entities of type Owner must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+      );
+      store.set("Owner", id.toString(), this);
+    }
+  }
+
+  static load(id: string): Owner | null {
+    return changetype<Owner | null>(store.get("Owner", id));
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get block_number(): i32 {
+    let value = this.get("block_number");
+    return value!.toI32();
+  }
+
+  set block_number(value: i32) {
+    this.set("block_number", Value.fromI32(value));
+  }
+
+  get mintTransactions(): Array<string> {
+    let value = this.get("mintTransactions");
+    return value!.toStringArray();
+  }
+
+  set mintTransactions(value: Array<string>) {
+    this.set("mintTransactions", Value.fromStringArray(value));
+  }
+
+  get sendTransactions(): Array<string> {
+    let value = this.get("sendTransactions");
+    return value!.toStringArray();
+  }
+
+  set sendTransactions(value: Array<string>) {
+    this.set("sendTransactions", Value.fromStringArray(value));
+  }
+
+  get receiveTransactions(): Array<string> {
+    let value = this.get("receiveTransactions");
+    return value!.toStringArray();
+  }
+
+  set receiveTransactions(value: Array<string>) {
+    this.set("receiveTransactions", Value.fromStringArray(value));
+  }
+
+  get mintCount(): i32 {
+    let value = this.get("mintCount");
+    return value!.toI32();
+  }
+
+  set mintCount(value: i32) {
+    this.set("mintCount", Value.fromI32(value));
+  }
+
+  get sendCount(): i32 {
+    let value = this.get("sendCount");
+    return value!.toI32();
+  }
+
+  set sendCount(value: i32) {
+    this.set("sendCount", Value.fromI32(value));
+  }
+
+  get receiveCount(): i32 {
+    let value = this.get("receiveCount");
+    return value!.toI32();
+  }
+
+  set receiveCount(value: i32) {
+    this.set("receiveCount", Value.fromI32(value));
+  }
+
+  get nfts(): Array<string> {
+    let value = this.get("nfts");
+    return value!.toStringArray();
+  }
+
+  set nfts(value: Array<string>) {
+    this.set("nfts", Value.fromStringArray(value));
+  }
+}
+
 export class Mint extends Entity {
   constructor(id: string) {
     super();
@@ -1343,6 +1315,147 @@ export class Reveal extends Entity {
 
   set starting_index(value: i32) {
     this.set("starting_index", Value.fromI32(value));
+  }
+}
+
+export class Payment extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+
+    this.set("block_number", Value.fromI32(0));
+    this.set("target", Value.fromString(""));
+    this.set("origin", Value.fromString(""));
+    this.set("value", Value.fromBigInt(BigInt.zero()));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save Payment entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        `Entities of type Payment must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+      );
+      store.set("Payment", id.toString(), this);
+    }
+  }
+
+  static load(id: string): Payment | null {
+    return changetype<Payment | null>(store.get("Payment", id));
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get block_number(): i32 {
+    let value = this.get("block_number");
+    return value!.toI32();
+  }
+
+  set block_number(value: i32) {
+    this.set("block_number", Value.fromI32(value));
+  }
+
+  get transaction(): string | null {
+    let value = this.get("transaction");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set transaction(value: string | null) {
+    if (!value) {
+      this.unset("transaction");
+    } else {
+      this.set("transaction", Value.fromString(<string>value));
+    }
+  }
+
+  get target(): string {
+    let value = this.get("target");
+    return value!.toString();
+  }
+
+  set target(value: string) {
+    this.set("target", Value.fromString(value));
+  }
+
+  get sender(): string | null {
+    let value = this.get("sender");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set sender(value: string | null) {
+    if (!value) {
+      this.unset("sender");
+    } else {
+      this.set("sender", Value.fromString(<string>value));
+    }
+  }
+
+  get origin(): string {
+    let value = this.get("origin");
+    return value!.toString();
+  }
+
+  set origin(value: string) {
+    this.set("origin", Value.fromString(value));
+  }
+
+  get value(): BigInt {
+    let value = this.get("value");
+    return value!.toBigInt();
+  }
+
+  set value(value: BigInt) {
+    this.set("value", Value.fromBigInt(value));
+  }
+
+  get topic(): string | null {
+    let value = this.get("topic");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set topic(value: string | null) {
+    if (!value) {
+      this.unset("topic");
+    } else {
+      this.set("topic", Value.fromString(<string>value));
+    }
+  }
+
+  get description(): string | null {
+    let value = this.get("description");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set description(value: string | null) {
+    if (!value) {
+      this.unset("description");
+    } else {
+      this.set("description", Value.fromString(<string>value));
+    }
   }
 }
 

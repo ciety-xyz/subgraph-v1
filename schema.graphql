@@ -58,19 +58,6 @@ type ContractRole @entity {
   role: [String!]!
 }
 
-type Payment @entity {
-  "id: transactionHash(hex)_logIndex(dec)"
-  id: ID!
-  block_number: Int!
-  transaction: Transaction
-  target: String!
-  sender: String #msg.sender
-  origin: String! #tx.origin
-  value: BigInt! #msg.value
-  topic: String
-  description: String
-}
-
 type Nft @entity {
   "id: nftContractAddress(hex)_tokenId(dec)"
   id: ID!
@@ -106,6 +93,19 @@ type Minter @entity {
   minted_amount: Int!
 }
 
+type Owner @entity {
+  "id: ownerAddress(hex)"
+  id: ID!
+  block_number: Int!
+  mintTransactions: [Transaction!]!
+  sendTransactions: [Transaction!]!
+  receiveTransactions: [Transaction!]!
+  mintCount: Int!
+  sendCount: Int!
+  receiveCount: Int!
+  nfts: [Nft!]!
+}
+
 type Mint @entity {
   "id: transactionHash(hex)_logIndex(dec)"
   id: ID!
@@ -138,6 +138,19 @@ enum RequestType {
   Remove
   Change
   Cancel
+}
+
+type Payment @entity {
+  "id: transactionHash(hex)_logIndex(dec)"
+  id: ID!
+  block_number: Int!
+  transaction: Transaction
+  target: String!
+  sender: String #msg.sender
+  origin: String! #tx.origin
+  value: BigInt! #msg.value
+  topic: String
+  description: String
 }
 
 type WalletRequest @entity {
