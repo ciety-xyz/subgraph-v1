@@ -247,3 +247,5 @@ templates:
           handler: handleEtherReceived
         - event: MintFeePaid(indexed address,indexed address,uint256,uint256)
           handler: handleMintFeePaid
+        - event: BalanceTransferred(indexed address,uint256)
+          handler: handleBalanceTransferred

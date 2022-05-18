@@ -8,7 +8,7 @@ import { EventName, getEventName } from '../modules/event';
 import { updateMinterEntities } from '../modules/minter';
 import { handleNFTContractBalance, updateTotalMintedAmountForNftContract } from '../modules/nftContract';
 import { ownershipTransfer } from '../modules/ownership';
-import { EtherReceived, MintFeePaid } from '../types/NftFactory/OmnuumNFT721';
+import { BalanceTransferred, EtherReceived, MintFeePaid } from '../types/NftFactory/OmnuumNFT721';
 import { ADDRESS_DEAD, ADDRESS_ZERO } from '../utils/constants';
 import { manageOwner } from '../modules/manageOwners';
 
@@ -127,4 +127,20 @@ export function handleEtherReceived(event: EtherReceived): void {
 
 export function handleMintFeePaid(event: MintFeePaid): void {
   handleNFTContractBalance(event, event.params.nftContract, event.params.profit, event.params.mintFee);
+}
+
+export function handleBalanceTransferred(event: BalanceTransferred): void {
+  const nftContractAddress = event.address.toHexString();
+  const contractEntity = Contract.load(nftContractAddress);
+  const eventName = getEventName(EventName.BalanceTransferred);
+  if (contractEntity) {
+    const transactionEntity = saveTransaction(event, getContractTopic(event.address), eventName);
+    contractEntity.block_number = transactionEntity.block_number;
+    contractEntity.transaction = transactionEntity.id;
+    contractEntity.withdrawal = contractEntity.withdrawal.plus(event.params.value);
+
+    contractEntity.save();
+  } else {
+    logging(getLogMsg(LogMsg.___NO_ENTITY), eventName, nftContractAddress, '');
+  }
 }

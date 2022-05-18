@@ -62,6 +62,28 @@ export class ApprovalForAll__Params {
   }
 }
 
+export class BalanceTransferred extends ethereum.Event {
+  get params(): BalanceTransferred__Params {
+    return new BalanceTransferred__Params(this);
+  }
+}
+
+export class BalanceTransferred__Params {
+  _event: BalanceTransferred;
+
+  constructor(event: BalanceTransferred) {
+    this._event = event;
+  }
+
+  get receiver(): Address {
+    return this._event.parameters[0].value.toAddress();
+  }
+
+  get value(): BigInt {
+    return this._event.parameters[1].value.toBigInt();
+  }
+}
+
 export class BaseURIChanged extends ethereum.Event {
   get params(): BaseURIChanged__Params {
     return new BaseURIChanged__Params(this);
@@ -199,28 +221,6 @@ export class Transfer__Params {
 
   get tokenId(): BigInt {
     return this._event.parameters[2].value.toBigInt();
-  }
-}
-
-export class TransferBalance extends ethereum.Event {
-  get params(): TransferBalance__Params {
-    return new TransferBalance__Params(this);
-  }
-}
-
-export class TransferBalance__Params {
-  _event: TransferBalance;
-
-  constructor(event: TransferBalance) {
-    this._event = event;
-  }
-
-  get value(): BigInt {
-    return this._event.parameters[0].value.toBigInt();
-  }
-
-  get receiver(): Address {
-    return this._event.parameters[1].value.toAddress();
   }
 }
 

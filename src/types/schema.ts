@@ -15,13 +15,6 @@ export class Transaction extends Entity {
   constructor(id: string) {
     super();
     this.set("id", Value.fromString(id));
-
-    this.set("event_selectors", Value.fromStringArray(new Array(0)));
-    this.set("block_number", Value.fromI32(0));
-    this.set("timestamp", Value.fromI32(0));
-    this.set("from", Value.fromString(""));
-    this.set("value", Value.fromBigInt(BigInt.zero()));
-    this.set("gas_price", Value.fromBigInt(BigInt.zero()));
   }
 
   save(): void {
@@ -244,15 +237,6 @@ export class Contract extends Entity {
   constructor(id: string) {
     super();
     this.set("id", Value.fromString(id));
-
-    this.set("block_number", Value.fromI32(0));
-    this.set("transaction", Value.fromString(""));
-    this.set("owner", Value.fromString(""));
-    this.set("topic", Value.fromString(""));
-    this.set("is_removed", Value.fromBoolean(false));
-    this.set("is_owner_changed", Value.fromBoolean(false));
-    this.set("profit", Value.fromBigInt(BigInt.zero()));
-    this.set("fee_paid", Value.fromBigInt(BigInt.zero()));
   }
 
   save(): void {
@@ -473,6 +457,15 @@ export class Contract extends Entity {
     this.set("profit", Value.fromBigInt(value));
   }
 
+  get withdrawal(): BigInt {
+    let value = this.get("withdrawal");
+    return value!.toBigInt();
+  }
+
+  set withdrawal(value: BigInt) {
+    this.set("withdrawal", Value.fromBigInt(value));
+  }
+
   get fee_paid(): BigInt {
     let value = this.get("fee_paid");
     return value!.toBigInt();
@@ -572,10 +565,6 @@ export class ContractRole extends Entity {
   constructor(id: string) {
     super();
     this.set("id", Value.fromString(id));
-
-    this.set("block_number", Value.fromI32(0));
-    this.set("transaction", Value.fromString(""));
-    this.set("role", Value.fromStringArray(new Array(0)));
   }
 
   save(): void {
@@ -652,12 +641,6 @@ export class Nft extends Entity {
   constructor(id: string) {
     super();
     this.set("id", Value.fromString(id));
-
-    this.set("block_number", Value.fromI32(0));
-    this.set("transaction", Value.fromString(""));
-    this.set("nft_contract", Value.fromString(""));
-    this.set("token_id", Value.fromString(""));
-    this.set("owners", Value.fromStringArray(new Array(0)));
   }
 
   save(): void {
@@ -752,14 +735,6 @@ export class MintSchedule extends Entity {
   constructor(id: string) {
     super();
     this.set("id", Value.fromString(id));
-
-    this.set("block_number", Value.fromI32(0));
-    this.set("transaction", Value.fromString(""));
-    this.set("nft_contract", Value.fromString(""));
-    this.set("topic", Value.fromString(""));
-    this.set("group_id", Value.fromString(""));
-    this.set("end_date", Value.fromI32(0));
-    this.set("minted_amount", Value.fromI32(0));
   }
 
   save(): void {
@@ -890,11 +865,6 @@ export class Minter extends Entity {
   constructor(id: string) {
     super();
     this.set("id", Value.fromString(id));
-
-    this.set("block_number", Value.fromI32(0));
-    this.set("minter_address", Value.fromString(""));
-    this.set("nfts", Value.fromStringArray(new Array(0)));
-    this.set("minted_amount", Value.fromI32(0));
   }
 
   save(): void {
@@ -963,15 +933,6 @@ export class Owner extends Entity {
   constructor(id: string) {
     super();
     this.set("id", Value.fromString(id));
-
-    this.set("block_number", Value.fromI32(0));
-    this.set("mintTransactions", Value.fromStringArray(new Array(0)));
-    this.set("sendTransactions", Value.fromStringArray(new Array(0)));
-    this.set("receiveTransactions", Value.fromStringArray(new Array(0)));
-    this.set("mintCount", Value.fromI32(0));
-    this.set("sendCount", Value.fromI32(0));
-    this.set("receiveCount", Value.fromI32(0));
-    this.set("nfts", Value.fromStringArray(new Array(0)));
   }
 
   save(): void {
@@ -1076,13 +1037,6 @@ export class Mint extends Entity {
   constructor(id: string) {
     super();
     this.set("id", Value.fromString(id));
-
-    this.set("block_number", Value.fromI32(0));
-    this.set("transaction", Value.fromString(""));
-    this.set("nft_contract", Value.fromString(""));
-    this.set("topic", Value.fromString(""));
-    this.set("minter", Value.fromString(""));
-    this.set("mint_quantity", Value.fromI32(0));
   }
 
   save(): void {
@@ -1212,13 +1166,6 @@ export class Reveal extends Entity {
   constructor(id: string) {
     super();
     this.set("id", Value.fromString(id));
-
-    this.set("block_number", Value.fromI32(0));
-    this.set("transaction", Value.fromString(""));
-    this.set("nft_contract", Value.fromString(""));
-    this.set("topic", Value.fromString(""));
-    this.set("vrf_fare", Value.fromBigInt(BigInt.zero()));
-    this.set("starting_index", Value.fromI32(0));
   }
 
   save(): void {
@@ -1322,11 +1269,6 @@ export class Payment extends Entity {
   constructor(id: string) {
     super();
     this.set("id", Value.fromString(id));
-
-    this.set("block_number", Value.fromI32(0));
-    this.set("target", Value.fromString(""));
-    this.set("origin", Value.fromString(""));
-    this.set("value", Value.fromBigInt(BigInt.zero()));
   }
 
   save(): void {
@@ -1463,14 +1405,6 @@ export class WalletRequest extends Entity {
   constructor(id: string) {
     super();
     this.set("id", Value.fromString(id));
-
-    this.set("block_number", Value.fromI32(0));
-    this.set("transaction", Value.fromString(""));
-    this.set("requester", Value.fromString(""));
-    this.set("request_type", Value.fromString(""));
-    this.set("voters", Value.fromStringArray(new Array(0)));
-    this.set("votes", Value.fromI32(0));
-    this.set("is_execute", Value.fromBoolean(false));
   }
 
   save(): void {
@@ -1635,9 +1569,6 @@ export class WalletProfit extends Entity {
   constructor(id: string) {
     super();
     this.set("id", Value.fromString(id));
-
-    this.set("block_number", Value.fromI32(0));
-    this.set("value", Value.fromBigInt(BigInt.zero()));
   }
 
   save(): void {

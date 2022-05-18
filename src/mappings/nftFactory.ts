@@ -40,6 +40,7 @@ export function handleNftContractDeployed(event: NftContractDeployed): void {
   contractEntity.total_burned_amount = BigInt.zero().toI32();
   contractEntity.profit = BigInt.zero();
   contractEntity.fee_paid = BigInt.zero();
+  contractEntity.withdrawal = BigInt.zero();
 
   // Interaction with the NFT contract for max supply, cover uri.
   const nftContract = NftContract.bind(event.params.nftContract);

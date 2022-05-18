@@ -5,6 +5,8 @@
   "repository": "https://github.com/omnuum/subgraph-v1",
   "type": "module",
   "scripts": {
+    "auth:private": "dotenv -- bash -c 'graph auth --product hosted-service $AUTH_PRIVATE'",
+    "auth:omnuum": "dotenv -- bash -c 'graph auth --product hosted-service $AUTH_OMNUUM'",
     "createEventSelector": "node scripts/createEventSelectors.js",
     "prepare:mainnet": "mustache config/mainnet.json subgraph.template.yaml > subgraph.mainnet.yaml",
     "prepare:rinkeby": "mustache config/rinkeby.json subgraph.template.yaml > subgraph.rinkeby.yaml",
@@ -17,7 +19,7 @@
     "deploy:hosting:ddevkim:rinkeby": "npm run build:rinkeby && graph deploy --product hosted-service ddevkim/omnuum-rinkeby subgraph.rinkeby.yaml"
   },
   "dependencies": {
-    "@graphprotocol/graph-cli": "0.28.1",
+    "@graphprotocol/graph-cli": "0.29.2",
     "@graphprotocol/graph-ts": "0.26.0",
     "@typescript-eslint/eslint-plugin": "^5.17.0",
     "@typescript-eslint/parser": "^5.17.0",
@@ -25,6 +27,8 @@
     "typescript": "^4.6.3"
   },
   "devDependencies": {
+    "dotenv": "^16.0.1",
+    "dotenv-cli": "^5.1.0",
     "eslint-config-prettier": "^8.5.0",
     "fxjs": "^0.21.3",
     "mustache": "^4.2.0",

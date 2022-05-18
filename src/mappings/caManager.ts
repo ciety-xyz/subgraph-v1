@@ -37,6 +37,7 @@ export function handleContractRegistered(event: ContractRegistered): void {
   contractEntity.is_owner_changed = false;
   contractEntity.profit = BigInt.zero();
   contractEntity.fee_paid = BigInt.zero();
+  contractEntity.withdrawal = BigInt.zero();
 
   contractEntity.save();
 }
