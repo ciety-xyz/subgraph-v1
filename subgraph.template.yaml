@@ -136,12 +136,12 @@ dataSources:
         - name: OmnuumNFT721
           file: ./abis/OmnuumNFT721.json
       eventHandlers:
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
         - event: RequestVRF(indexed address,indexed bytes32,string)
           handler: handleRequestVRF
         - event: ResponseVRF(indexed bytes32,uint256,string,bool,string)
           handler: handleResponseVRF
-        - event: OwnershipTransferred(indexed address,indexed address)
-          handler: handleOwnershipTransferred
         - event: Updated(uint256,string)
           handler: handleUpdated
  {{/vrfManager}}
@@ -167,22 +167,22 @@ dataSources:
         - name: OmnuumWallet
           file: ./abis/OmnuumWallet.json
       eventHandlers:
-        - event: EtherReceived(indexed address,uint256)
-          handler: handleEtherReceived
-        - event: PaymentReceived(indexed address,indexed address,string,string,uint256)
-          handler: handlePaymentReceived
-        - event: MintFeeReceived(indexed address,uint256)
-          handler: handleMintFeeReceived
-        - event: Requested(indexed address,indexed uint256,indexed uint8)
-          handler: handleRequested
         - event: Approved(indexed address,indexed uint256,uint8)
           handler: handleApproved
         - event: Canceled(indexed address,indexed uint256)
           handler: handleCanceled
-        - event: Revoked(indexed address,indexed uint256,uint8)
-          handler: handleRevoked
+        - event: EtherReceived(indexed address,uint256)
+          handler: handleEtherReceived
         - event: Executed(indexed address,indexed uint256,indexed uint8)
           handler: handleExecuted
+        - event: MintFeeReceived(indexed address,uint256)
+          handler: handleMintFeeReceived
+        - event: PaymentReceived(indexed address,indexed address,string,string,uint256)
+          handler: handlePaymentReceived
+        - event: Requested(indexed address,indexed uint256,indexed uint8)
+          handler: handleRequested
+        - event: Revoked(indexed address,indexed uint256,uint8)
+          handler: handleRevoked
   {{/wallet}}
 
   # nftFactory
