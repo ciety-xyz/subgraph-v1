@@ -8,6 +8,8 @@ type Transaction @entity {
   to: String
   value: BigInt!
   gas_price: BigInt!
+  gas_limit: BigInt!
+  nonce: BigInt!
 
   "Derived"
   contracts: [Contract!] @derivedFrom(field: "transaction")

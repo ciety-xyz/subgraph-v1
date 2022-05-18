@@ -260,7 +260,7 @@
     "which" "2.0.2"
     "yaml" "1.9.2"
 
-"@graphprotocol/graph-ts@0.26.0":
+"@graphprotocol/graph-ts@^0.26.0":
   "integrity" "sha512-GW/emOJl+35MXgmIxTnUK7dJtPCaB9u5aAwoLVqJ8swogC794O92UrXMVrAJsherUriu+yI9bLMGmNPOIi60jw=="
   "resolved" "https://registry.npmjs.org/@graphprotocol/graph-ts/-/graph-ts-0.26.0.tgz"
   "version" "0.26.0"

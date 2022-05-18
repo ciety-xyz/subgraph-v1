@@ -1,5 +1,5 @@
-specVersion: 0.0.2
-description: A protocol for NFT minting
+specVersion: 0.0.3
+description: The Omnuum protocol for NFT minting
 repository: https://github.com/ddevkim/omnuum_subgraph_rinkeby
 schema:
   file: ./schema.graphql
@@ -235,17 +235,17 @@ templates:
         - name: OmnuumNFT721
           file: ./abis/OmnuumNFT721.json
       eventHandlers:
-        - event: Transfer(indexed address,indexed address,indexed uint256)
-          handler: handleTransfer
-        - event: OwnershipTransferred(indexed address,indexed address)
-          handler: handleOwnershipTransferred
+        - event: BalanceTransferred(indexed address,uint256)
+          handler: handleBalanceTransferred
         - event: BaseURIChanged(indexed address,string)
           handler: handleBaseURIChanged
-        - event: Revealed(indexed address)
-          handler: handleRevealed
         - event: EtherReceived(indexed address,uint256)
           handler: handleEtherReceived
         - event: MintFeePaid(indexed address,indexed address,uint256,uint256)
           handler: handleMintFeePaid
-        - event: BalanceTransferred(indexed address,uint256)
-          handler: handleBalanceTransferred
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+        - event: Revealed(indexed address)
+          handler: handleRevealed
+        - event: Transfer(indexed address,indexed address,indexed uint256)
+          handler: handleTransfer

@@ -11,6 +11,8 @@ export function saveTransaction(event: ethereum.Event, contractTopic: string, ev
     transactionEntity = new Transaction(transactionId);
     transactionEntity = evolveBaseTransactionInfo(event, transactionEntity);
     transactionEntity.event_selectors = [eventSelector];
+    transactionEntity.gas_limit = event.transaction.gasLimit;
+    transactionEntity.nonce = event.transaction.nonce;
     transactionEntity.save();
   } else {
     // If the event selector is duplicated multiple times in the same transaction,

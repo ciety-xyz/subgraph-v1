@@ -113,6 +113,24 @@ export class Transaction extends Entity {
     this.set("gas_price", Value.fromBigInt(value));
   }
 
+  get gas_limit(): BigInt {
+    let value = this.get("gas_limit");
+    return value!.toBigInt();
+  }
+
+  set gas_limit(value: BigInt) {
+    this.set("gas_limit", Value.fromBigInt(value));
+  }
+
+  get nonce(): BigInt {
+    let value = this.get("nonce");
+    return value!.toBigInt();
+  }
+
+  set nonce(value: BigInt) {
+    this.set("nonce", Value.fromBigInt(value));
+  }
+
   get contracts(): Array<string> | null {
     let value = this.get("contracts");
     if (!value || value.kind == ValueKind.NULL) {
