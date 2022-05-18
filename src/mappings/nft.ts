@@ -15,7 +15,7 @@ import { manageOwner } from '../modules/manageOwners';
 export function handleTransfer(event: Transfer): void {
   const nftContractAddress = event.address.toHexString();
   const tokenId = event.params.tokenId.toString();
-  const eventName = getEventName(EventName.TransferSingle);
+  const eventName = getEventName(EventName.Transfer);
   const transactionEntity = saveTransaction(event, getContractTopic(event.address), eventName);
   const mintQuantity = 1;
 

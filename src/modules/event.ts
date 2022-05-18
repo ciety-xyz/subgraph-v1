@@ -10,7 +10,7 @@ export enum EventName {
   EtherReceived,
   MintFeePaid,
   BalanceTransferred,
-  TransferSingle,
+  Transfer,
   ownershipTransferred,
   BaseURIChanged,
   Revealed,
@@ -49,8 +49,8 @@ export function getEventName(eventName: EventName): string {
       return 'MintFeePaid';
     case EventName.BalanceTransferred:
       return 'BalanceTransferred';
-    case EventName.TransferSingle:
-      return 'TransferSingle';
+    case EventName.Transfer:
+      return 'Transfer';
     case EventName.BaseURIChanged:
       return 'BaseURIChanged';
     case EventName.Revealed:

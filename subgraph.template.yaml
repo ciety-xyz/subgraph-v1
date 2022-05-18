@@ -64,22 +64,22 @@ dataSources:
         - name: OmnuumNFT721
           file: ./abis/OmnuumNFT721.json
       eventHandlers:
-        - event: SetPublicSchedule(indexed address,indexed uint256,uint256,uint256,uint32,uint32)
-          handler: handleSetPublicSchedule
-        - event: PublicMint(indexed address,indexed address,indexed uint256,uint32,uint32,uint256)
-          handler: handlePublicMint
         - event: Airdrop(indexed address,indexed address,uint256)
           handler: handleAirdrop
-        - event: OwnershipTransferred(indexed address,indexed address)
-          handler: handleOwnershipTransferred
         - event: ChangeFeeRate(uint256)
           handler: handleChangeFeeRate
-        - event: SetMinFee(uint256)
-          handler: handleSetMinFee
-        - event: SetSpecialFeeRate(indexed address,uint256)
-          handler: handleSetSpecialFeeRate
         - event: MintFeePaid(indexed address,indexed address,uint256,uint256)
           handler: handleMintFeePaid
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+        - event: PublicMint(indexed address,indexed address,indexed uint256,uint32,uint32,uint256)
+          handler: handlePublicMint
+        - event: SetMinFee(uint256)
+          handler: handleSetMinFee
+        - event: SetPublicSchedule(indexed address,indexed uint256,uint256,uint256,uint32,uint32)
+          handler: handleSetPublicSchedule
+        - event: SetSpecialFeeRate(indexed address,uint256)
+          handler: handleSetSpecialFeeRate
   {{/mintManager}}
 
   # Ticket Manager
