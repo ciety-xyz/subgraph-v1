@@ -20,7 +20,6 @@ import { handleNFTContractBalance } from '../modules/nftContract';
 import { MINT_MANAGER_TOPIC } from '../utils/constants';
 import { Address } from '@graphprotocol/graph-ts';
 import { getLogMsg, logging, LogMsg } from '../utils/logger';
-import { OmnuumNFT721 as NftContract } from '../types/templates/OmnuumNFT721/OmnuumNFT721';
 
 export function handleSetPublicSchedule(event: SetPublicSchedule): void {
   const mintScheduleEntity = getMintScheduleEntity(
