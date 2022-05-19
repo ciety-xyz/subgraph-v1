@@ -24,14 +24,14 @@ export function handleWalletProfit(
   let walletProfitEntity = WalletProfit.load(target);
   if (!walletProfitEntity) {
     walletProfitEntity = new WalletProfit(target);
-    walletProfitEntity.value = value;
+    walletProfitEntity.value = value.neg();
 
     const contractEntity = Contract.load(target);
     if (contractEntity) {
       walletProfitEntity.contract = target;
     }
   } else {
-    walletProfitEntity.value = walletProfitEntity.value.plus(value);
+    walletProfitEntity.value = walletProfitEntity.value.minus(value);
   }
   walletProfitEntity.block_number = transaction.block_number;
   walletProfitEntity.save();

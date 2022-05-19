@@ -28,6 +28,7 @@ export function handleNftContractDeployed(event: NftContractDeployed): void {
   }
 
   const transactionEntity = saveTransaction(event, getContractTopic(event.address), eventName);
+  contractEntity.address = nftAddress;
   contractEntity.block_number = transactionEntity.block_number;
   contractEntity.transaction = transactionEntity.id;
   contractEntity.owner = creator;

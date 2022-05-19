@@ -9,6 +9,7 @@ export enum LogMsg {
   ___DUPLICATED,
   ___DIFF_OWNER,
   ___NFT_DEPLOYED,
+  ___ALREADY_EXIST,
 }
 
 export function getLogMsg(key: LogMsg): string {
@@ -29,6 +30,8 @@ export function getLogMsg(key: LogMsg): string {
       return '___DIFF_OWNER';
     case LogMsg.___NFT_DEPLOYED:
       return '___NFT_DEPLOYED';
+    case LogMsg.___ALREADY_EXIST:
+      return '___ALREADY_EXIST';
     default:
       return '___UNRECOGNIZED_LOG_MESSAGE';
   }

@@ -1,4 +1,4 @@
-import { Minter } from '../types/schema';
+import { Mint, Minter } from '../types/schema';
 import { OmnuumNFT721 as NftContract } from '../types/templates/OmnuumNFT721/OmnuumNFT721';
 import { Address } from '@graphprotocol/graph-ts';
 
@@ -33,6 +33,7 @@ export function updateMinterEntityWithMintSchedule(
     minterEntity = new Minter(id);
     minterEntity.minter_address = minterAddress;
     minterEntity.minted_amount = mintQuantity;
+    minterEntity.nfts = [];
   } else {
     minterEntity.minted_amount = minterEntity.minted_amount + mintQuantity;
   }

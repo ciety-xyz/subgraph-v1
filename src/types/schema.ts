@@ -282,6 +282,15 @@ export class Contract extends Entity {
     this.set("id", Value.fromString(value));
   }
 
+  get address(): string {
+    let value = this.get("address");
+    return value!.toString();
+  }
+
+  set address(value: string) {
+    this.set("address", Value.fromString(value));
+  }
+
   get block_number(): i32 {
     let value = this.get("block_number");
     return value!.toI32();
@@ -291,13 +300,21 @@ export class Contract extends Entity {
     this.set("block_number", Value.fromI32(value));
   }
 
-  get transaction(): string {
+  get transaction(): string | null {
     let value = this.get("transaction");
-    return value!.toString();
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
   }
 
-  set transaction(value: string) {
-    this.set("transaction", Value.fromString(value));
+  set transaction(value: string | null) {
+    if (!value) {
+      this.unset("transaction");
+    } else {
+      this.set("transaction", Value.fromString(<string>value));
+    }
   }
 
   get owner(): string {
@@ -1178,6 +1195,40 @@ export class Mint extends Entity {
       this.set("mint_price", Value.fromBigInt(<BigInt>value));
     }
   }
+
+  get fee_rate(): BigInt | null {
+    let value = this.get("fee_rate");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set fee_rate(value: BigInt | null) {
+    if (!value) {
+      this.unset("fee_rate");
+    } else {
+      this.set("fee_rate", Value.fromBigInt(<BigInt>value));
+    }
+  }
+
+  get min_fee(): BigInt | null {
+    let value = this.get("min_fee");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set min_fee(value: BigInt | null) {
+    if (!value) {
+      this.unset("min_fee");
+    } else {
+      this.set("min_fee", Value.fromBigInt(<BigInt>value));
+    }
+  }
 }
 
 export class Reveal extends Entity {
@@ -1247,13 +1298,21 @@ export class Reveal extends Entity {
     this.set("topic", Value.fromString(value));
   }
 
-  get vrf_fare(): BigInt {
+  get vrf_fare(): BigInt | null {
     let value = this.get("vrf_fare");
-    return value!.toBigInt();
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
   }
 
-  set vrf_fare(value: BigInt) {
-    this.set("vrf_fare", Value.fromBigInt(value));
+  set vrf_fare(value: BigInt | null) {
+    if (!value) {
+      this.unset("vrf_fare");
+    } else {
+      this.set("vrf_fare", Value.fromBigInt(<BigInt>value));
+    }
   }
 
   get random_number(): BigInt | null {

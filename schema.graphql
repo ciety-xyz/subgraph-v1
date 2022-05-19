@@ -24,13 +24,14 @@ type Transaction @entity {
 type Contract @entity {
   "id: contractAddress(hex)"
   id: ID!
-  block_number: Int!
-  transaction: Transaction!
+  address: String!
+  block_number: Int
+  transaction: Transaction
   owner: String!
   topic: String!
-  is_removed: Boolean!
+  is_removed: Boolean
   is_revealed: Boolean
-  is_owner_changed: Boolean!
+  is_owner_changed: Boolean
   name: String
   symbol: String
   collection_id: String
@@ -121,6 +122,8 @@ type Mint @entity {
   mint_quantity: Int!
   max_quantity: Int
   mint_price: BigInt
+  fee_rate: BigInt
+  min_fee: BigInt
 }
 
 type Reveal @entity {
@@ -130,9 +133,9 @@ type Reveal @entity {
   transaction: Transaction!
   nft_contract: Contract!
   topic: String!
-  vrf_fare: BigInt!
+  vrf_fare: BigInt
   random_number: BigInt
-  starting_index: Int!
+  starting_index: Int
 }
 
 enum RequestType {

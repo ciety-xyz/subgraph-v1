@@ -1,9 +1,11 @@
 import { getUniqueId, saveTransaction } from './transaction';
-import { Mint, MintSchedule } from '../types/schema';
+import { Contract, Mint, MintSchedule } from '../types/schema';
 import { getLogMsg, logging, LogMsg } from '../utils/logger';
 import { updateMinterEntityWithMintSchedule } from './minter';
 import { getContractTopic } from './topic';
-import { PublicMint } from '../types/OmnuumMintManager/OmnuumMintManager';
+import { OmnuumMintManager, PublicMint } from '../types/OmnuumMintManager/OmnuumMintManager';
+import { MINT_MANAGER_TOPIC } from '../utils/constants';
+import { Address } from '@graphprotocol/graph-ts';
 
 export function handleMint<T extends PublicMint>(event: T, eventName: string, mintTopic: string): void {
   const mintEntityId = getUniqueId(event);
@@ -29,7 +31,25 @@ export function handleMint<T extends PublicMint>(event: T, eventName: string, mi
   mintEntity.max_quantity = event.params.maxQuantity.toI32();
   mintEntity.mint_price = event.params.price;
 
-  mintEntity.save();
+  const mintManagerContractEntity = Contract.load(MINT_MANAGER_TOPIC);
+  if (mintManagerContractEntity) {
+    const mintManagerAddress = mintManagerContractEntity.address;
+    const mintManagerContract = OmnuumMintManager.bind(Address.fromString(mintManagerAddress));
+    if (mintManagerContract) {
+      const feeRate = mintManagerContract.try_getFeeRate(Address.fromString(nftContractAddress));
+      if (feeRate.reverted) {
+        logging(getLogMsg(LogMsg.___CALL_REVERTED), eventName, event.address.toHexString(), '@query feeRate');
+      } else {
+        mintEntity.fee_rate = feeRate.value;
+      }
+      const minFee = mintManagerContract.try_minFee();
+      if (minFee.reverted) {
+        logging(getLogMsg(LogMsg.___CALL_REVERTED), eventName, event.address.toHexString(), '@query minFee');
+      } else {
+        mintEntity.min_fee = minFee.value;
+      }
+    }
+  }
 
   // update minted_amount at MintSchedule Entity
   const mintScheduleEntity = MintSchedule.load(mintScheduleId);
@@ -51,4 +71,6 @@ export function handleMint<T extends PublicMint>(event: T, eventName: string, mi
     mintQuantity,
     transactionEntity.block_number
   );
+
+  mintEntity.save();
 }

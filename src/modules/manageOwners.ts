@@ -15,6 +15,10 @@ export function manageOwner(
   let toOwnerEntity = Owner.load(to);
   if (!toOwnerEntity) {
     toOwnerEntity = new Owner(to);
+    toOwnerEntity.mintTransactions = [];
+    toOwnerEntity.sendTransactions = [];
+    toOwnerEntity.receiveTransactions = [];
+    toOwnerEntity.nfts = [];
     toOwnerEntity.mintCount = 0;
     toOwnerEntity.sendCount = 0;
     toOwnerEntity.receiveCount = 0;

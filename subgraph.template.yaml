@@ -103,6 +103,8 @@ dataSources:
       abis:
         - name: TicketManager
           file: ./abis/TicketManager.json
+        - name: OmnuumMintManager
+          file: ./abis/OmnuumMintManager.json
         - name: OmnuumNFT721
           file: ./abis/OmnuumNFT721.json
       eventHandlers:

@@ -15,31 +15,54 @@ import { getLogMsg, logging, LogMsg } from '../utils/logger';
 import { ownershipTransfer } from '../modules/ownership';
 
 export function handleContractRegistered(event: ContractRegistered): void {
-  const contractEntityId = event.params.managerContract.toHexString();
+  const managerContractEntityId = event.params.managerContract.toHexString();
+  const contractTopic = event.params.topic;
+  const eventName = getEventName(EventName.ContractRegistered);
+  const transactionEntity = saveTransaction(event, 'CAMANAGER', eventName);
+  const txOrigin = event.transaction.from.toHexString();
 
-  let contractEntity = Contract.load(contractEntityId);
+  let contractEntity = Contract.load(managerContractEntityId);
   if (!contractEntity) {
-    contractEntity = new Contract(contractEntityId);
-    log.debug('DEBUG__manager_contract_registration address: {}', [contractEntityId]);
+    contractEntity = new Contract(managerContractEntityId);
+
+    // In the contract entity, the topic entered as an argument value when the manager contract is registered should be stored as it is.
+    contractEntity.address = managerContractEntityId;
+    contractEntity.block_number = transactionEntity.block_number;
+    contractEntity.transaction = transactionEntity.id;
+    contractEntity.owner = txOrigin;
+    contractEntity.topic = contractTopic;
+    contractEntity.is_removed = false;
+    contractEntity.is_owner_changed = false;
+    contractEntity.profit = BigInt.zero();
+    contractEntity.fee_paid = BigInt.zero();
+    contractEntity.withdrawal = BigInt.zero();
+
+    contractEntity.save();
+  } else {
+    logging(
+      getLogMsg(LogMsg.___ALREADY_EXIST),
+      eventName,
+      event.address.toHexString(),
+      'Manager contract already existed, but try to register again.'
+    );
+  }
+
+  let topicManagerContractEntity = Contract.load(contractTopic);
+  if (!topicManagerContractEntity) {
+    topicManagerContractEntity = new Contract(contractTopic);
   }
 
   // The transaction entity should store a contract topic where the event was triggered in which contract.
   // This topic can be retrieved by loading Contract Entity for the contract address where the event occurred.
   // Since CA Manager is the contract itself that manages the contract, it has no choice but to register the contract topic with a constant value.
-  const transactionEntity = saveTransaction(event, 'CAMANAGER', getEventName(EventName.ContractRegistered));
+  topicManagerContractEntity.address = managerContractEntityId;
+  topicManagerContractEntity.owner = txOrigin;
+  topicManagerContractEntity.topic = contractTopic;
+  topicManagerContractEntity.profit = BigInt.zero();
+  topicManagerContractEntity.fee_paid = BigInt.zero();
+  topicManagerContractEntity.withdrawal = BigInt.zero();
 
-  // In the contract entity, the topic entered as an argument value when the manager contract is registered should be stored as it is.
-  contractEntity.block_number = transactionEntity.block_number;
-  contractEntity.transaction = transactionEntity.id;
-  contractEntity.owner = event.transaction.from.toHexString();
-  contractEntity.topic = event.params.topic;
-  contractEntity.is_removed = false;
-  contractEntity.is_owner_changed = false;
-  contractEntity.profit = BigInt.zero();
-  contractEntity.fee_paid = BigInt.zero();
-  contractEntity.withdrawal = BigInt.zero();
-
-  contractEntity.save();
+  topicManagerContractEntity.save();
 }
 
 export function handleContractRemoved(event: ContractRemoved): void {

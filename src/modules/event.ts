@@ -23,6 +23,9 @@ export enum EventName {
   ResponseVRF,
   Requested,
   Updated,
+  ChangeFeeRate,
+  SetMinFee,
+  SetSpecialFeeRate,
 }
 
 export function getEventName(eventName: EventName): string {
@@ -73,6 +76,12 @@ export function getEventName(eventName: EventName): string {
       return 'Requested';
     case EventName.Updated:
       return 'Updated';
+    case EventName.ChangeFeeRate:
+      return 'ChangeFeeRate';
+    case EventName.SetMinFee:
+      return 'SetMinFee';
+    case EventName.SetSpecialFeeRate:
+      return 'SetSpecialFeeRate';
     default:
       return '';
   }

@@ -7,15 +7,20 @@ import {
   ChangeFeeRate,
   SetMinFee,
   MintFeePaid,
+  OmnuumMintManager,
 } from '../types/OmnuumMintManager/OmnuumMintManager';
 import { EventName, getEventName } from '../modules/event';
 import { getUniqueId, saveTransaction } from '../modules/transaction';
 import { getContractTopic, getMintTopic, MintTopic } from '../modules/topic';
-import { Mint } from '../types/schema';
+import { Contract, Mint } from '../types/schema';
 import { handleMint } from '../modules/handleMint';
 import { ownershipTransfer } from '../modules/ownership';
 import { getMintScheduleEntity } from '../modules/mintSchedule';
 import { handleNFTContractBalance } from '../modules/nftContract';
+import { MINT_MANAGER_TOPIC } from '../utils/constants';
+import { Address } from '@graphprotocol/graph-ts';
+import { getLogMsg, logging, LogMsg } from '../utils/logger';
+import { OmnuumNFT721 as NftContract } from '../types/templates/OmnuumNFT721/OmnuumNFT721';
 
 export function handleSetPublicSchedule(event: SetPublicSchedule): void {
   const mintScheduleEntity = getMintScheduleEntity(
@@ -42,6 +47,7 @@ export function handleAirdrop(event: Airdrop): void {
   const eventName = getEventName(EventName.Airdrop);
   const transactionEntity = saveTransaction(event, getContractTopic(event.address), eventName);
   const nftContractAddress = event.params.nftContract.toHexString();
+  const mintQuantity = event.params.quantity.toI32();
 
   let mintEntity = Mint.load(mintEntityId);
   if (!mintEntity) {
@@ -53,7 +59,28 @@ export function handleAirdrop(event: Airdrop): void {
   mintEntity.nft_contract = nftContractAddress;
   mintEntity.topic = getMintTopic(MintTopic.AIRDROP);
   mintEntity.minter = event.params.receiver.toHexString();
-  mintEntity.mint_quantity = event.params.quantity.toI32();
+  mintEntity.mint_quantity = mintQuantity;
+
+  const mintManagerContractEntity = Contract.load(MINT_MANAGER_TOPIC);
+  if (mintManagerContractEntity) {
+    const mintManagerAddress = mintManagerContractEntity.address;
+    const mintManagerContract = OmnuumMintManager.bind(Address.fromString(mintManagerAddress));
+    if (mintManagerContract) {
+      const feeRate = mintManagerContract.try_getFeeRate(Address.fromString(nftContractAddress));
+      if (feeRate.reverted) {
+        logging(getLogMsg(LogMsg.___CALL_REVERTED), eventName, event.address.toHexString(), '@query feeRate');
+      } else {
+        mintEntity.fee_rate = feeRate.value;
+      }
+
+      const minFee = mintManagerContract.try_minFee();
+      if (minFee.reverted) {
+        logging(getLogMsg(LogMsg.___CALL_REVERTED), eventName, event.address.toHexString(), '@query minFee');
+      } else {
+        mintEntity.min_fee = minFee.value;
+      }
+    }
+  }
 
   mintEntity.save();
 }
@@ -66,8 +93,20 @@ export function handleOwnershipTransferred(event: OwnershipTransferred): void {
   ownershipTransfer(event);
 }
 
-export function handleChangeFeeRate(event: ChangeFeeRate): void {}
+export function handleChangeFeeRate(event: ChangeFeeRate): void {
+  // Saving Transaction Only
+  const eventName = getEventName(EventName.ChangeFeeRate);
+  saveTransaction(event, getContractTopic(event.address), eventName);
+}
 
-export function handleSetMinFee(event: SetMinFee): void {}
+export function handleSetMinFee(event: SetMinFee): void {
+  // Saving Transaction Only
+  const eventName = getEventName(EventName.SetMinFee);
+  saveTransaction(event, getContractTopic(event.address), eventName);
+}
 
-export function handleSetSpecialFeeRate(event: SetSpecialFeeRate): void {}
+export function handleSetSpecialFeeRate(event: SetSpecialFeeRate): void {
+  // Saving Transaction Only
+  const eventName = getEventName(EventName.SetSpecialFeeRate);
+  saveTransaction(event, getContractTopic(event.address), eventName);
+}
