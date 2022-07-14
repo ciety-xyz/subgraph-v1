@@ -1,0 +1,19 @@
+{
+  "network": "matic",
+  "deployStartAt": "2:50:56 AM",
+  "deployer": "0xF891E5556686b588269762d59466451FD7cE49B9",
+  "caManager": { "address": "0xB1b09A19eCd692a071efe5E370653E3ef10d8129", "startBlock": "30686796" },
+  "mintManager": { "address": "0x1F152dD9A414F3F59A219Cfa094ab0e8ec1fB24e", "startBlock": "30687422" },
+  "exchange": { "address": "0xADecf83a3b120b9689b1C5bc8A6791e2BEA062F3", "startBlock": "30687434" },
+  "wallet": { "address": "0x5ECA52eDD8b34B1596891d7AA7a518357B5f7e60", "startBlock": "30687471" },
+  "ticketManager": { "address": "0x22e4f9ceB16e3b59B209830E59a6E2Dc1aa1D8b2", "startBlock": "30687440" },
+  "vrfManager": { "address": "0xbdb39a4b12FF2713199DF5BE2b80B7841626BF4a", "startBlock": "30687465" },
+  "revealManager": { "address": "0x61642E59dC403DC882B5A40569ff0F41ff643d6D", "startBlock": "30687444" },
+  "senderVerifier": { "address": "0xD2D2173A503D48DAA4C80137567aeDF0f45187b5", "startBlock": "30687461" },
+  "nft721": {
+    "impl": "0x776f9c1ABE63BC55766D3b443a63692E1b0d486B",
+    "beacon": "0x0ce9c7Dc8B650603F1aa50042f3CE7568cA3544c",
+    "startBlock": "30687637"
+  },
+  "nftFactory": { "address": "0x5a7E407238707Ee2E3888BB263723A2Da311507a", "startBlock": "30687671" }
+}

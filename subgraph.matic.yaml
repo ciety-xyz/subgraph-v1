@@ -1,0 +1,241 @@
+specVersion: 0.0.3
+description: The Omnuum protocol for NFT minting
+repository: https://github.com/ddevkim/omnuum_subgraph_rinkeby
+schema:
+  file: ./schema.graphql
+dataSources:
+
+  # CA Manager
+  - kind: ethereum/contract
+    name: OmnuumCAManager
+    network: matic
+    source:
+      startBlock: 30686796
+      address: "0xB1b09A19eCd692a071efe5E370653E3ef10d8129"
+      abi: OmnuumCAManager
+    mapping:
+      file: ./src/mappings/caManager.ts
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - Transaction
+        - Contract
+        - ContractRole
+      abis:
+        - name: OmnuumCAManager
+          file: ./abis/OmnuumCAManager.json
+      eventHandlers:
+        - event: ContractRegistered(indexed address,string)
+          handler: handleContractRegistered
+        - event: ContractRemoved(indexed address,string)
+          handler: handleContractRemoved
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+        - event: RoleAdded(indexed address,string)
+          handler: handleRoleAdded
+        - event: RoleRemoved(indexed address,string)
+          handler: handleRoleRemoved
+
+  # Mint Manager
+  - kind: ethereum/contract
+    name: OmnuumMintManager
+    network: matic
+    source:
+      startBlock: 30687422
+      address: "0x1F152dD9A414F3F59A219Cfa094ab0e8ec1fB24e"
+      abi: OmnuumMintManager
+    mapping:
+      file: ./src/mappings/mintManager.ts
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - Transaction
+        - MintSchedule
+        - Mint
+        - Contract
+      abis:
+        - name: OmnuumMintManager
+          file: ./abis/OmnuumMintManager.json
+        - name: OmnuumNFT721
+          file: ./abis/OmnuumNFT721.json
+      eventHandlers:
+        - event: Airdrop(indexed address,indexed address,uint256)
+          handler: handleAirdrop
+        - event: ChangeFeeRate(uint256)
+          handler: handleChangeFeeRate
+        - event: MintFeePaid(indexed address,indexed address,uint256,uint256)
+          handler: handleMintFeePaid
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+        - event: PublicMint(indexed address,indexed address,indexed uint256,uint32,uint32,uint256)
+          handler: handlePublicMint
+        - event: SetMinFee(uint256)
+          handler: handleSetMinFee
+        - event: SetPublicSchedule(indexed address,indexed uint256,uint256,uint256,uint32,uint32)
+          handler: handleSetPublicSchedule
+        - event: SetSpecialFeeRate(indexed address,uint256)
+          handler: handleSetSpecialFeeRate
+
+  # Ticket Manager
+  - kind: ethereum/contract
+    name: TicketManager
+    network: matic
+    source:
+      startBlock: 30687440
+      address: "0x22e4f9ceB16e3b59B209830E59a6E2Dc1aa1D8b2"
+      abi: TicketManager
+    mapping:
+      file: ./src/mappings/ticketManager.ts
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - Transaction
+        - MintSchedule
+        - Mint
+      abis:
+        - name: TicketManager
+          file: ./abis/TicketManager.json
+        - name: OmnuumMintManager
+          file: ./abis/OmnuumMintManager.json
+        - name: OmnuumNFT721
+          file: ./abis/OmnuumNFT721.json
+      eventHandlers:
+        - event: SetTicketSchedule(indexed address,indexed uint256,uint256)
+          handler: handleSetTicketSchedule
+        - event: TicketMint(indexed address,indexed address,indexed uint256,uint32,uint32,uint256)
+          handler: handleTicketMint
+
+  # VRF Manager
+  - kind: ethereum/contract
+    name: OmnuumVRFManager
+    network: matic
+    source:
+      startBlock: 30687465
+      address: "0xbdb39a4b12FF2713199DF5BE2b80B7841626BF4a"
+      abi: OmnuumVRFManager
+    mapping:
+      file: ./src/mappings/vrfManager.ts
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - Transaction
+        - Reveal
+        - Contract
+      abis:
+        - name: OmnuumVRFManager
+          file: ./abis/OmnuumVRFManager.json
+        - name: OmnuumNFT721
+          file: ./abis/OmnuumNFT721.json
+      eventHandlers:
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+        - event: RequestVRF(indexed address,indexed bytes32,string)
+          handler: handleRequestVRF
+        - event: ResponseVRF(indexed bytes32,uint256,string,bool,string)
+          handler: handleResponseVRF
+        - event: Updated(uint256,string)
+          handler: handleUpdated
+
+  # Wallet
+  - kind: ethereum/contract
+    name: OmnuumWallet
+    network: matic
+    source:
+      startBlock: 30687471
+      address: "0x5ECA52eDD8b34B1596891d7AA7a518357B5f7e60"
+      abi: OmnuumWallet
+    mapping:
+      file: ./src/mappings/wallet.ts
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - Transaction
+        - Payment
+      abis:
+        - name: OmnuumWallet
+          file: ./abis/OmnuumWallet.json
+      eventHandlers:
+        - event: Approved(indexed address,indexed uint256,uint8)
+          handler: handleApproved
+        - event: Canceled(indexed address,indexed uint256)
+          handler: handleCanceled
+        - event: EtherReceived(indexed address,uint256)
+          handler: handleEtherReceived
+        - event: Executed(indexed address,indexed uint256,indexed uint8)
+          handler: handleExecuted
+        - event: MintFeeReceived(indexed address,uint256)
+          handler: handleMintFeeReceived
+        - event: PaymentReceived(indexed address,indexed address,string,string,uint256)
+          handler: handlePaymentReceived
+        - event: Requested(indexed address,indexed uint256,indexed uint8)
+          handler: handleRequested
+        - event: Revoked(indexed address,indexed uint256,uint8)
+          handler: handleRevoked
+
+  # nftFactory
+  - kind: ethereum/contract
+    name: NftFactory
+    network: matic
+    source:
+      startBlock: 30687671
+      address: "0x5a7E407238707Ee2E3888BB263723A2Da311507a"
+      abi: NftFactory
+    mapping:
+      file: ./src/mappings/nftFactory.ts
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - Transaction
+        - Contract
+      abis:
+        - name: NftFactory
+          file: ./abis/NftFactory.json
+        - name: OmnuumNFT721
+          file: ./abis/OmnuumNFT721.json
+      eventHandlers:
+        - event: NftContractDeployed(indexed address,indexed address,indexed uint256)
+          handler: handleNftContractDeployed
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+
+
+templates:
+  - kind: ethereum/contract
+    name: OmnuumNFT721
+    network: matic
+    source:
+      abi: OmnuumNFT721
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      file: ./src/mappings/nft.ts
+      entities:
+        - Transaction
+        - Contract
+        - Nft
+        - Minter
+      abis:
+        - name: OmnuumNFT721
+          file: ./abis/OmnuumNFT721.json
+      eventHandlers:
+        - event: BalanceTransferred(indexed address,uint256)
+          handler: handleBalanceTransferred
+        - event: BaseURIChanged(indexed address,string)
+          handler: handleBaseURIChanged
+        - event: EtherReceived(indexed address,uint256)
+          handler: handleEtherReceived
+        - event: MintFeePaid(indexed address,indexed address,uint256,uint256)
+          handler: handleMintFeePaid
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+        - event: Revealed(indexed address)
+          handler: handleRevealed
+        - event: Transfer(indexed address,indexed address,indexed uint256)
+          handler: handleTransfer

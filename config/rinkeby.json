@@ -1,19 +1,19 @@
 {
   "network": "rinkeby",
-  "deployStartAt": "3:45:34 PM",
+  "deployStartAt": "12:36:43 PM",
   "deployer": "0xF891E5556686b588269762d59466451FD7cE49B9",
-  "caManager": { "address": "0x4DDB8A445626F263086bfc35D83138F8F58546CE", "startBlock": "10696057" },
-  "mintManager": { "address": "0xdB09724585cd6CDe2bE010eC15D231B7D3F7628f", "startBlock": "10696062" },
-  "exchange": { "address": "0x638d7870f9515Ff9F9e2c391D4F8Ae141e3E944D", "startBlock": "10696064" },
-  "wallet": { "address": "0x029A474dba7c3f5D4E572b504527Efe85da79617", "startBlock": "10696070" },
-  "ticketManager": { "address": "0xeb76525Cacf4550AFc0c57d04b59280c8C2A52de", "startBlock": "10696065" },
-  "vrfManager": { "address": "0xC4490009553c3BDd275a7c70a5aE7d268e05C551", "startBlock": "10696069" },
-  "revealManager": { "address": "0xe27C32e758b49c1765F32AEcB48c8014752f282b", "startBlock": "10696066" },
-  "senderVerifier": { "address": "0x7504f5Eb5B992EC30Ec20489EDBf96650AC13525", "startBlock": "10696067" },
+  "caManager": { "address": "0x2B56903100B56EA5CEF2447Bb2ff69285AC23ecC", "startBlock": "10683895" },
+  "mintManager": { "address": "0x4A9025da9182F9E10d1989A6779df28950683f47", "startBlock": "10683899" },
+  "exchange": { "address": "0xbA769BeEEDFe9e522c69223194b03e63AD510353", "startBlock": "10683901" },
+  "wallet": { "address": "0x4D715F80568aca8d2e411Ca1dBc924C60C4b3A1B", "startBlock": "10683910" },
+  "ticketManager": { "address": "0x91296E538059EFFF40C524A204161300Ae86E415", "startBlock": "10683903" },
+  "vrfManager": { "address": "0x1fD1E2392F2E8dF1Ff5eaf8d0a64e9b92B0fB740", "startBlock": "10683908" },
+  "revealManager": { "address": "0x5e70fD11C14bdcda37263724849c74073C60d591", "startBlock": "10683905" },
+  "senderVerifier": { "address": "0xD9c62cF04efE4eE41f75220DbBD7c3Eae8db89fD", "startBlock": "10683906" },
   "nft721": {
-    "impl": "0x9bB778642Aa0161C657638cC3284C81e797C4E3d",
-    "beacon": "0x4A06372d8C3cb28A05489E1c41f338fA9Ce1f86c",
-    "startBlock": "10696073"
+    "impl": "0xcCb5aa28D0AC95E0B7E8f152Cf636A3384AE4B90",
+    "beacon": "0x940b90BC3695473771a54c17a08448d187Ec9e06",
+    "startBlock": "10683913"
   },
-  "nftFactory": { "address": "0x8c10A6cD50d325064BeBB41e9234E8315D035A99", "startBlock": "10696075" }
+  "nftFactory": { "address": "0xabc9D5D98426601dBF439ce21333cF268ca3dC98", "startBlock": "10683914" }
 }
