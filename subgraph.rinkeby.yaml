@@ -8,10 +8,10 @@ dataSources:
   # CA Manager
   - kind: ethereum/contract
     name: OmnuumCAManager
-    network: matic
+    network: rinkeby
     source:
-      startBlock: 30686796
-      address: "0xB1b09A19eCd692a071efe5E370653E3ef10d8129"
+      startBlock: 11050024
+      address: "0xf20497261fa3419c5883738D658A0c42D202931d"
       abi: OmnuumCAManager
     mapping:
       file: ./src/mappings/caManager.ts
@@ -40,10 +40,10 @@ dataSources:
   # Mint Manager
   - kind: ethereum/contract
     name: OmnuumMintManager
-    network: matic
+    network: rinkeby
     source:
-      startBlock: 30687422
-      address: "0x1F152dD9A414F3F59A219Cfa094ab0e8ec1fB24e"
+      startBlock: 11050028
+      address: "0xc85FD9828c27D90E3Bf9A237B726B01462f23Ccc"
       abi: OmnuumMintManager
     mapping:
       file: ./src/mappings/mintManager.ts
@@ -81,10 +81,10 @@ dataSources:
   # Ticket Manager
   - kind: ethereum/contract
     name: TicketManager
-    network: matic
+    network: rinkeby
     source:
-      startBlock: 30687440
-      address: "0x22e4f9ceB16e3b59B209830E59a6E2Dc1aa1D8b2"
+      startBlock: 11050034
+      address: "0xB5e660a7571bb20525030079F5DF2f9Ad78888a5"
       abi: TicketManager
     mapping:
       file: ./src/mappings/ticketManager.ts
@@ -111,10 +111,10 @@ dataSources:
   # VRF Manager
   - kind: ethereum/contract
     name: OmnuumVRFManager
-    network: matic
+    network: rinkeby
     source:
-      startBlock: 30687465
-      address: "0xbdb39a4b12FF2713199DF5BE2b80B7841626BF4a"
+      startBlock: 11050040
+      address: "0x060E5ED840Ee7e6b7adDAaCd5F65c4C0eB0fD2e3"
       abi: OmnuumVRFManager
     mapping:
       file: ./src/mappings/vrfManager.ts
@@ -143,10 +143,10 @@ dataSources:
   # Wallet
   - kind: ethereum/contract
     name: OmnuumWallet
-    network: matic
+    network: rinkeby
     source:
-      startBlock: 30687471
-      address: "0x5ECA52eDD8b34B1596891d7AA7a518357B5f7e60"
+      startBlock: 11050042
+      address: "0x22eD6b501A05173D23034aa1004C17CCea999D8F"
       abi: OmnuumWallet
     mapping:
       file: ./src/mappings/wallet.ts
@@ -180,10 +180,10 @@ dataSources:
   # nftFactory
   - kind: ethereum/contract
     name: NftFactory
-    network: matic
+    network: rinkeby
     source:
-      startBlock: 30687671
-      address: "0x5a7E407238707Ee2E3888BB263723A2Da311507a"
+      startBlock: 11050047
+      address: "0x7C27B2D96cCE521666A9690c2B52A1b5e054a2D2"
       abi: NftFactory
     mapping:
       file: ./src/mappings/nftFactory.ts
@@ -208,7 +208,7 @@ dataSources:
 templates:
   - kind: ethereum/contract
     name: OmnuumNFT721
-    network: matic
+    network: rinkeby
     source:
       abi: OmnuumNFT721
     mapping:

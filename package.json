@@ -2,7 +2,7 @@
   "name": "omnuum-v1",
   "version": "1.0.0",
   "license": "GPL-3.0-or-later",
-  "repository": "https://github.com/omnuum/subgraph-v1",
+  "repository": "https://github.com/ciety-xyz/subgraph-v1",
   "type": "module",
   "scripts": {
     "auth:private": "dotenv -- bash -c 'graph auth --product hosted-service $AUTH_PRIVATE'",

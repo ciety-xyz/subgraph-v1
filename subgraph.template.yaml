@@ -1,6 +1,6 @@
 specVersion: 0.0.3
 description: The Omnuum protocol for NFT minting
-repository: https://github.com/ddevkim/omnuum_subgraph_rinkeby
+repository: https://github.com/ciety-xyz/subgraph-v1
 schema:
   file: ./schema.graphql
 dataSources:
