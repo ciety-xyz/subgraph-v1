@@ -17,9 +17,9 @@
     "build:mainnet": "npm run codegen:mainnet && graph build subgraph.mainnet.yaml",
     "build:goerli": "npm run codegen:goerli && graph build subgraph.goerli.yaml",
     "build:matic": "npm run codegen:matic && graph build subgraph.matic.yaml",
-    "deploy:hosting:mainnet": "npm run build:mainnet && graph deploy --product hosted-service omnuum/omnuum-mainnet subgraph.mainnet.yaml",
-    "deploy:hosting:goerli": "npm run build:goerli && graph deploy --product hosted-service omnuum/omnuum-goerli subgraph.goerli.yaml",
-    "deploy:hosting:matic": "npm run build:matic && graph deploy --product hosted-service omnuum/omnuum-matic subgraph.matic.yaml",
+    "deploy:hosting:mainnet": "npm run build:mainnet && graph deploy --product hosted-service ciety-xyz/omnuum-mainnet subgraph.mainnet.yaml",
+    "deploy:hosting:goerli": "npm run build:goerli && graph deploy --product hosted-service ciety-xyz/omnuum-goerli subgraph.goerli.yaml",
+    "deploy:hosting:matic": "npm run build:matic && graph deploy --product hosted-service ciety-xyz/omnuum-matic subgraph.matic.yaml",
     "deploy:hosting:ddevkim:mainnet": "npm run build:mainnet && graph deploy --product hosted-service ddevkim/omnuum-mainnet subgraph.mainnet.yaml",
     "deploy:hosting:ddevkim:goerli": "npm run build:goerli && graph deploy --product hosted-service ddevkim/omnuum-goerli subgraph.goerli.yaml",
     "deploy:hosting:ddevkim:matic": "npm run build:matic && graph deploy --product hosted-service ddevkim/omnuum-matic subgraph.matic.yaml"
