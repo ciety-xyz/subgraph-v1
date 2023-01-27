@@ -10,19 +10,19 @@ npm install
 ## Manifest Generation
 ```bash
 npm run prepare:mainnet
-npm run prepare:rinkeby
+npm run prepare:goerli
 ```
 
 ## Generate codes for schema graphql
 ```bash
 npm run codegen:mainnet
-npm run codegen:rinkeby
+npm run codegen:goerli
 ```
 
 ## Compile WASM files
 ```bash
 npm run build:mainnet
-npm run build:rinkeby
+npm run build:goerli
 ```
 
 ## Create Event Selectors
@@ -33,7 +33,7 @@ npm run createEventSelector
 ## Deploy Subgraph (Hosted Service)
 ```bash
 npm run deploy:hosting:mainnet
-npm run deploy:hosting:rinkeby
-npm run deploy:hosting:staging:rinkeby
+npm run deploy:hosting:goerli
+npm run deploy:hosting:staging:goerli
 
 ```

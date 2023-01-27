@@ -1,0 +1,19 @@
+{
+  "network": "goerli",
+  "deployStartAt": "8:20:08 PM",
+  "deployer": "0x6F75DDD866B9E390f9f668235C3219432EAa0eE3",
+  "caManager": { "address": "0xd16CEBCB9f3A5FB2bCa5e7bAa27Ea29ecdFC2459", "startBlock": "8379425" },
+  "mintManager": { "address": "0xf1667D5Aba46b90A0907298fdE7e8694140A86eA", "startBlock": "8379429" },
+  "exchange": { "address": "0xA1Ed3826Bde6e9595369a7761619Ee484DA17595", "startBlock": "8379432" },
+  "wallet": { "address": "0xAb45FEE77d414eC0E363960DB05B8c9180b927EC", "startBlock": "8379438" },
+  "ticketManager": { "address": "0xB1CF5a19D72Cb4A8b0a6750f741338eD66b6FD7C", "startBlock": "8379433" },
+  "vrfManager": { "address": "0xBBa9C8e03A15eeE12D9240D2443EA9f3B7a550b0", "startBlock": "8379436" },
+  "revealManager": { "address": "0x77e10eA69509214ac48f7A28223a7F78f546C338", "startBlock": "8379434" },
+  "senderVerifier": { "address": "0x419ECa952484b8B862D7cfe792e36F765A73A56f", "startBlock": "8379435" },
+  "nft721": {
+    "impl": "0xC811b82D520e7650c1cD38cc81EB36B42c203976",
+    "beacon": "0xE70c4D774C2AF6868d6484071080a3d6FAdA5fFA",
+    "startBlock": "8379440"
+  },
+  "nftFactory": { "address": "0x2F63Bb2950526649408ed560c1050edd56bA7fCE", "startBlock": "8379441" }
+}
